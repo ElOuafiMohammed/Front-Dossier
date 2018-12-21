@@ -1,0 +1,33 @@
+@import 'src/app/theme/components/siga-tableau-component.scss';
+@import 'src/app/theme/sass/conf/_variables.scss';
+.button-align{
+  text-align: right;
+  margin-right:-4px !important;
+}
+
+
+.ion-ios-plus-outline::before {
+  content: "\F48A";
+  margin-right: 5px !important;
+}
+
+.siga-form-addLine{
+  color: $siga-green-content !important;
+  border: 1px solid $siga-green-content !important;
+  padding: .3em;
+  width: 160px;
+  max-width: 150px;
+  min-width: 150px;
+  background-color: $siga-grey-white !important;
+}
+
+.icon-remark {
+  background-repeat: no-repeat;
+  display: inline-block;
+  fill: currentColor;
+  height: 12px;
+  width: 12px;
+  margin-right: 9px;
+  margin-top: 2px;
+  color: $siga-grey-saisi;
+}

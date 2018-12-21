@@ -1,0 +1,120 @@
+<div class="content">
+  <div fxLayout="column">
+
+    <span class="text">Ouvrages</span>
+    <div class="floatcss" fxLayout="row">
+      <button id="addOuvrage" fxFlexOffset="75" [ngClass]="(stateButtonAdd)?'ion-ios-plus-outline siga-form-confirm':'ion-ios-plus-outline siga-form-invalid'"
+        class="siga-button siga-form-confirm siga-taille-image-plus siga-form-addLine btn btn-default" type="button" (click)="addOuvrage()"
+        [disabled]="stateButtonAdd || desactiveActionOuvrage || viewAdministratif">
+        <em class="siga-form-confirm siga-taille-image-plus"></em>
+        <span> {{ 'dossier.update.ouvrage.boutonAjouter' | translate }} </span>
+      </button>
+    </div>
+  </div>
+
+  <div fxLayout="row">
+    <!--  Table Ouvarge mat-table-->
+    <form novalidate [formGroup]="formOuvrage" fxFlex="100">
+      <div class="alignTableLeft">
+        <mat-table #table [dataSource]="dataSource">
+
+          <!-- button expanded Row -->
+          <ng-container matColumnDef="actionsColumn">
+            <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass'">
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass'">
+              <button id="expandedRowDown" *ngIf="row.expanded == false" class="element-row" [class.expanded]="expanded" (click)="toggleDetailsRow(row)"
+                mat-icon-button>
+                <em fxFlex="10" class="siga-tooltip siga-icon ion-ios-arrow-down">
+                </em>
+              </button>
+              <button id="expandedRowUp" *ngIf="row.expanded == true" class="element-row" [class.expanded]="expanded" (click)="toggleDetailsRow(row)"
+                mat-icon-button>
+                <em fxFlex="10" class="siga-tooltip siga-icon ion-ios-arrow-up">
+                </em>
+              </button>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Column Type ouvrage-->
+          <ng-container matColumnDef="type">
+            <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthType'">Type </mat-header-cell>
+            <mat-cell *matCellDef="let element" [ngClass]="'customWidthType'">
+              <siga-select-type-ouvrage [rowData]="element" [typesOuvrages]="typesOuvrages" (updateOuvrageEvent)="change($event)"></siga-select-type-ouvrage>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Column numéro ouvrage-->
+          <ng-container matColumnDef="numero">
+            <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthNumero'"> Numéro </mat-header-cell>
+            <mat-cell *matCellDef="let element" [ngClass]="'customWidthNumero'">
+              <siga-input-numero-ouvrage [rowData]="element" (updateOuvrageEvent)="onBlur($event)"></siga-input-numero-ouvrage>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="search">
+            <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass'"></mat-header-cell>
+            <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'">
+              <button mat-button type="button" class="element-row" [disabled]="element.disable" (click)="searchOuvrage(element)" mat-icon-button
+                id="boutonRechercheOuvrage">
+                <em fxFlex="10" class="siga-tooltip siga-icon ion-ios-search"></em>
+              </button>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Column intitulé ouvrage-->
+          <ng-container matColumnDef="intitule">
+            <mat-header-cell *matHeaderCellDef [ngClass]="'customIntitule'"> Intitulé </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="disabledIntitule">
+              {{element.libelle}}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="libelleEtat">
+            <mat-header-cell *matHeaderCellDef [ngClass]="'customEtat'"> Etat </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="disabledEtatOuvrage"> {{element.libelleEtat}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="suppression">
+            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="trashColor">
+              <div id="supprimeLigneOuvrage" [ngClass]="{ disableButton : desactiveActionOuvrage || viewAdministratif}" (click)="deleteRow(element)">
+                <em fxFlex="5" class="siga-tooltip siga-icon ion-trash-a">
+                  <span class="siga-tooltiptext">Supprimer</span>
+                </em>
+              </div>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Afficher les caractéristriques de l'ouvrage-->
+          <ng-container matColumnDef="expandedDetail">
+            <mat-cell *matCellDef="let detail" class="expanded-row">
+              <div fxLayout="column" fxFlex="100">
+                <div *ngIf="detail.element.libelleEtat" fxLayout="column" class="expanded-row-subdiv">
+                  <div class="text content1">Caractéristiques</div>
+                  <siga-caracteristique-ouvrage [settings]="detail.element.settings" [source]="detail.element.source"></siga-caracteristique-ouvrage>
+                </div>
+
+                <div *ngIf="detail.element.libelleEtat" fxLayout="column" class="expanded-row-subdiv">
+                  <div class="text content2">Impacts</div>
+                  <siga-impacts-ouvrage [settings]="detail.element.settingsImpacts" [source]="detail.element.sourceImpacts"></siga-impacts-ouvrage>
+                </div>
+              </div>
+
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <!-- mat-row pour l'affichage des différents lignes de la table -->
+          <mat-row *matRowDef="let row; columns: displayedColumns; let index=index" matRipple class="element-row css-mat" [class.expanded]="expandedElement == row"></mat-row>
+          <!-- mat-row pour afficher la liste des caractéristiques d'un ouvrage -->
+          <mat-row *matRowDef="let row; columns: ['expandedDetail']; when: isExpansionDetailRow" [@detailExpand]="row.element.expanded===true ? 'expanded' : 'collapsed'"
+            style="overflow: hidden">
+          </mat-row>
+        </mat-table>
+        <!-- affichage dans le cas d'existence d'un message d'erreur -->
+        <mat-hint class="siga-error" *ngIf="currentOperation?.enableMessageError">
+          {{messageToDisplay}}
+        </mat-hint>
+      </div>
+    </form>
+  </div>
+</div>

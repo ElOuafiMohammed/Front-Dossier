@@ -1,0 +1,71 @@
+@import 'src/app/theme/components/siga-tableau-component.scss';
+@import 'src/app/theme/sass/conf/_variables.scss';
+@import 'src/app/theme/components/siga-utils-style.scss';
+
+:host /deep/ {
+.table-spec {
+	 margin-left: 0.8em;
+
+	th:nth-child(1),
+	td:nth-child(1),
+	th:nth-child(2),
+	td:nth-child(2),
+	th:nth-child(3),
+	td:nth-child(3),
+	th:nth-child(4),
+	td:nth-child(4){
+		 text-align: left !important;
+	}
+
+	th:nth-child(5),
+	th:nth-child(6),
+	th:nth-child(7),
+	th:nth-child(8){
+	 text-align: right !important;
+	}
+	td:nth-child(4),
+	td:nth-child(6),
+	td:nth-child(8) {
+	color: rgb(156, 152, 152);
+	}
+	ng2-smart-table-cell {
+		line-height: 20px;
+		font-size:0.8em;
+	}
+ }
+}
+
+.ion-ios-plus-outline{
+	margin-right: 5px
+}
+.content {
+	padding: 20px;
+	padding-top: 3px;
+	color: $siga-grey-saisi;
+}
+
+
+.specifique{
+	padding-top: 10px !important;
+	margin-right: 7px
+}
+
+.error-spec {
+	margin-left: 0.8em;
+}
+
+:host /deep/ .colorErreurCumulMontantAvance {
+	td {
+		.erreurCumulMontantAvance {
+			color: $siga-red-error !important;
+		}
+	}
+}
+
+:host /deep/ .colorErreurCumulMontantSubvention {
+	td {
+		.erreurCumulMontantSubvention {
+			color: $siga-red-error !important;
+		}
+	}
+}

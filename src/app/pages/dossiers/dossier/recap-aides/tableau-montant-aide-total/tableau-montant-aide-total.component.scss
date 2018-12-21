@@ -1,0 +1,41 @@
+@import 'src/app/theme/components/siga-tableau-component.scss';
+
+
+:host /deep/ {
+
+  .table-spec { 
+
+    th,td {
+      border: none !important;
+      border-bottom: 1px solid rgba(102, 102, 102, .42) !important;
+    } 
+
+    td:nth-child(1) {
+      text-align: center;
+      line-height: 30px;
+     } 
+     
+    &-total {
+      th,td {
+        border: none !important;
+      }
+    }
+  }
+}
+
+:host /deep/ .montant-op-recap-align-total { margin-right: 0.7em;}
+:host /deep/ .montant-eli-recap-align-total {
+  padding: 0em 0.7em;
+  margin-right: -0.1em;
+}
+:host /deep/ .montant-ret-recap-align-total { padding: 0em 0.5em;}
+:host /deep/ .montant-av-recap-align-total { padding: 0em 0.3em;}
+:host /deep/ .montant-sub-recap-align-total { padding: 0em 0.2em;}
+:host /deep/ .total-aides-align { padding-right: 10px;}
+
+.margin {
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 10px
+}

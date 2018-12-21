@@ -1,0 +1,550 @@
+<div [ngClass]="addRemarqueClosed?'al-main-with-remarque':'al-main'">
+  <form novalidate (ngSubmit)="onSubmit()" [formGroup]="formUpdateDossier" (keydown.enter)="$event.preventDefault()">
+    <mat-card class="siga-box-card">
+      <div class="card-dossier" fxLayout="column" fxLayoutAlign="space-between">
+
+        <!-- FIRST ROW -->
+        <div fxLayout="row" fxLayoutAlign="space-between">
+          <!-- Intitulé -->
+          <mat-form-field fxFlex="40">
+            <input autocomplete="off" matInput maxlength="80" placeholder="Intitulé" formControlName="intitule"
+              tabindex="1">
+            <button mat-button type="button" *ngIf="intituleControl.value && !viewRight && !viewAdministratif"
+              matSuffix mat-icon-button aria-label="Clear" (click)="setToNullValue(intituleControl)">
+              <mat-icon>close</mat-icon>
+            </button>
+            <mat-hint align="end">
+              {{intituleControl.value?.length}} / 80
+            </mat-hint>
+          </mat-form-field>
+          <!-- Bénéficiaire -->
+          <div fxLayout="row" fxFlex="48">
+            <!-- Bénéficiaire part 1 -->
+            <mat-form-field fxFlex="20" class="temp-fix-error-display" [ngClass]="{ 'benef-invalid':benefInactive || (!dossierService.dossier?.beneficiaire.actif && dossierService.dossier?.statutPhase === 'A')}">
+              <input matInput maxlength="9" autocomplete="off" placeholder="Bénéficiaire" formControlName="benef_number"
+                class="siga-uppercase-input" tabindex="2">
+              <button mat-button type="button" matSuffix mat-icon-button aria-label="search" [disabled]="viewRight || viewAdministratif"
+                (click)="searchBeneficiary()" id="boutonRechercheBenef" tabindex="3">
+                <mat-icon>search</mat-icon>
+              </button>
+              <mat-hint></mat-hint>
+              <mat-error *ngIf="benefNumberControl.hasError('pattern')">
+                <strong>
+                  Format incorrect : 99999999A
+                </strong>
+              </mat-error>
+              <mat-error *ngIf="benefNumberControl.hasError('benefInactive')">
+                <strong>
+                  Ce bénéficiaire est inactif
+                </strong>
+              </mat-error>
+              <mat-error *ngIf="benefNumberControl.hasError('benefNotFound')">
+                <strong>
+                  {{message}}
+                </strong>
+              </mat-error>
+              <mat-hint *ngIf="!dossierService.dossier?.beneficiaire.actif && dossierService.dossier?.statutPhase === 'A'"
+                class="benef-invalid">
+                <strong>
+                  Ce bénéficiaire est inactif
+                </strong>
+              </mat-hint>
+              <mat-hint *ngIf="benefInactive" class="benef-invalid">
+                <strong>
+                  Ce bénéficiaire est inactif
+                </strong>
+              </mat-hint>
+            </mat-form-field>
+            <!-- statusBenef -->
+            <mat-icon class="icon-infoo" matTooltip="Statut du bénéficiaire : {{dossierService.dossier?.beneficiaire.status?dossierService.dossier.beneficiaire.status:'Non renseigné'}}"
+              [matTooltipClass]="'tooltip-general'">info</mat-icon>
+
+            <div class="temp-margin">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <!-- Bénéficiaire part 2 -->
+            <mat-form-field fxFlex="78">
+              <input matInput formControlName="benef_libelle">
+            </mat-form-field>
+            <br />
+          </div>
+          <!-- Phase -->
+          <mat-form-field fxFlex="5">
+            <input matInput placeholder="Phase" formControlName="phase">
+            <mat-icon class="icon-info" fxFlex="4" *ngIf="dossierService.dossier?.phase === 'T40'" [matTooltipPosition]="'left'"
+              [matTooltipClass]="'tooltip-refus'" matTooltip="Dossier Refusé &#13;&#13; {{tooltip?.labelNature}} &#13; {{tooltip?.libelleNature}} &#13;&#13;{{tooltip?.labelMotif}} &#13; {{tooltip?.libelleMotif}} &#13;&#13;">info</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <!-- SECOND ROW -->
+        <div fxLayout="row" fxLayoutAlign="space-between" [ngClass]="{ disableDossier : viewRight || viewAdministratif}">
+          <!-- Date de la demande -->
+          <mat-form-field fxFlex="15">
+            <input autocomplete="off" matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dp" placeholder="Date de la demande"
+              tabindex="4" formControlName="dateDemande">
+            <mat-datepicker-toggle id="dateDemande" matSuffix [for]="dp"></mat-datepicker-toggle>
+            <mat-datepicker #dp></mat-datepicker>
+            <mat-error *ngIf="dateDemandeControl.hasError('dateLength')">
+              <strong>
+                {{'messages.erreurDateLength' | translate}}
+              </strong>
+            </mat-error>
+            <mat-error *ngIf="dateDemandeControl.hasError('wrongFormat')">
+              <strong>
+                {{'messages.erreurDateFormat' | translate}}
+              </strong>
+            </mat-error>
+            <mat-error *ngIf="dateDemandeControl.hasError('matDatepickerParse')">
+              <strong>
+                {{'messages.erreurDateValid' | translate}}
+              </strong>
+            </mat-error>
+            <mat-error *ngIf="dateDemandeControl.hasError('matDatepickerMin')">
+              <strong>
+                {{'messages.erreurLimitInfDate' | translate}}
+              </strong>
+            </mat-error>
+            <mat-error *ngIf="dateDemandeControl.hasError('matDatepickerMax')">
+              <strong>
+                {{'messages.erreurLimitSupDate' | translate}}
+              </strong>
+            </mat-error>
+          </mat-form-field>
+          <!-- Date complet -->
+          <mat-form-field fxFlex="15">
+            <input autocomplete="off" matInput [min]="dateDemandeControl.value" [max]="maxDate" [matDatepicker]="date"
+              placeholder="Date complet" tabindex="5" formControlName="dateComplet">
+            <mat-datepicker-toggle id="dateComplet" matSuffix [for]="date"></mat-datepicker-toggle>
+            <mat-datepicker #date></mat-datepicker>
+            <mat-error *ngIf="dateCompletControl.hasError('dateLength')">
+              <strong>
+                {{'messages.erreurDateLength' | translate}}
+              </strong>
+            </mat-error>
+            <mat-error *ngIf="dateCompletControl.hasError('wrongFormat')">
+              <strong>
+                {{'messages.erreurDateFormat' | translate}}
+              </strong>
+            </mat-error>
+            <mat-error *ngIf="dateCompletControl.hasError('matDatepickerParse')">
+              <strong>
+                {{'messages.erreurDateValid' | translate}}
+              </strong>
+            </mat-error>
+            <mat-error *ngIf="dateCompletControl.hasError('matDatepickerMin')">
+              <strong>
+                {{'messages.erreurLimitInfDateDemande' | translate}}
+              </strong>
+            </mat-error>
+            <mat-error *ngIf="dateCompletControl.hasError('matDatepickerMax')">
+              <strong>
+                {{'messages.erreurLimitSupDate' | translate}}
+              </strong>
+            </mat-error>
+          </mat-form-field>
+          <!-- Priorité -->
+          <mat-form-field class="temp-fix-error-display prioriteDecision" fxFlex="7">
+            <div fxLayout="row">
+              <input matInput placeholder="Priorité" [matAutocomplete]="niveauPrioriteAutoComplete" formControlName="priorite"
+                tabindex="6">
+              <div id="priorite" class="mat-select-arrow-wrapper">
+                <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !niveauPrioriteAutoComplete.isOpen, 'mat-select-arrow-up': niveauPrioriteAutoComplete.isOpen}"></div>
+              </div>
+            </div>
+            <button mat-button class="space-close" *ngIf="prioriteControl.value && !viewRight && !viewAdministratif"
+              matSuffix mat-icon-button aria-label="Clear" (click)="prioriteControl.setValue(''); prioriteControl.markAsDirty();">
+              <mat-icon>close</mat-icon>
+            </button>
+            <mat-error *ngIf="!prioriteControl.hasError('required') && prioriteControl.touched && prioriteControl.hasError(prioriteValidatorKey)">
+              <strong>
+                {{'messages.erreurSelection' | translate}}
+              </strong>
+            </mat-error>
+            <mat-autocomplete class="prioriteOptionsClass" #niveauPrioriteAutoComplete="matAutocomplete" [displayWith]="displayNiveauPriorite"
+              [autoActiveFirstOption]="true">
+              <mat-option *ngFor="let niveauPriorite of filteredPriorites | async; trackBy: trackById" [value]="niveauPriorite">
+                <span> {{niveauPriorite.code}}</span>
+                <span>-</span>
+                <span> {{niveauPriorite.libelle}}</span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <!-- Session decision -->
+          <div fxFlex="35" fxLayoutAlign="end">
+            <span class="space-top sessionDecision">Session décision :</span>
+            <mat-form-field fxFlex="16" class="temp-fix-error-display">
+              <div fxLayout="row">
+                <input matInput [matAutocomplete]="procedureAutoComplete" formControlName="procedureDecision" tabindex="7">
+                <div id="sessionDecision" class="mat-select-arrow-wrapper">
+                  <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !procedureAutoComplete.isOpen, 'mat-select-arrow-up': procedureAutoComplete.isOpen}"></div>
+                </div>
+              </div>
+              <button mat-button class="space-close" *ngIf="procedureControl.value && !viewRight  && phaseControl.value !== 'T35' && !viewAdministratif"
+                matSuffix mat-icon-button aria-label="Clear" (click)="procedureControl.setValue(null); procedureControl.markAsDirty();">
+                <mat-icon>close</mat-icon>
+              </button>
+              <mat-error *ngIf="!procedureControl.hasError('required') && procedureControl.touched && procedureControl.hasError(procedureValidatorKey)">
+                <strong>
+                  {{'messages.erreurSelection' | translate}}
+                </strong>
+              </mat-error>
+              <mat-autocomplete class="sessionOptionsClass" #procedureAutoComplete="matAutocomplete" [displayWith]="displaySession"
+                [autoActiveFirstOption]="true">
+                <mat-option *ngFor="let session of filteredProcedures | async; trackBy: trackById" [value]="session">
+                  <span> {{session.code}}</span>
+                  <span>-</span>
+                  <span> {{session.libelle}}</span>
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field fxFlexOffset="5" fxFlex="20" class="temp-fix-error-display">
+              <input matInput maxlength="4" autocomplete="off" placeholder="Année" formControlName="annee" class="siga-uppercase-input"
+                tabindex="8">
+            </mat-form-field>
+            <mat-form-field fxFlex="20" fxFlexOffset="3" class="temp-fix-error-display">
+              <input matInput maxlength="9" autocomplete="off" placeholder="Session" formControlName="sessionNumero"
+                class="siga-uppercase-input" tabindex="9">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- THIRD ROW -->
+        <div fxLayout="row" [ngClass]="{ disableDossier : viewRight || viewAdministratif}">
+          <!-- Domaines -->
+          <div fxFlex="49" class="siga-domaine-margin">
+            <mat-radio-group *ngIf="dossierService.dossier && dossierService.dossier.thematique?.code === 'GREE'"
+              formControlName="domaine">
+              <span class="mat-radio-button">
+                Domaine :
+              </span>
+              <mat-radio-button class="mat-radio-button" *ngFor="let domaine of domaines; trackBy: trackById" [value]="domaine">{{domaine.libelle}}</mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <!-- vide -->
+          <div fxFlex="37"></div>
+          <!-- Ancien numéro de dossier AEAG -->
+          <div fxFlex="14" fxLayoutAlign="end">
+            <mat-form-field *ngIf="dossierService.dossier?.numeroAid != null " fxFlex="88">
+              <input matInput placeholder="Numéro du dossier AEAG" formControlName="numeroAid">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+    <!-- Dossier Expansion panel -->
+    <mat-expansion-panel class="temp-margin siga-box-card" expanded *ngIf="dossierService.dossier?.avis !== null">
+      <mat-expansion-panel-header>
+        <mat-panel-title [ngClass]="{'mat-error': ((formAvisAttribution && !formAvisAttribution.valid && !formAvisAttribution.disabled))}">
+          Bloc administratif
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-tab-group class="tab-border" [ngClass]="{'mat-error-tab-avis': (formAvisAttribution && !formAvisAttribution.valid && !formAvisAttribution.disabled)}"
+        [@.disabled]="true">
+        <mat-tab label="Synthèse">
+          <siga-tableau-recap-des-numeros *ngIf="dossierService.dossier?.dossierAdmin"  [delaiValiditeIn]="delaiFinValiditeOut"></siga-tableau-recap-des-numeros>
+        </mat-tab>
+        <mat-tab label="Description générale" *ngIf="displayDescGenerale">
+          <description-generale (onDescriptionFormChange)="onDescriptionFormChange($event)"
+            (descriptifTechniqueChangesEvent)="descriptifTechniqueChanges($event)" [dossier]="dossierService.dossier"
+            (eventDesc)="eventDesc($event)"></description-generale>
+        </mat-tab>
+        <mat-tab label="Documents juridiques">
+          <siga-avis-attribution (onAvisAttributionFormChange)="onAvisAttributionFormChange($event)"></siga-avis-attribution>
+        </mat-tab>
+        <mat-tab label="Paiements">
+        </mat-tab>
+      </mat-tab-group>
+    </mat-expansion-panel>
+
+    <!-- Dossier Expansion panel -->
+    <mat-expansion-panel class="temp-margin siga-box-card" expanded>
+      <mat-expansion-panel-header>
+        <mat-panel-title [ngClass]="{'mat-error': ((montantAutoFinancementError < 0) || (formRecaputilatif && !formRecaputilatif.valid) || (formDescription && !formDescription.valid) || (formPrevisionnel && !formPrevisionnel.valid && !formPrevisionnel.disabled) || !validTablePrev || !validTableCofin || !validTableDispositifRattachPrev || !validListPieceJointes || !validCorrespondants)}">
+          Informations dossier
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <mat-tab-group class="tab-border" [ngClass]="{'mat-error-tab-prev': (formPrevisionnel && !formPrevisionnel.valid && !formPrevisionnel.disabled)  || !validTablePrev || !validTableCofin || !validTableDispositifRattachPrev, 
+      'mat-error-tab-desc': (formDescription && !formDescription.valid && !formDescription.disabled),
+      'mat-error-tab-recap': (formRecaputilatif && !formRecaputilatif.valid && !formRecaputilatif.disabled),
+      'mat-error-tab-plan': (montantAutoFinancementError < 0),
+      'mat-error-tab-pieces': !validListPieceJointes,
+       'mat-error-tab-inter':!validCorrespondants,
+       'mat-error-tab-inter-noInfos':!validCorrespondants && hasInfoSpec  }"
+        [@.disabled]="true">
+        <mat-tab label="Récapitulatif des aides">
+          <siga-montant-aide-total-table></siga-montant-aide-total-table>
+          <recap-aides *ngIf="dossierService?.dossierFinancier != null" [dossier]="dossierService.dossier"
+            (onRecaputilatifFormChange)="onRecaputilatifFormChange($event)" (recapDelete)="recapChange(true)"></recap-aides>
+        </mat-tab>
+        <mat-tab label="Description générale" *ngIf="!displayDescGenerale">
+          <description-generale (onDescriptionFormChange)="onDescriptionFormChange($event)"
+            (descriptifTechniqueChangesEvent)="descriptifTechniqueChanges($event)" [dossier]="dossierService.dossier"
+            (eventDesc)="eventDesc($event)"></description-generale>
+        </mat-tab>
+        <mat-tab label="Prévisionnel">
+          <siga-previsionnel (onPreDossierFormChange)="onPreDossierFormChange($event)"> </siga-previsionnel>
+
+          <siga-app-tableau-dynam-prev *ngIf="dossierService.dossier?.preDossier !=null " [preDossier]="dossierService.dossier.preDossier "
+            [viewRight]="viewRight " [thematiqueLinesPrevisionnel]="thematiqueLinesPrevisionnel
+            "
+            (onLinePrevAttaChange)="onLinePrevAttaChange($event) "></siga-app-tableau-dynam-prev>
+
+          <siga-dispositifs-rattaches-prev *ngIf="dossierService.dossier?.preDossier != null" [preDossier]="dossierService.dossier.preDossier"
+            [viewRight]="viewRight" (isFormDpRattachPrevValid)="isFormDpRattachPrevValid($event)"
+            (onDispositifRattachesPrevChange)="
+            onDispositifRattachesPrevChange($event) "></siga-dispositifs-rattaches-prev>
+          <!-- Origine demande -->
+          <div [ngClass]="{ disableDossier : viewRight || viewAdministratif}" fxLayout="column" fxFlex="25"
+            fxLayoutAlign="space-around">
+            <mat-form-field class="origineDemande">
+              <div fxLayout="row">
+                <input id="origineDemandeInitiale" matInput placeholder="Origine de la demande initiale"
+                  [matAutocomplete]="origineDemandeAutoComplete" formControlName="origineDemande">
+                <div class="mat-select-arrow-wrapper">
+                  <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !origineDemandeAutoComplete.isOpen, 'mat-select-arrow-up': origineDemandeAutoComplete.isOpen}"></div>
+                </div>
+              </div>
+              <button mat-button type="button" *ngIf="origineDemandeControl.value && !viewRight && !viewAdministratif"
+                matSuffix mat-icon-button aria-label="Clear" (click)="setToNullValue(origineDemandeControl)">
+                <mat-icon>close</mat-icon>
+              </button>
+              <mat-hint></mat-hint>
+              <mat-error *ngIf="!origineDemandeControl.hasError('required') && origineDemandeControl.touched && origineDemandeControl.hasError('origineDemandeNotFound')">
+                <strong>
+                  {{'messages.erreurChoixOption' | translate}}
+                </strong>
+              </mat-error>
+
+              <mat-autocomplete #origineDemandeAutoComplete="matAutocomplete" [displayWith]="displayOrigineDemande"
+                [autoActiveFirstOption]="true">
+                <mat-option *ngFor="let origineDemande of filteredOrigineDemandes | async; trackBy: trackById" [value]="origineDemande">
+                  <span> {{origineDemande.libelle}} </span>
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+        </mat-tab>
+        <mat-tab label="Plan financement">
+          <siga-app-tableau-dynam-cofin [cofinanceurlines]="cofinanceurlines" (onLineCofinanceurAttaChange)="onLineCofinanceurAttaChange($event)"></siga-app-tableau-dynam-cofin>
+          <siga-recap-co-financement #recapCoFinancement [coFinanceur]="cofinaceur" (onRecapCofinancementFormChange)="onRecapCofinancementFormChange($event)"></siga-recap-co-financement>
+        </mat-tab>
+        <mat-tab label="Pièces jointes">
+          <siga-app-pieces-jointes (isPiecesJointesListValidParent)="isPiecesJointesListValidParent($event)"></siga-app-pieces-jointes>
+        </mat-tab>
+        <mat-tab label="Bloc notes">
+          <ng-template matTabContent>
+            <siga-bloc-note (valueBlocNoteChange)="valueBlocNoteChange($event)" [blocNoteValueExist]="blocNoteValueExist"></siga-bloc-note>
+          </ng-template>
+        </mat-tab>
+        <mat-tab label="Courriers">
+          <siga-app-courriers></siga-app-courriers>
+        </mat-tab>
+        <mat-tab label="Informations spécifiques" *ngIf="!hasInfoSpec">
+          <siga-infos-specifiques [dossier]="dossierService.dossier" (infoUpdated)="infoUpdated($event)"
+            (pageHasErrorEvent)="pageInfoSpecHasError($event)"></siga-infos-specifiques>
+        </mat-tab>
+        <mat-tab label="Interlocuteurs">
+          <siga-app-interlocuteurs [currentDossier]="dossierService.dossier" (isRespAdmEvent)="onRespAdmEvent($event)"
+            (isCorrespondantValidParent)="isCorrespondantValidParent($event)"></siga-app-interlocuteurs>
+        </mat-tab>
+      </mat-tab-group>
+
+
+    </mat-expansion-panel>
+    <div class="
+            natoperations">
+      <!-- Natures Operation select -->
+      <mat-card class="temp-margin ie11-flex-wrapper natOperationHead siga-box-card" fxLayout="row" fxLayoutAlign="none end">
+
+        <div fxLayout="column" fxFlex="75">
+          <div fxLayout="row" class="nature-operation-card" fxFlex="90" *ngFor="let operation of displayedOperations; trackBy: trackById"
+            [ngClass]="{'nature-operation-selected': operation==currentOperation}" (click)="onSelectOperation(operation)">
+            <span class="nature-operation-text" fxFlex="95" [ngClass]="{'mat-error': operation.dispositifRattacheError || operation.montantCoutError || operation.ouvrageError || operation.masseEauError || operation?.bvGestionError || operation.departementError || operation.communeError || operation.regionError || operation.localisationPertinenteError }">
+              {{ operation.natureOperation.ligne }}.{{ operation.natureOperation.numero }} -
+              {{operation.natureOperation.libelle }} ({{operation.noOrdre}})
+
+            </span>
+            <button mat-icon-button type="button" class="operation-delete-button" *ngIf="operation && !viewRight && !viewAdministratif"
+              (click)="onDeleteOperation(operation)" fxFlexAlign="center end">
+              <mat-icon class="siga-close-button">close</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <mat-form-field fxFlex="20" fxFlexOffset="5" class="operation-align" fxFlexAlign="end">
+          <div fxLayout="row">
+            <input id="natureOperation" #input matInput placeholder="+ Nature opération" [matAutocomplete]="operationAutoComplete"
+              formControlName="operations">
+            <div class="mat-select-arrow-wrapper">
+              <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !operationAutoComplete.isOpen, 'mat-select-arrow-up': operationAutoComplete.isOpen}"></div>
+            </div>
+          </div>
+          <button mat-button type="button" *ngIf="naturesOperationControl.value" matSuffix mat-icon-button aria-label="Clear"
+            (click)="naturesOperationControl.setValue(null)">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-error *ngIf="naturesOperationControl.touched && naturesOperationControl.hasError('natureNotFound')">
+            <strong>
+              {{'messages.erreurChoixOption' | translate}}
+            </strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-autocomplete class="operations-options-class" (optionSelected)="onNatureOperationSelect($event); blurInput()"
+          #operationAutoComplete="matAutocomplete" [displayWith]="displayNaturesOperation" [autoActiveFirstOption]="true">
+          <mat-option *ngFor="let natureOperation of filteredUponUserInputNatureOperation | async; trackBy: trackById"
+            [value]="natureOperation">
+            <span> {{natureOperation?.ligne}}.{{natureOperation?.numero}} </span>
+            <span> - </span>
+            <span> {{natureOperation?.libelle}} </span>
+          </mat-option>
+        </mat-autocomplete>
+
+      </mat-card>
+
+      <!-- Natures Operation Expansion panel -->
+      <mat-expansion-panel class="temp-margin natOperationExpPanel siga-box-card" *ngIf="currentOperation" expanded>
+        <mat-expansion-panel-header class="natOperationMatPanelHeader">
+          <mat-panel-title [ngClass]="{'mat-error': (formMontantsAideManuel && !formMontantsAideManuel.valid && !formMontantsAideManuel.disabled) 
+         || (formDispositif && !formDispositif.valid && !formDispositif.disabled) || this.currentOperation.dispositifRattacheError || currentOperation.masseEauError || this.currentOperation.montantCoutError || currentOperation.ouvrageError || currentOperation?.bvGestionError || currentOperation.departementError || currentOperation.communeError || currentOperation.regionError || this.currentOperation.localisationPertinenteError}">
+            <span>
+              Nature opération
+            </span>
+            <div class="nature-operation-font">
+              <span> &nbsp; </span>
+              <span> : </span>
+              <span>
+                {{currentOperation.natureOperation.ligne}}.{{currentOperation.natureOperation.numero}}
+              </span>
+              <span> - </span>
+              <span> {{currentOperation.natureOperation.libelle}} ({{currentOperation.noOrdre}})</span>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <mat-tab-group class="tab-border" [ngClass]="{'mat-error-tab-ouvrage': !validTableOuvrage && currentOperation.ouvrageError, 'mat-error-tab-couts': (formMontantsAideManuel && !formMontantsAideManuel.valid && !formMontantsAideManuel.disabled) || !validCoutTravaux && currentOperation.montantCoutError, 'mat-error-tab-masse-eau': currentOperation.masseEauError || currentOperation.bvGestionError || currentOperation.departementError || currentOperation.communeError || currentOperation.regionError || currentOperation.localisationPertinenteError, 'mat-error-tab-disporattache': currentOperation.dispositifRattacheError}"
+          [@.disabled]="true">
+
+          <!-- Onglet Coût/Aide avec mat-table-->
+          <mat-tab label="Coûts/Aides">
+            <siga-app-tableau-montants-couts-mat-table [currentOperation]="currentOperation" (onCoutsTravauxFormChange)="onCoutsTravauxFormChange($event)"
+              (onSpecificiteCalculFormChange)="onSpecificiteCalculFormChange($event)" (onTotalMontantOperationChange)="onTotalMontantOperationChange($event)"
+              (onTotalMontantRetenuChange)="onTotalMontantRetenuChange($event)"></siga-app-tableau-montants-couts-mat-table>
+            <siga-montants-aide-manuel #montantAideManuel [currentOperation]="currentOperation"
+              (onMontantsAideManuelFormChange)="onMontantsAideManuelFormChange($event)">
+            </siga-montants-aide-manuel>
+          </mat-tab>
+          <mat-tab label="Ouvrages" id="ongletOuvrage">
+            <siga-tableau-dynamique-ouvrage [currentOperation]="currentOperation" (isEditImpactEvent)="isEditImpactEvent($event)"
+              (isFormOuvrageValid)="isFormOuvrageValid($event)"></siga-tableau-dynamique-ouvrage>
+          </mat-tab>
+          <mat-tab label="Localisation" id="ongletLocalisation">
+            <div fxLayout="column">
+              <!-- Partie localisation pertinente -->
+              <div [ngClass]="{ 'toggle-refus':viewRight || viewAdministratif}">
+                <mat-slide-toggle labelPosition="before" class="label-localisation-pertinente" (change)="onChangeLocalisationPertinente($event)"
+                  [checked]="currentOperation.localisationPertinente">
+                  Localisation pertinente
+                </mat-slide-toggle>
+                <mat-error class="erreur-localisation-pertinente" *ngIf="this.currentOperation.localisationPertinenteError">
+                  au moins une information de localisation doit être saisie
+                </mat-error>
+
+              </div>
+            </div>
+            <!-- /Partie Régions -->
+            <div fxLayout="row">
+              <siga-app-regions [currentOperation]="currentOperation" id="selector-regions" class="siga-selector-regions"
+                (erreurEventRegion)="onErreurEventRegion($event)" (eventRegionEditMode)="onEventRegionEditMode($event)"></siga-app-regions>
+            </div>
+            <!-- /Partie Departements et Communes-->
+            <div fxLayout="row">
+              <siga-app-departements [currentOperation]="currentOperation" id="selector-departements" class="siga-selector-departements"
+                [viewRight]="viewRight" (erreurEventDepartement)="onErreurEventDepartement($event)"
+                (eventDepartementEditMode)="onEventDepartementEditMode($event)"></siga-app-departements>
+            </div>
+            <!-- /Partie BV de gestion -->
+            <div fxLayout="row">
+              <siga-bv-gestion [currentOperation]="currentOperation" id="selector-bv-gestion" class="siga-selector-bv-gestion"
+                (erreurEventBv)="onErreurEventBv($event)" (eventBvEditMode)="onEventBvEditMode($event)"></siga-bv-gestion>
+            </div>
+            <!-- /Partie Masse Eau -->
+            <siga-app-masse-eau [currentOperation]="currentOperation" (massesEauChangesEvent)="onMassesEauChangesEvent($event)"
+              (masseEauHasErrorEvent)="onMasseEauHasErrorEvent($event)"></siga-app-masse-eau>
+          </mat-tab>
+          <mat-tab label="Autres infos">
+            <siga-multiple-card-theme [operation]="currentOperation" (onThemesFormChange)="onThemesFormChange($event)">
+            </siga-multiple-card-theme>
+            <siga-dispositifs-rattaches [currentOperation]="currentOperation" (isFormDispositifValid)="isFormDispositifValid($event)"
+              (isFormDispositifChange)="isFormDispositifChange($event)"></siga-dispositifs-rattaches>
+          </mat-tab>
+
+        </mat-tab-group>
+      </mat-expansion-panel>
+    </div>
+
+  </form>
+
+  <div fxLayout="row" fxLayoutAlign="space-around" class="button-siga">
+    <!-- Quitter -->
+    <button id="quitterDossier" mat-raised-button (click)="close()" type="button" fxFlex="12" tabindex="1001">
+      <em class="ion-close siga-error"></em> &nbsp;Quitter
+    </button>
+    <!-- Enregistrer  -->
+    <button id="enrigistrerDossier" *ngIf="dossierService.dossier?.phase !=='T40'" mat-raised-button [disabled]="submitted || recoverErrorStatus() || recipientIsRequired"
+      type="submit" fxFlex="12" tabindex="1000" (keydown.enter)="onSubmit()" (click)="onSubmit()">
+      <em [ngClass]="(formUpdateDossier.valid)?'ion-checkmark siga-form-confirm':'ion-checkmark siga-form-invalid'"></em>
+      &nbsp;Enregistrer
+    </button>
+    <button id="enrigistrerDossierRefus" *ngIf="dossierService.dossier?.phase ==='T40'" mat-raised-button [disabled]="submitted || !validCorrespondants"
+      type="submit" fxFlex="12" tabindex="1000" (keydown.enter)="onSubmit()" (click)="onSubmit()">
+      <em [ngClass]="(formUpdateDossier.valid)?'ion-checkmark siga-form-confirm':'ion-checkmark siga-form-invalid'"></em>
+      &nbsp;Enregistrer
+    </button>
+    <!-- Basculer || Valider || Dévalider -->
+    <button id="basculerDossier" #button mat-raised-button [disabled]="submitted || recoverErrorStatus()" [hidden]="!isInKnownPhase() || dossierService.dossier?.phase==='T40' || (isPhasePrevisionnel() && currentOperation==null) || currentOperation==null"
+      (click)=" isPhasePrevisionnel() ? basculer() : (dossierService.dossier?.phase=='T10' ? valider() : devalider())
+        "
+      (keydown.enter)="dossierService.dossier?.phase==='T40' ? reactiverDossier() : refuserDossier() " type="button "
+      tabindex="1002">
+      <span *ngIf="isPhasePrevisionnel() ">Basculer</span>
+      <span *ngIf="dossierService.dossier?.phase==='T10' ">Valider</span>
+      <span *ngIf="dossierService.dossier?.phase==='T15' ">Dévalider</span>
+    </button>
+    <!-- Refuser || Réactiver -->
+    <button id="refuserDossier" #button mat-raised-button [disabled]="submitted || !dossierService.dossier " (click)="dossierService.dossier?.phase==='T40'
+        ? reactiverDossier() : refuserDossier() "
+      (keydown.enter)="dossierService.dossier?.phase==='T40' ? reactiverDossier()
+        : refuserDossier() " type="button "
+      tabindex="1003">
+      <span *ngIf="dossierService.dossier?.phase !=='T40' ">Refuser</span>
+      <span *ngIf="dossierService.dossier?.phase==='T40' ">Réactiver</span>
+    </button>
+    <!-- Remarque -->
+    <button id="remarqueDossier" #button mat-raised-button (click)="addRemarque() " type="button " tabindex="1004">
+      <span>Remarques</span>
+    </button>
+  </div>
+
+  <!-- Remarque -->
+
+  <div class="fixedHeightContainer remarque " [hidden]="addRemarqueClosed ">
+    <div>
+      <mat-expansion-panel id="Remarques" class="temp-margin siga-remark-background siga-box-card " expanded>
+        <div fxLayout="row ">
+          <mat-panel-title>
+            Remarques
+          </mat-panel-title>
+          <div class="align-icon-close ">
+            <button class="closeRemarque" id="closeRemarque" type="button" mat-button matSuffix mat-icon-button
+              aria-label="Clear" (click)="closeRemarque() ">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div class="content-remarque ">
+          <siga-list-remarques id="addRemarqueClosed" [remarqueClicked]="addRemarqueClosed " (remarques)="remarque($event)"></siga-list-remarques>
+        </div>
+      </mat-expansion-panel>
+    </div>
+  </div>
+
+</div>

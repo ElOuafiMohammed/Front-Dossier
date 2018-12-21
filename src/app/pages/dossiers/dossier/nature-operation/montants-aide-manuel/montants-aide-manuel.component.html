@@ -1,0 +1,145 @@
+<div class="content">
+  <span class="libelle">
+    Aides
+  </span>
+  <form novalidate [formGroup]="formMontantsAideManuel">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <div fxLayout="column" fxFlex="100" fxLayoutAlign="space-between stretch">
+        <div fxLayout="row"></div>
+        <div fxLayout="row" fxLayoutAlign="space-around center">
+          <div fxFlexOffset="4" class="text" fxFlexAlign="center" fxFlex="20">
+            Avance
+          </div>
+          <!-- Avance -->
+          <mat-form-field fxFlex="7" class="temp-fix-error-display">
+            <div fxLayout="row">
+              <input name="tauxA" id="tauxAvance" (blur)="tauxAvanceObBlur(avanceControl.value)" matInput placeholder="Taux" formControlName="tauxAvance"
+                maxlength="5" tabindex="10111" [ngModel]="tauxAvance" (ngModelChange)="tauxAvance = $event" (input)="onlyDecimalTaux(tauxAvance)">
+              <span [ngClass]="{ disableDossier : viewRight || viewAdministratif}">%</span>
+            </div>
+            <mat-error *ngIf="avanceControl.hasError('avanceHasToBeANumber')">
+              <strong>
+                {{'messages.montantAideManuel.erreurPourcentAvance' | translate}}
+              </strong>
+            </mat-error>
+            <mat-error *ngIf="avanceControl.hasError('avanceCannotBeOver100')">
+              <strong>
+                {{'messages.montantAideManuel.erreurAvanceSupCent' | translate}}
+              </strong>
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Montant Avance -->
+          <mat-form-field fxFlexOffset="5" fxFlex="20" class="temp-fix-error-display">
+            <input id="montantAvance"  (blur)="montantAvanceOnBlur(montantAvanceControl.value)"
+              onKeyPress="if(this.value.length==10) return false;" autocomplete="off" maxlength="13" matInput formControlName="montantAvance"
+              [value]="montantAvanceControl.value" placeholder="Montant en €" tabindex="10112"
+              onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key=='Tab' || event.key == 'Delete' || event.key == 'ArrowLeft' || event.key == 'ArrowRight' || event.key =='Backspace'">
+              <button id="clearMontantAvance" mat-button type="button" *ngIf="montantAvanceControl.value && !viewRight && !viewAdministratif"
+              matSuffix mat-icon-button aria-label="Clear" (click)="resetAvanceInputs($event)">
+              <mat-icon>close</mat-icon>
+            </button>
+            <mat-error *ngIf="montantAvanceControl.hasError('montantCannotBeOverTotalMontantRetenu')">
+              <strong>
+                {{'messages.montantAideManuel.erreurMontantSupTRetenu' | translate}}
+              </strong>
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Equivalent subvention -->
+          <mat-form-field fxFlexOffset="5" fxFlex="16">
+            <input id="montantAvanceEqSubvention" autocomplete="off" matInput formControlName="montantAvanceEqSubvention" [value]="equivalentSubControl.value"
+              placeholder="Equivalent subvention">
+          </mat-form-field>
+
+          <!-- Coefficient de conversion -->
+          <mat-icon class="icon-info" matTooltip="Coefficient de conversion : {{coefficientConversion?.valeurCoef}}" [matTooltipClass]="'tooltip-general'">info</mat-icon>
+
+          <div fxFlex></div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-around center" [ngClass]="{ disableDossier : viewRight || viewAdministratif}">
+          <div fxFlexOffset="4" class="text" fxFlexAlign="center" fxFlex="20">
+            Subvention
+          </div>
+
+          <!-- Subvention -->
+          <mat-form-field fxFlex="7" class="temp-fix-error-display">
+            <div fxLayout="row">
+              <input id="tauxSubvention" name="tauxS" id="tauxSubvention" (blur)="subventionOnBlur(subventionControl.value)" matInput placeholder="Taux"
+                formControlName="tauxSubvention" maxlength="5" tabindex="10113" [ngModel]="tauxSubvention" (ngModelChange)="tauxSubvention = $event"
+                (input)="onlyDecimalTauxSubvention(tauxSubvention)">
+              <span>%</span>
+            </div>
+            <mat-error *ngIf="subventionControl.hasError('subventionHasToBeANumber')">
+              <strong>
+                {{'messages.montantAideManuel.erreurPourcentAvance' | translate}}
+              </strong>
+            </mat-error>
+            <mat-error *ngIf="subventionControl.hasError('subventionCannotBeOver100')">
+              <strong>
+                {{'messages.montantAideManuel.erreurAvanceSupCent' | translate}}
+              </strong>
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Montant Subvention -->
+          <mat-form-field fxFlexOffset="5" fxFlex="20" class="temp-fix-error-display">
+            <input id="montantSubvention"  (blur)="montantSubventionOnBlur(montantSubControl.value)"
+              onKeyPress="if(this.value.length==10) return false;" autocomplete="off" maxlength="13" matInput formControlName="montantSubvention"
+              onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key=='Tab' || event.key == 'Delete' || event.key == 'ArrowLeft' || event.key == 'ArrowRight' || event.key =='Backspace'">
+              <button id="clearMontantSubvention" mat-button type="button" *ngIf="montantSubControl.value && !viewRight && !viewAdministratif"
+              matSuffix mat-icon-button aria-label="Clear" (click)="resetSubventionInputs()">
+              <mat-icon>close</mat-icon>
+            </button>
+            <mat-error *ngIf="montantSubControl.hasError('montantCannotBeOverTotalMontantRetenu')">
+              <strong>
+                {{'messages.montantAideManuel.erreurMontantSupTRetenu' | translate}}
+              </strong>
+            </mat-error>
+          </mat-form-field>
+          <div fxFlex></div>
+        </div>
+
+
+        <div *ngIf="viewLineSpec" fxLayout="row" fxLayoutAlign="space-around center" [ngClass]="{ disableDossier : viewRight || viewAdministratif}">
+          <div fxFlexOffset="4" class="text" fxFlexAlign="center" fxFlex="20">
+            Taux Equivalent subvention spéc
+          </div>
+
+          <!-- Taux éq subv spéc -->
+          <mat-form-field fxFlex="7" class="temp-fix-error-display">
+            <div fxLayout="row">
+              <input id="tauxSpecifique" name="tauxSpec" (blur)="tauxEqSubSpecBlur(eqSubventionSpecTauxControl.value)" matInput formControlName="tauxSpecifique"
+                maxlength="5" tabindex="10115" [value]="eqSubventionSpecTauxControl.value" (input)="onlyDecimalTauxSpec(eqSubventionSpecTauxControl.value)">
+              <span [ngClass]="{ disableDossier : viewRight || viewAdministratif}">%</span>
+            </div>
+            <mat-error *ngIf="eqSubventionSpecTauxControl.hasError('eqSubSpecHasToBeANumber')">
+              <strong>
+                {{'messages.montantAideManuel.erreurPourcentAvance' | translate}}
+              </strong>
+            </mat-error>
+            <mat-error *ngIf="eqSubventionSpecTauxControl.hasError('eqSubSpecCannotBeOver100')">
+              <strong>
+                {{'messages.montantAideManuel.erreurAvanceSupCent' | translate}}
+              </strong>
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Equivalent subvention spéc-->
+          <mat-form-field *ngIf="viewEquiSubSpec" fxFlexOffset="5" fxFlex="20">
+            <input id="montantEqSubventionSpecifique" autocomplete="off" matInput formControlName="montantEqSubventionSpecifique" [value]="eqSubventionSpecControl.value"
+              placeholder="Equivalent subvention spéc">
+          </mat-form-field>
+
+          <div fxFlex></div>
+        </div>
+      </div>
+
+      <div fxLayout="column" fxFlex="31" fxLayoutAlign="space-between start">
+        <div fxLayout="row" tabindex="10116">
+        </div>
+      </div>
+    </div>
+  </form>
+
+</div>

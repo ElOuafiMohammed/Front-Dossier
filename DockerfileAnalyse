@@ -1,0 +1,29 @@
+### STAGE 1: Build ###
+
+# We label our stage as 'builder'
+FROM node:8-alpine as builder
+
+COPY package.json package-lock.json ./
+
+RUN npm config set proxy "http://and-fgt-linux-01.akka.eu:9090"
+RUN npm config set http-proxy "http://and-fgt-linux-01.akka.eu:9090"
+RUN npm config set https-proxy "http://and-fgt-linux-01.akka.eu:9090"
+RUN npm config set strict-ssl false
+ENV http_proxy "http://and-fgt-linux-01.akka.eu:9090"
+ENV https_proxy "http://and-fgt-linux-01.akka.eu:9090"
+
+RUN npm set progress=false && npm config set depth 0 && npm cache clean --force
+
+## Storing node modules on a separate layer will prevent unnecessary npm installs at each build
+RUN npm i && mkdir /ng-app && cp -R ./node_modules ./ng-app
+
+WORKDIR /ng-app
+
+COPY . .
+
+RUN apk update && apk add openjdk8-jre-base
+
+## IL FAUT CHROME et NG TEST ne termine pas si erreurs tslint : https://github.com/angular/angular-cli/issues/11483
+## RUN node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng test --code-coverage
+
+RUN npm run sonar-scanner

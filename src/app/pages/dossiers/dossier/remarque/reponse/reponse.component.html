@@ -1,0 +1,28 @@
+<div fxLayout="row" class="siga-response-content">
+  <div fxLayout="column" fxFlex="98.4">
+    <div fxLayout="row" class="siga-align-nom-date">
+      <mat-form-field class="diplayUnderLine siga-nom-person-response">
+        <input matInput [formControl]="nomPrenomControl" autocomplete="off" [ngModel]="nomInspecteur">
+      </mat-form-field>
+      <div class="siga-max-width-response"></div>
+      <mat-form-field class="diplayUnderLine siga-date-response">
+        <input matInput [formControl]="dateDujourControl" autocomplete="off" [ngModel]="dateDuJourAffiche">
+      </mat-form-field>
+    </div>
+    <div fxLayout="row">
+      <div fxFlex="100">
+        <mat-form-field class="diplayUnderLine siga-response">
+          <textarea id="textAreaResponse" matInput [ngClass]="responseDisabled? 'siga-textarea-style siga-response-disabled' : 'siga-textarea-style'"
+            (blur)="onBlurResponse();" [formControl]="reponseControl" reponse="off" [ngModel]="reponse"></textarea>
+        </mat-form-field>
+      </div>
+      <div fxFlex="2">
+        <button (click)="deleteResponse()" [ngClass]=" !disableButtonSupr ? 'sam-tooltip sam-icon ion-trash-a no-design' : 'sam-tooltip sam-icon ion-trash-a siga-icon-trash-design-disabled'"
+          [disabled]="disableButtonSupr">
+          <span [hidden]="disableButtonSupr" class="sam-tooltiptext">Supprimer</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>

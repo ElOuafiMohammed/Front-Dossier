@@ -1,0 +1,25 @@
+<div mat-dialog-content>
+  <p>Voulez-vous enregistrer les modifications effectuées ?</p>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-evenly">
+  <span matTooltip="{{tooltipValue}}">
+
+    <button *ngIf="data.typeAction == 'update'" mat-button [ngStyle]="styleFocusSave()" (click)="onSave()" class="sizebuttonSave"
+      [disabled]="data.valueStatusError">
+      <em *ngIf="!data.valueStatusError" class="material-icons">save</em>
+      <img *ngIf="data.valueStatusError" alt="enregistrer" [src]="imageIconSaveWarning"> Enregistrer
+    </button>
+  </span>
+  <button mat-button (click)="onLeave()" class="notFocusCancelButton">
+    <em class="material-icons">close</em>Quitter</button>
+  <div *ngIf='this.data.valueStatusError'>
+    <button mat-button class="sizebuttonCancel" (click)="onCancel()" [ngStyle]="styleFocusCancel()" cdkFocusInitial>
+      <em class="material-icons">reply</em>Annuler
+    </button>
+  </div>
+  <div *ngIf='!this.data.valueStatusError'>
+    <button mat-button class="sizebuttonCancel" (click)="onCancel()" [ngStyle]="styleFocusCancel()">
+      <em class="material-icons">reply</em>Annuler
+    </button>
+  </div>
+</div>

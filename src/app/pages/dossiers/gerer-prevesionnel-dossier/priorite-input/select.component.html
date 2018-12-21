@@ -1,0 +1,10 @@
+<mat-form-field class="width-input-select-prev margin" tabindex="{{indexSelect}}">
+  <mat-select (selectionChange)="change(selected)" [(value)]="selected" [disabled]="!rowData.beneficiaire?.actif">
+    <mat-select-trigger>{{selected?.code}}</mat-select-trigger>
+    <mat-option *ngFor="let priorite of priorites; trackBy: trackById" [value]="priorite">
+      <span> {{ priorite.code }} </span>
+      <span> - </span>
+      <span> {{ priorite.libelle }}</span>
+    </mat-option>
+  </mat-select>
+</mat-form-field>

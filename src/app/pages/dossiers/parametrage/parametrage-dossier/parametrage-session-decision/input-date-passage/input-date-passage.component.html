@@ -1,0 +1,35 @@
+<div fxLayout="row" fxLayoutAlign="start center">
+  <form novalidate [formGroup]="formSessionDecision" (keydown.enter)="$event.preventDefault()">
+    <mat-form-field>
+      <input autocomplete="off" tabindex="{{index_tab_date}}" [min]="minDate" matInput [matDatepicker]="picker" formControlName="date"
+        (change)="setControlDate()" class="dfvClass">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="this.dateControl?.hasError('dateLength') ">
+        <strong>
+          {{'messages.erreurDateFormat' | translate}}
+        </strong>
+      </mat-error>
+      <mat-error *ngIf="this.dateControl?.hasError('wrongFormat') ">
+        <strong>
+          {{'messages.erreurDateFormat' | translate}}
+        </strong>
+      </mat-error>
+      <mat-error *ngIf="this.dateControl?.hasError('matDatepickerParse') ">
+        <strong>
+          {{'messages.erreurDateValid' | translate}}
+        </strong>
+      </mat-error>
+      <mat-error *ngIf="this.dateControl?.hasError('matDatepickerMin') ">
+        <strong>
+          {{'messages.erreurLimitInfDate' | translate}}
+        </strong>
+      </mat-error>
+      <mat-error *ngIf="this.dateControl?.hasError('required') && !this.dateControl?.hasError('matDatepickerParse') ">
+        <strong>
+          {{'messages.erreurDateRequise' | translate}}
+        </strong>
+      </mat-error>
+    </mat-form-field>
+  </form>
+</div>

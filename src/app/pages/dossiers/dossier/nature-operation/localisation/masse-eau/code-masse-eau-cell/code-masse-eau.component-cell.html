@@ -1,0 +1,7 @@
+<div fxLayout="row">
+  <mat-form-field *ngIf="!rowData.nom" fxFlex="100" class="temp-fix-error-display">
+    <input matInput (blur)="onBlur(control)" (focus)="onFocusEvent()" [formControl]="control" autocomplete="off" class="siga-uppercase-input"
+      [ngClass]="{'input-error': rowData.hasError && !isValueModified, 'siga-underlined-input': isOutOfFocus}">
+  </mat-form-field>
+  <span *ngIf="rowData.nom" class="siga-pointer-unmodifiable" fxFlex="100">{{value}}</span>
+</div>

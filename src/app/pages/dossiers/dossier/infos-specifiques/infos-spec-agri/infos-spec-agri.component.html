@@ -1,0 +1,7 @@
+<div class="margin" fxLayout="row" fxLayoutAlign="space-between stretch">
+    <div [ngClass]="{ 'siga-content-Info-spec-agri': currentThema === 'AGRI' ,'siga-content-Info-spec': currentThema !== 'AGRI'}">
+      <div fxLayout="column" fxLayoutAlign="stretch">
+        <ng2-smart-table class="table-spec" [settings]="settings" [source]="source"></ng2-smart-table>
+      </div>
+    </div>
+  </div>

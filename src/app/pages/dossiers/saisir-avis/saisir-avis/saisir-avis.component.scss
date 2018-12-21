@@ -1,0 +1,203 @@
+@import 'src/app/theme/components/siga-tableau-component.scss';
+@import 'src/app/theme/components/siga-tooltip.scss';
+@import 'src/app/theme/sass/conf/_variables.scss';
+@import 'src/app/theme/components/siga-utils-style.scss';
+
+.mat-row:hover {
+  background-color:#EDEDED;
+}
+.mat-table {
+  width: 100%;
+  padding: 24px !important;
+}
+
+
+:host /deep/ {
+  .card-body {
+    flex-direction: column;
+    display: initial !important;
+  }
+}
+.mat-cell {
+  display: initial;
+  // Pour l'alignement des cellules dans la row
+  min-height: auto;
+}
+
+.icon-info-benef{
+  margin-left: 2px;
+  color:$siga-red-error !important;
+  font-size: 17px !important ;
+}
+.siga-icon-edit {
+  height: 18px !important;
+  width: 18px !important;
+  color: $siga-grey-saisi !important;
+}
+
+.siga-total-montant {
+  color: $siga-green-content !important;
+  text-align: right;
+}
+
+.siga-motif-style {
+  margin-top: -10px !important;
+  margin-bottom: -12px !important;
+  margin-left:2% !important;
+  margin-right:2% !important;
+  width:96% !important;
+  color: $siga-grey-saisi ;
+}
+
+.customWidthNumDos {
+  flex: 0 0 12% !important;
+  color:  $siga-green-content !important;
+  padding-left: 0px;
+  cursor: pointer !important;
+  &:hover {
+    font-weight: bold
+  }
+}
+
+.customNumDosHeader {
+  flex: 0 0 12% !important;
+  font-size: 0.9em !important;
+  color:rgba(102, 102, 102, 0.54) !important;
+  padding: .0em !important;
+}
+
+@media only screen  and (max-width: 1367px) {
+  .customWidthNumDos {
+    flex: 0 0 12% !important;
+    padding-left: 0px;
+    color:  $siga-green-content !important;
+    cursor: pointer !important;
+    &:hover {
+      font-weight: bold !important;
+    }
+  }
+  .customNumDosHeader {
+    flex: 0 0 12% !important;
+    font-size: 0.9em !important;
+    color:rgba(102, 102, 102, 0.54) !important;
+    padding: .0em !important;
+  }
+}
+
+.customWidthMotif {
+  font-size: 0.9em !important;
+  color: rgba(102, 102, 102, 0.54) !important;
+}
+
+.customLibelleHeader {
+  margin-left: 2% !important;
+  font-size: 0.9em !important;
+  color: rgba(102, 102, 102, 0.54)!important;
+  flex: 0 0 43%;
+}
+.customLibellerow {
+  margin-left: 2% !important;
+  font-size: .87rem !important;
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  line-height: 25px;
+  flex: 0 0 43%;
+  color: $siga-grey-saisi;
+}
+
+
+ .customMontantHeader {
+  flex: 0 0 13%;
+  font-size: 0.9em !important;
+  color:rgba(102, 102, 102, 0.54) !important;
+  text-align: right !important;
+}
+
+.siga-avis-style {
+  width: 100% !important;
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+ font-size: 14px;
+}
+
+.customMontantWidth {
+  flex: 0 0 13%;
+  text-align: right;
+}
+ 
+.customAvis {
+  margin-left: 2% !important;
+  font-size: 0.9em !important;
+  color:rgba(102, 102, 102, 0.54) !important;
+  flex: 0 0 20%;
+}
+
+.css-mat {
+  height: 50px !important;
+}
+
+.mat-form-field {
+  text-align: left;
+}
+
+.disabledIntitule {
+  color: $siga-grey-saisi !important;
+}
+
+.mat-header-row, .mat-row {
+  padding: 0px;
+  min-height: 35px;
+  border-bottom-color: #adaab1
+}
+
+
+.siga-icon {
+  cursor: pointer;
+  visibility: visible;
+  font-size: 1.2em;
+}
+
+.siga-tooltip:hover .siga-tooltiptext {
+  visibility: visible;
+}
+.ion-checkmark {
+  color: $siga-green-content;
+}    
+
+:host /deep/ .diplayUnderLine .mat-form-field-underline {
+  border-bottom: 1px solid;
+  border-color: $siga-red-error;
+}
+
+.siga-error-message {
+  color:$siga-red-error !important;
+  font-size: 12px;
+  margin-left: 2% !important;
+  margin-bottom: -7px !important;
+}
+
+
+
+.siga-correct-value-style {
+  color: $siga-green-content !important;
+}
+
+.gsaisir-avis-padding {
+  margin-bottom: -130px;
+}
+
+.g-div-saisi-avis-margin {
+  margin-bottom: 94px !important;
+}
+
+.nbr-dossiers-trouves {
+  padding-left: 21px; 
+  padding-bottom: 17px;
+}
+.siga-position-cretera {
+  padding-top: 3px;padding-bottom: 3px;
+}
+
+.siga-style-table {
+  padding-bottom: 17;
+  max-height: 440px !important;
+  overflow-y: scroll;
+}

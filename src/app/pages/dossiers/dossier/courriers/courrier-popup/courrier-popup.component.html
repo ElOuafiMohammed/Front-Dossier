@@ -1,0 +1,373 @@
+<h1 mat-dialog-title>
+  {{'dossier.update.courrier.titrePopup' | translate}}{{numDossier}}
+</h1>
+
+<div mat-dialog-content id="dialog" class="little-font margintop-negativ-10 height-dialog">
+  <form novalidate [formGroup]="formCourrier" (ngSubmit)="onSubmit()" (keydown.enter)="$event.preventDefault()">
+
+    <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column" fxLayoutAlign="space-between">
+
+      <!-- Modèle -->
+
+      <mat-form-field fxFlex="30">
+        <div fxLayout="row">
+          <input id="inputModele" matInput placeholder="{{'dossier.update.courrier.modele' | translate}} *"
+            [matAutocomplete]="modeleAutoComplete" formControlName="modele" tabindex="2001">
+          <div class="mat-select-arrow-wrapper">
+            <div *ngIf="!viewRight" class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !modeleAutoComplete.isOpen, 'mat-select-arrow-up': modeleAutoComplete.isOpen}"></div>
+          </div>
+        </div>
+        <button mat-button *ngIf="modeleControl.value && !viewRight" matSuffix mat-icon-button aria-label="Clear"
+          (click)="modeleControl.setValue(null)">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error *ngIf="!modeleControl.hasError('required') && modeleControl.touched && modeleControl.hasError(modeleValidatorKey)">
+          <strong>
+            {{'messages.erreurChoixOption' | translate}}
+          </strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-autocomplete #modeleAutoComplete="matAutocomplete" [displayWith]="displayModele" [autoActiveFirstOption]="true"
+        (optionSelected)="onModeleSelect($event.option.value)">
+        <mat-option *ngFor="let modele of filteredModeles | async; trackBy: trackById" [value]="modele">
+          <span> {{modele.type}} </span>
+        </mat-option>
+      </mat-autocomplete>
+      <div fxFlex="15"></div>
+
+
+      <!-- Bénéficiaire -->
+
+      <mat-form-field fxFlex="15" class="temp-fix-error-display">
+        <input matInput maxlength="9" autocomplete="off" placeholder="{{'dossier.update.courrier.destinataire' | translate}} *"
+          formControlName="destinataireReference" class="siga-uppercase-input" tabindex="2002" id="destinataireReferenceInput">
+        <button mat-button type="button" matSuffix mat-icon-button aria-label="search" (click)="searchDestinataire()"
+          id="boutonRechercheBenef">
+          <mat-icon>search</mat-icon>
+        </button>
+        <mat-hint></mat-hint>
+        <mat-error *ngIf="destinataireReferenceControl.hasError('pattern')">
+          <strong>
+            {{'messages.benefCodeFormat' | translate}}
+          </strong>
+        </mat-error>
+        <mat-error *ngIf="destinataireReferenceControl.hasError('benefInactive')">
+          <strong>
+            {{'messages.benefInactif' | translate}}
+          </strong>
+        </mat-error>
+        <mat-error *ngIf="destinataireReferenceControl.hasError('benefNotFound')">
+          <strong>
+            {{message}}
+          </strong>
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Titre -->
+
+      <mat-form-field fxFlex="33">
+        <input autocomplete="off" matInput placeholder="{{'dossier.update.courrier.titre' | translate}}"
+          formControlName="destinataireTitre" tabindex="2003" id="destinataireTitreInput">
+        <button mat-button *ngIf="destinataireTitreControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="destinataireTitreControl.setValue(null)"
+          id="destinataireTitreDelete">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+
+    </div>
+
+    <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column" fxLayoutAlign="space-between">
+
+      <!-- Date Création -->
+
+      <mat-form-field fxFlex="15" class="temp-fix-error-display">
+        <input autocomplete="off" matInput [matDatepicker]="dp" placeholder="{{'dossier.update.courrier.dateCreation' | translate}} *"
+          tabindex="2004" formControlName="dateCreation" id="dateCreationInput">
+        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker #dp></mat-datepicker>
+        <mat-error *ngIf="dateCreationControl.hasError('dateLength')">
+          <strong>
+            {{'messages.erreurDateLength' | translate}}
+          </strong>
+        </mat-error>
+        <mat-error *ngIf="dateCreationControl.hasError('wrongFormat')">
+          <strong>
+            {{'messages.erreurDateFormat' | translate}}
+          </strong>
+        </mat-error>
+        <mat-error *ngIf="dateCreationControl.hasError('matDatepickerParse')">
+          <strong>
+            {{'messages.erreurDateValid' | translate}}
+          </strong>
+        </mat-error>
+      </mat-form-field>
+
+      <!-- RAISON SOCIALE -->
+
+      <div fxLayout="column" fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column" fxLayoutAlign="space-between"
+        fxFlex="50">
+
+        <mat-label class="color-grey margintop-negativ-5" fxFlex="100">{{'dossier.update.courrier.raisonSociale' |
+          translate}} *</mat-label>
+
+        <mat-form-field fxFlex="100" class="margintop-negativ-10  margin-ie-20">
+          <input autocomplete="off" matInput formControlName="destinataireRaisonSociale" tabindex="2005" id="destinataireRaisonSocialeInput">
+          <button mat-button *ngIf="destinataireRaisonSocialeControl.value" matSuffix mat-icon-button aria-label="Clear"
+            (click)="destinataireRaisonSocialeControl.setValue(null)" id="destinataireRaisonSocialeDelete">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-hint></mat-hint>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="100" class="margintop-negativ-30  margin-ie-5">
+          <input autocomplete="off" matInput formControlName="destinataireRaisonSociale2" tabindex="2005" id="destinataireRaisonSociale2Input">
+          <button mat-button *ngIf="destinataireRaisonSociale2Control.value" matSuffix mat-icon-button aria-label="Clear"
+            (click)="destinataireRaisonSociale2Control.setValue(null)" id="destinataireRaisonSociale2Delete">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+      </div>
+
+    </div>
+
+
+    <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column" fxLayoutAlign="space-between">
+      <div fxLayout="column" fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column" fxLayoutAlign="space-between"
+        fxFlex="50" class="margintop-negativ-25 margin-ie-0">
+
+        <!-- LR avec avis de récéption -->
+        <div>
+          <mat-slide-toggle labelPosition="before" class="color-grey " (change)="onChangeToggle($event.checked)"
+            [checked]="false" id="AvisReceptionToggle">
+            {{'dossier.update.courrier.lrAvisReception' | translate}}
+          </mat-slide-toggle>
+        </div>
+
+        <!-- Pieces jointes -->
+
+        <div fxLayout="row">
+          <mat-form-field fxFlex="90" class="margintop-negativ-85 margin-ie-0">
+            <input autocomplete="off" matInput placeholder="{{'dossier.update.courrier.pieceJointe' | translate}}"
+              formControlName="piecesJointes" tabindex="2007" id="piecesJointesInput">
+            <button mat-button *ngIf="piecesJointesControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="piecesJointesControl.setValue('')"
+              id="piecesJointesDelete">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+
+
+
+      </div>
+      <div fxLayout="column" fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column" fxLayoutAlign="space-between"
+        fxFlex="50" class="margintop-negativ-10 margin-ie-0">
+
+        <!-- Adresse -->
+
+        <mat-label class="color-grey" fxFlex="100">{{'dossier.update.courrier.adresse' | translate}} *</mat-label>
+
+        <mat-form-field fxFlex="100" class="margintop-negativ-15  margin-ie-10">
+          <input autocomplete="off" matInput formControlName="destinataireAdresse" tabindex="2007" id="destinataireAdresseInput">
+          <button mat-button *ngIf="destinataireAdresseControl.value" matSuffix mat-icon-button aria-label="Clear"
+            (click)="destinataireAdresseControl.setValue(null)" id="adresseDelete">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-hint></mat-hint>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="100" class="margintop-negativ-30  margin-ie-5">
+          <input autocomplete="off" matInput tabindex="2007" formControlName="destinataireAdresse2" id="destinataireAdresse2Input">
+          <button mat-button *ngIf="destinataireAdresse2Control.value" matSuffix mat-icon-button aria-label="Clear"
+            (click)="destinataireAdresse2Control.setValue(null)" id="adresse2Delete">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+      </div>
+
+    </div>
+    <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column" fxLayoutAlign="space-between"
+      class="margintop-negativ-5">
+
+      <!-- Contact -->
+
+      <mat-form-field fxFlex="30" class="margintop-negativ-30 margin-ie-0">
+        <div fxLayout="row">
+          <input matInput placeholder="{{'dossier.update.courrier.contact' | translate}} *" [matAutocomplete]="contactAutoComplete"
+            formControlName="contact" tabindex="2011" id="contactInput">
+          <div class="mat-select-arrow-wrapper">
+            <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !contactAutoComplete.isOpen, 'mat-select-arrow-up': contactAutoComplete.isOpen}"></div>
+          </div>
+        </div>
+        <button mat-button *ngIf="contactControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="contactControl.setValue(null)"
+          id="contactDelete">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error *ngIf="!contactControl.hasError('required') && contactControl.touched && contactControl.hasError('contactNotFound')">
+          <strong>
+            {{'messages.erreurChoixOption' | translate}}
+          </strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-autocomplete class="responsableOptionsClass" #contactAutoComplete="matAutocomplete" [displayWith]="displayContact"
+        [autoActiveFirstOption]="true" (optionSelected)="onContactSelect($event.option.value)">
+        <mat-option *ngFor="let contact of filteredContacts | async; trackBy: trackById" [value]="contact">
+          <span> {{contact.prenom}} </span>
+          <span> {{contact.nom}} </span>
+        </mat-option>
+      </mat-autocomplete>
+
+      <div fxFlex="15"></div>
+
+      <!-- Code Postal -->
+
+      <mat-form-field fxFlex="15">
+        <input autocomplete="off" maxlength="5" matInput placeholder="{{'dossier.update.courrier.codePostal' | translate}} *"
+          formControlName="destinataireCodePostal" tabindex="2009" id="destinataireCodePostalInput">
+        <button mat-button *ngIf="destinataireCodePostalControl.value" matSuffix mat-icon-button aria-label="Clear"
+          (click)="destinataireCodePostalControl.setValue(null)" id="destinataireCodePostalDelete">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-hint></mat-hint>
+        <mat-error *ngIf="destinataireCodePostalControl.hasError('pattern')">
+          <strong>
+            {{'messages.nicCodeFormat' | translate}}
+          </strong>
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Commune  -->
+
+      <mat-form-field fxFlex="33">
+        <input autocomplete="off" matInput placeholder="{{'dossier.update.ouvrage.commune' | translate}} *"
+          formControlName="destinataireCommune" tabindex="2010" id="destinataireCommuneInput" class="siga-uppercase-input">
+        <button mat-button *ngIf="destinataireCommuneControl.value" matSuffix mat-icon-button aria-label="Clear"
+          (click)="destinataireCommuneControl.setValue(null)" id="destinataireCommuneDelete">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+
+    </div>
+    <div class="margintop-negativ-20">
+
+      <!-- VOS REFERENCES -->
+      <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column" fxLayoutAlign="space-between">
+        <mat-label class="color-grey margintop-negativ-5">{{'dossier.update.courrier.vosRef' | translate}} </mat-label>
+      </div>
+      <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column" fxLayoutAlign="space-between">
+        <!-- Partie 1 -->
+        <mat-form-field fxFlex="100" class=" margintop-negativ-15">
+          <input autocomplete="off" matInput formControlName="vosReferences" tabindex="2011" id="vosReferencesInput">
+          <button mat-button *ngIf="vosReferencesControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="vosReferencesControl.setValue('')"
+            id="vosReferencesDelete">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column" fxLayoutAlign="space-between">
+        <!-- Partie 2 -->
+        <mat-form-field fxFlex="100" class="margintop-negativ-30 ">
+          <input autocomplete="off" matInput formControlName="vosReferences2" tabindex="2012" id="vosReferences2Input">
+          <button mat-button *ngIf="vosReferences2Control.value" matSuffix mat-icon-button aria-label="Clear" (click)="vosReferences2Control.setValue('')"
+            id="vosReferences2Delete">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+    </div>
+    <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column" fxLayoutAlign="space-between">
+
+      <!-- Nos Références -->
+      <mat-label class="color-grey margintop-negativ-5">{{'dossier.update.courrier.nosRef' | translate}}</mat-label>
+    </div>
+    <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column" fxLayoutAlign="space-between">
+      <mat-form-field fxFlex="100" class=" margintop-negativ-15">
+        <input autocomplete="off" matInput formControlName="nosReferences" tabindex="2013" id="nosReferencesInput">
+        <button mat-button *ngIf="nosReferencesControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="nosReferencesControl.setValue(null)"
+          id="nosReferencesDelete">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+
+    </div>
+    <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column" fxLayoutAlign="space-between">
+
+      <!-- Copie adressée pour information à -->
+
+      <mat-form-field fxFlex="100" class="margintop-negativ-10">
+        <input autocomplete="off" matInput formControlName="copieInformation" placeholder="{{'dossier.update.courrier.copie' | translate}}"
+          tabindex="2015" id="copieInformationInput">
+        <button mat-button *ngIf="copieInformationControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="copieInformationControl.setValue('')"
+          id="copieInformationDelete">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+
+    </div>
+    <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column" fxLayoutAlign="space-between">
+
+      <!-- Objet -->
+
+      <mat-form-field fxFlex="100" class="margintop-negativ-10">
+        <input autocomplete="off" matInput formControlName="objet" placeholder="{{'dossier.update.courrier.objet' | translate}} *"
+          tabindex="2016" id="objetInput">
+        <button mat-button *ngIf="objetControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="objetControl.setValue(null)"
+          id="objetDelete">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+
+    </div>
+    <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column" fxLayoutAlign="space-between"
+      class="margin-bottom-radio">
+
+      <!-- Signataire -->
+
+      <mat-form-field fxFlex="30" class="margintop-negativ-25">
+        <div fxLayout="row">
+          <input matInput placeholder="{{'dossier.update.courrier.signataire' | translate}} *" [matAutocomplete]="signataireAutoComplete"
+            formControlName="signataire" tabindex="2019" id="signataireInput">
+          <div class="mat-select-arrow-wrapper">
+            <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !signataireAutoComplete.isOpen, 'mat-select-arrow-up': signataireAutoComplete.isOpen}"></div>
+          </div>
+        </div>
+        <button mat-button *ngIf="signataireControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="signataireControl.setValue(null);"
+          id="signataireDelete">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error *ngIf="!signataireControl.hasError('required') && signataireControl.touched && signataireControl.hasError('signataireNotFound')">
+          <strong>
+            {{'messages.erreurChoixOption' | translate}}
+          </strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-autocomplete #signataireAutoComplete="matAutocomplete" [displayWith]="displaySignataire"
+        [autoActiveFirstOption]="true" (optionSelected)="onSignataireSelect($event.option.value)">
+        <mat-option *ngFor="let sign of filteredSignataires | async; trackBy: trackById" [value]="sign">
+          <span> {{sign.prenom}} </span>
+          <span> {{sign.nom}} </span>
+        </mat-option>
+      </mat-autocomplete>
+
+      <div fxFlex="15"></div>
+
+    </div>
+
+  </form>
+</div>
+
+<div mat-dialog-actions fxLayoutAlign="space-around">
+  <!-- Annuler -->
+  <button mat-raised-button (click)="onNoClick()" type="button" fxFlex="20" tabindex="2020" id="annulerButton">
+    <em class="ion-close siga-form-cancel"></em>
+    <span class="margin-button">{{'dossier.update.courrier.annule' | translate}}</span>
+  </button>
+  <!-- Générer document -->
+  <button mat-raised-button type="button" fxFlex="20" (click)="onSubmit()" (keydown.enter)="onSubmit()" [disabled]="!formCourrier.valid"
+    [ngClass]="(formCourrier.valid)?'':'siga-form-invalid'" tabindex="2021" id="genererButton">
+    <em [ngClass]="(formCourrier.valid)?'ion-checkmark siga-form-confirm':'ion-checkmark'"></em>
+    <span class="margin-button">{{'dossier.update.courrier.genere' | translate}}</span>
+  </button>
+</div>

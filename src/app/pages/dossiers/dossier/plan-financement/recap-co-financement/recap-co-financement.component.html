@@ -1,0 +1,81 @@
+<div>
+  <mat-error class="errorMontant" *ngIf="montantAutofinancement < 0">
+    {{ 'messages.erreurAutoFinancement' | translate }}
+  </mat-error>
+</div>
+<div class="content">
+  <form novalidate [formGroup]="formRecapCofinancement">
+    <div fxLayout="row" fxLayoutAlign="start">
+      <div fxLayout="column" fxFlex="100" fxLayoutAlign="space-between stretch">
+        <div fxLayout="row">
+          <div fxFlexAlign="center" fxFlex="20" class="align-label">
+            Aide agence (en Eq. Subv.)
+          </div>
+          <!-- Montant Aide Agence -->
+          <mat-form-field fxFlex="15">
+            <input matInput placeholder="Montant en €" formControlName="montantAide" [value]="montantAideControl.value">
+          </mat-form-field>
+          <!-- Taux aide externe publique-->
+          <mat-form-field fxFlexOffset="5" fxFlex="8">
+            <div>
+              <div fxLayout="row">
+                <mat-label>%</mat-label>
+                <input matInput formControlName="tauxAideAgence" [value]="tauxMontantAideControl.value">
+              </div>
+              <mat-icon class="icon-info" matTooltip="Calculé par rapport au montant total opération = {{montantOperationInfo}} €" [matTooltipClass]="'tooltip-general'">info</mat-icon>
+            </div>
+          </mat-form-field>
+        </div>
+        <div>
+          <!-- Montnt aide externes publique -->
+          <div fxFlexAlign="center" fxFlex="20" class="align-label">
+            Aides externes publiques
+          </div>
+          <mat-form-field fxFlex="15">
+            <input matInput formControlName="aideExternePubliques" [value]="aidePubliqueControl.value">
+          </mat-form-field>
+
+          <!-- Taux aide externe publique-->
+          <mat-form-field fxFlexOffset="5" fxFlex="8">
+            <div fxLayout="row">
+              <input matInput formControlName="tauxAidePublic" [value]="tauxAidePubliqueControl.value">
+            </div>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <!-- Montnt aide externes privees -->
+          <div fxFlexAlign="center" fxFlex="20" class="align-label">
+            Aides externes privées
+          </div>
+          <mat-form-field fxFlex="15">
+            <input matInput formControlName="aideExternePrivees" [value]="aidePriveeControl.value">
+          </mat-form-field>
+          <!-- Taux aide externe privees-->
+          <mat-form-field fxFlexOffset="5" fxFlex="8">
+            <div fxLayout="row">
+              <input matInput formControlName="tauxAidePrivee" [value]="tauxAidePriveeControl.value">
+            </div>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <!--Autofinancement-->
+          <div fxFlexAlign="center" fxFlex="20" class="align-label">
+            Autofinancement
+          </div>
+          <mat-form-field fxFlex="15">
+            <input matInput formControlName="autofinancement" [value]="autoFinancementControl.value" [ngClass]="{'errorMontantAutoFinance': montantAutofinancement < 0}">
+          </mat-form-field>
+          <!-- Taux aide autofinancement-->
+          <mat-form-field fxFlexOffset="5" fxFlex="8">
+            <div fxLayout="row">
+              <input matInput formControlName="tauxAutofinancement" [value]="tauxAutoFinancementControl.value" [ngClass]="{'errorMontantAutoFinance': montantAutofinancement < 0}">
+            </div>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </form>
+
+</div>

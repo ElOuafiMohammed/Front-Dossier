@@ -1,0 +1,6 @@
+@import 'src/app/theme/sass/conf/_variables.scss';
+@import 'src/app/theme/components/siga-utils-style.scss';
+
+.disabled-col {
+  color: $siga-grey-disable;
+}

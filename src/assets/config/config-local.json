@@ -1,0 +1,4 @@
+{
+  "BACKEND": "http://localhost:9090/siga",
+  "FRONT_DISPOSITIF": "http://localhost:4200"
+}

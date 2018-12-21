@@ -1,0 +1,30 @@
+<div class="siga-position-bottom-page">
+  <siga-criteres-attribuer-aide [thematiques]="thematiques" [procedureDecisions]="procedureDecisions" [sessions]="sessions"
+    [phases]="phases" (searchEventEmitter)="fetchResultatRecherche($event)" [submitted]="submitted" (dateAttributionEventEmitter)="changeDateAttribution($event)"
+    [newAttributionDate]="newAttributionDate">
+  </siga-criteres-attribuer-aide>
+
+  <div *ngIf="searchDone">
+    <ba-card>
+      <div *ngIf="nombreTotalResultats !=0" fxLayout="row" fxFlex="100%">
+        <div fxFlex="25%" class="siga-position-ba-card">
+          <strong> {{nombreTotalSelectionnees}} </strong>/
+          <strong>{{nombreTotalResultats}}</strong>
+          dossier(s) sélectionné(s)
+        </div>
+      </div>
+
+      <mat-checkbox  fxFlex="5.5%" class="position-head-card siga-position-ba-card" *ngIf="dossiersDatas.length !== 0" [checked]='checkAll'
+        (change)="onCheckBoxChange($event)">Tout</mat-checkbox>
+      <div class="gdiv-attrib-aides-margin">
+        <ng2-smart-table class="table-spec" [settings]="settings" [source]="source"></ng2-smart-table>
+      </div>
+    </ba-card>
+
+
+    <button #button mat-raised-button class="siga-recherch-attribution" [disabled]="submitted || noCheckedDossier  || currentSession === null || dateAttributionNotExist"
+      (click)="attribuerAide()" (keydown.enter)="attribuer()" type="button" tabindex="7">
+      <span>Attribuer</span>
+    </button>
+  </div>
+</div>

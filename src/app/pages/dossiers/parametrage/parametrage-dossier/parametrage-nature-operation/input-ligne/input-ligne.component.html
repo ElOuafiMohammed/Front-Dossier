@@ -1,0 +1,14 @@
+<div *ngIf="rowData.disable" class="disabled-col">
+  <span>{{rowData.ligne}}</span>
+</div>
+<div *ngIf="!rowData.disable">
+  <span>{{rowData.ligne}}</span>
+  <mat-form-field>
+    <mat-select (selectionChange)="change(selected)" [(value)]="selected" tabindex="{{index_tab_ligne}}">
+      <mat-select-trigger>{{selected?.numero}}</mat-select-trigger>
+      <mat-option *ngFor="let ligne of lignes; trackBy: trackById" [value]="ligne">
+        <span> {{ ligne.numero }} </span>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

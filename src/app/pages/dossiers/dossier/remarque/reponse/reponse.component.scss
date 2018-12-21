@@ -1,0 +1,122 @@
+@import 'src/app/theme/components/siga-tableau-component.scss';
+@import 'src/app/theme/sass/conf/_variables.scss';
+
+.mat-form-field-infix {
+  display: block;
+  position: relative;
+  flex: auto;
+  min-width: 300px !important;
+  width: 700px !important;
+}
+
+input, mat-icon, textarea {
+  color : $siga-grey-saisi;
+  }
+
+  .mat-form-field {
+    display: inline-block;
+    position: relative;
+    text-align: left;
+    width: 100%;
+}
+  /deep/ .diplayUnderLine .mat-input-underline {
+    display: none;
+
+}
+.align-icon-nom-date {
+  margin-top: -24px !important;
+}
+
+.align-icon-nom {
+  margin-top: 15px !important
+}
+.align-icon-person{
+  margin-top:42px !important;
+}
+.style-nom-inspecteur{
+  margin-top:30px; font-size: 10px;
+}
+.style-date-remarque{
+  margin-top: -26px;
+}
+
+.align-icon-supr{
+  margin-top:15px;
+  color : $siga-grey-saisi;
+}
+
+@media only screen  and (min-width: 1366px) {
+  .align-icon-supr{
+    margin-top:20px;
+    color : $siga-grey-saisi;
+  }
+}
+
+.margin-response{
+  margin-left: 50px !important;
+}
+.no-design {
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;  
+  color:$siga-grey-saisi;
+  margin-top: 25px !important;
+}
+
+
+.siga-icon-trash-design-disabled {
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:default;
+  overflow: hidden;  
+  color:$siga-grey-saisi;
+  opacity: 0.38 !important;
+  margin-top:25px;
+}
+
+
+.siga-response-disabled {
+  color: rgba(0, 0, 0, 0.38)  !important;
+}
+.siga-align-nom-date{
+  height: 28px !important;
+  }
+
+  .siga-response-width {
+    flex:80% !important;
+  }
+  
+
+  .mat-input-element:disabled {
+    color:  rgba(0, 0, 0, 0.58);
+}
+
+.siga-response-content{
+  margin-left: 90px;
+   font-size: 12px;
+}
+
+.siga-nom-person-response{
+  max-width: 200px;
+  min-width: 100px;
+}
+
+.siga-date-response{
+  max-width: 115px;
+}
+
+.siga-response{
+  margin-top:-8px;    
+  font-size: 12px;
+}
+.siga-textarea-style{
+  background: $siga-grey-white !important;   
+  height: 60px !important;
+}
+
+/deep/ .siga-max-width-response {
+  max-width: 16px;
+}

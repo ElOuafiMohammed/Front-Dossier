@@ -1,0 +1,51 @@
+@import 'src/app/theme/components/siga-tableau-component.scss';
+@import 'src/app/theme/sass/conf/_variables.scss';
+:host /deep/ {
+
+  .table-spec { 
+    margin-bottom: 24px;
+    margin-left: 18px;
+    margin-top: 0px;
+    th,td {
+      border: none !important;
+      border-bottom: 1px solid rgba(102, 102, 102, .42) !important;
+    } 
+    th {
+      padding-top: 0px;
+    }
+    th:not(:last-child),
+    td:not(:last-child)  {
+      text-align: left;
+      line-height: 30px;
+     } 
+     
+  }
+}
+.attributifNum {
+  margin-right: 20px;
+}
+.infos {
+  margin-top: 15px;
+  margin-bottom: 18px;
+}
+
+// SIGA-3634 : suppression code IE
+// css que pour IE
+// @media screen and (-ms-high-contrast:active), (-ms-high-contrast:none) {
+//   .infos{
+//     color: $siga-grey-saisi;
+//     margin-top: 32px;
+//   }
+// }
+.label-infos{
+  margin-left: 24px;
+  color: $siga-grey-saisi
+}
+.margin {
+  margin-left: 24px;
+  margin-top: -15px;
+}
+.datesDebutFin {
+  margin-top: 25px;
+  color: #676767
+}

@@ -1,0 +1,118 @@
+@import 'src/app/theme/components/siga-tableau-component.scss';
+@import 'src/app/pages/dossiers/dossier/dossier.component.scss';
+@import 'src/app/theme/sass/conf/_variables.scss';
+.mat-form-field-bv-gesion {
+  width: 100%;
+}
+
+.label-bv-gestion {
+  color: $siga-grey-actif-a2;
+  width: 500%;
+  margin:0px;
+
+}
+
+.input-wrapper-bv-gestion {
+  display: block;
+  overflow: hidden;
+  width: 100%;
+}
+
+.siga-choix-themes-component {
+  margin-top: 20px;
+  margin-left: 25px;
+  margin-bottom: 10px
+}
+
+.siga-theme-card-container {
+  display: inline-block;
+}
+
+.recapAides {
+  display: block !important;
+}
+  
+.modReduction {
+  margin-top: -20px !important;
+  max-width: 100% !important;
+}
+
+.blocks {
+  display: inline-block; 
+   width: 150px;
+}
+
+.wrap{
+    width:300px;
+    margin-top: 10px;
+    color: $siga-grey-saisi;
+    margin-left: 20px; 
+}
+
+.mat-select-arrow-down, .mat-select-arrow-up   {
+  border-left: $mat-select-arrow-size solid transparent;
+  border-right: $mat-select-arrow-size solid transparent;
+  border-top: $mat-select-arrow-size solid;
+}
+
+.mat-select-arrow-up { border-top: 0px; }
+.mat-select-arrow {
+  margin-top:6px;
+}
+
+.disabled-bv-gestion {
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.titre-bg-gestion{
+  color: $siga-grey-actif-a2;
+  width: 95px;
+  margin-top: 20px;
+  margin-left: 5px;
+}
+
+.block-bv {
+  color: $siga-grey-saisi;
+  margin-left: 20px;
+  margin-top: -6px;
+}
+
+.container {
+  position: relative;
+  display: flex;
+  flex-flow: row wrap;
+  padding-top: 0;
+  padding-left: 35px;
+  margin-top: -21px;
+}
+
+.content {
+  padding: 20px;
+  padding-top: 3px;
+  color: $siga-grey-saisi;
+  margin-top: -6px !important;
+  width: 100% !important;
+
+
+}
+
+.little-margin {
+  margin-top: -22px !important;
+  margin-left: 5px;
+}
+
+// Decale vers le bas de 11px en cas d'erreur pour afficher le message (-21px -11px = 10px) 
+.container-error {
+  margin-top: -10px !important;
+}
+
+// Gere la taille en large de la liste déroulante pour pouvoir afficher toutes les bv de gestion
+/deep/ {
+  .mat-autocomplete-panel.mat-autocomplete-visible {
+    min-width: 450px;
+    width: 100%;
+  }
+}
+  
+  

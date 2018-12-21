@@ -1,0 +1,22 @@
+/* Classe pour les tooltip generaux */
+@import 'src/app/theme/sass/conf/_variables.scss';
+
+/* Tooltip général */
+/deep/ .tooltip-general {
+  background-color: $siga-green-content;
+  border-radius: 10px !important;
+  font-size: 12px !important;
+  margin: 3px !important;
+}
+
+/* Tooltip d'erreur */
+/deep/ .tooltip-error {
+  background-color: $siga-red-error;
+  border-radius: 10px !important;
+  font-size: 12px !important;
+  margin: 3px !important;
+}
+
+/deep/ .primary-tooltip {
+  background-color: red !important;
+}

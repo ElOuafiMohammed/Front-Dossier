@@ -1,0 +1,30 @@
+<div fxLayout="row" fxLayoutAlign="start center">
+  <form novalidate [formGroup]="formNatureOperation" (keydown.enter)="$event.preventDefault()">
+    <mat-form-field>
+      <input autocomplete="off" tabindex="{{index_tab_dateFinValidite}}" matInput [min]="rowData.dateDebutValidite" [matDatepicker]="dp"
+        formControlName="dateFinValidite" (change)="setControlDate()" class="dfvClass">
+      <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+      <mat-datepicker #dp></mat-datepicker>
+      <mat-error *ngIf="this.dateFinValiditeControl.hasError('dateLength') ">
+        <strong>
+          {{'messages.erreurDateFormat' | translate}}
+        </strong>
+      </mat-error>
+      <mat-error *ngIf="this.dateFinValiditeControl.hasError('wrongFormat') ">
+        <strong>
+          {{'messages.erreurDateFormat' | translate}}
+        </strong>
+      </mat-error>
+      <mat-error *ngIf="this.dateFinValiditeControl.hasError('matDatepickerParse') ">
+        <strong>
+          {{'messages.erreurDateValid' | translate}}
+        </strong>
+      </mat-error>
+      <mat-error *ngIf="this.dateFinValiditeControl.hasError('matDatepickerMin') ">
+        <strong>
+          {{'messages.erreurLimitInfDateDebutValidite' | translate}}
+        </strong>
+      </mat-error>
+    </mat-form-field>
+  </form>
+</div>

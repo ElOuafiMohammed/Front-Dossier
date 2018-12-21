@@ -1,0 +1,44 @@
+<div class="gvalider-dossier-padding">
+  <siga-criteres-gerer-previsionnelle [sessions]="sessions" [thematiques]="thematiques" [phases]="phases" [priorites]="priorites"
+    [submitted]="submitted" (searchEventEmitter)="search($event)">
+  </siga-criteres-gerer-previsionnelle>
+
+  <div *ngIf="searchDone">
+    <ba-card>
+      <div fxLayout="row" fxFlex="100%" *ngIf="dossiersDatas && dossiersDatas.length > 0">
+        <div fxFlex="25%" class="margin">
+          <strong>{{dossiersDatas?.length}}</strong>
+          dossier(s) trouvé(s)
+        </div>
+        <div fxFlex="74.5%">
+        </div>
+      </div>
+      <div class="gdiv-gere-prev-margin">
+        <ng2-smart-table class="table-spec" [settings]="settings" [source]="source"></ng2-smart-table>
+      </div>
+      <!-- Total aides dossiers -->
+      <div class="siga-total-montant">
+        <div *ngIf="nombreTotalResultats !=0" fxLayout="row" fxFlex="100%">
+          <div fxFlex="20%">
+          </div>
+          <div fxFlex="60%" class="siga-position-total-libelle">
+            <strong>Total aides :</strong>
+          </div>
+          <div fxFlex="20%" class="util-right siga-position-total">
+            <strong>{{ this.formatMonetairePipe.transform(this.summeTotalList[0].totalMontant) }} €</strong>
+          </div>
+        </div>
+      </div>
+    </ba-card>
+    <!-- Enregistrer-->
+    <div fxLayout="row" fxLayoutAlign="space-around end">
+      <div fxFlex="80">
+      </div>
+      <button id="saveButton" #button mat-raised-button [disabled]="submitted || errorOnYear" (click)="submit()"
+        (keydown.enter)="submit()" type="button" tabindex="7">
+        <em [ngClass]="submitted || errorOnYear ?'ion-checkmark siga-form-invalid':'ion-checkmark  siga-form-confirm'"></em>
+        <span>Enregistrer</span>
+      </button>
+    </div>
+  </div>
+</div>

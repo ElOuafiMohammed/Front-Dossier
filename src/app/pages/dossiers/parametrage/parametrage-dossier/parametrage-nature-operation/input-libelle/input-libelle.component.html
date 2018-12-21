@@ -1,0 +1,7 @@
+<div fxLayout="row">
+  <form novalidate [formGroup]="formNatureOperation" (keydown.enter)="$event.preventDefault()">
+    <mat-form-field class="libelleClass" tabindex="{{index_tab_libelle}}">
+      <textarea #myTextArea class="siga-hidden" matInput formControlName="libelle" (keyup)="onBlur()"></textarea>
+    </mat-form-field>
+  </form>
+</div>

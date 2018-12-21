@@ -1,0 +1,4 @@
+<div class="nounderline" class="siga-intitule"  matTooltip="{{rowData?.intitule |uppercase}}" [matTooltipPosition]="'left'">
+    {{intituleTrunc | uppercase}}
+    <span *ngIf="showTooltip">...</span>
+   </div>

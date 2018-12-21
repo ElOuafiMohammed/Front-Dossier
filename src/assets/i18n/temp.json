@@ -1,0 +1,56 @@
+{
+  "general": {
+    "home": "Dossiers",
+    "menu": {
+      "dossiers": {
+        "title": "Dossiers",
+        "new": "Créer dossier",
+        "accueil": "Accueil",
+        "cancel": "Annuler",
+        "confirm": "Confirmer",
+        "popupCanelChange": "Des données ont été saisies. Etes-vous sûr de vouloir quitter cet écran ?"
+      }
+    },
+    "language": {
+      "french": "Français",
+      "english": "Anglais"
+    },
+    "created_with": "Créé avec"
+  },
+  "dossier": {
+    "create": {
+      "labels": {},
+      "errors": {
+        "selectChoice": "Veuillez sélectionner un des choix parmi les options possibles.",
+        "errorFormat": "Format incorrect : 9999999A"
+      },
+      "placeholders": {
+        "thematique": "Thématique",
+        "departement": "Département",
+        "intitule": "Intitulé",
+        "beneficiaire": "Bénéficiaire"
+      }
+    },
+    "update": {
+      "labels": {
+        "buttonRefuse": "Refuser le dossier",
+        "buttonMotif": "Motif de refus"
+      },
+      "errors": {},
+      "placeholders": {}
+    },
+    "refuse": {
+      "labels": {
+        "titleRefuse": "Refuser le dossier",
+        "titleMotif": "Motif de refus du dossier"
+      },
+      "errors": {
+        "selectChoice": "Veuillez sélectionner un des choix parmi les options possibles."
+      },
+      "placeholders": {
+        "nature": "Nature",
+        "motif": "Motif"
+      }
+    }
+  }
+}

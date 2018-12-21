@@ -1,0 +1,24 @@
+<mat-form-field [formGroup]="formRoleCorrespondant" class="full-width" fxFlex="10">
+  <div fxLayout="row">
+    <input id="selectRoleCorrespondant" class="role" matInput aria-label="Role" [matAutocomplete]="roleAutoComplete"
+      formControlName="roleCorrespondant" tabindex="100005">
+
+    <div class="mat-select-arrow-wrapper">
+      <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !roleAutoComplete.isOpen, 'mat-select-arrow-up': roleAutoComplete.isOpen}"></div>
+    </div>
+  </div>
+  <button id="buttonCloseRole" mat-button class="space-close" *ngIf="roleCorrespondantControl.value" matSuffix
+    mat-icon-button aria-label="Clear" (click)="roleCorrespondantControl.setValue(null); roleCorrespondantControl.reset(); ">
+    <mat-icon>close</mat-icon>
+  </button>
+  <mat-error *ngIf="!roleCorrespondantControl.hasError('required') && roleCorrespondantControl.touched && roleCorrespondantControl.hasError(roleValidatorKey)">
+    <strong>{{'messages.erreurChoixOption' | translate}} </strong>
+  </mat-error>
+</mat-form-field>
+
+<mat-autocomplete id="autoCompleteRole" #roleAutoComplete="matAutocomplete" [autoActiveFirstOption]="true"
+  [displayWith]="displayRole" class="listRole">
+  <mat-option *ngFor="let role of filteredRole  | async; trackBy: trackById" [value]="role">
+    {{role.libelle}}
+  </mat-option>
+</mat-autocomplete>

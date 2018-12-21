@@ -1,0 +1,34 @@
+<critere-card-nature-operation [lignes]="lignes" [thematiques]="thematiques" (searchEventEmitter)="fetchResultatRecherche($event)">
+</critere-card-nature-operation>
+<div>
+  <ba-card>
+    <div class="block">
+      <button [disabled]="!canAdd" class="siga-bouton siga-form-addLine btn btn-default" type="button" (click)="onAddNatureOperation()">
+        <em [ngClass]="(canAdd)?'ion-ios-plus-outline siga-form-confirm':'ion-ios-plus-outline siga-form-invalid'"
+          class="espacement siga-taille-image-plus"></em>
+        <span>Ajouter une nature</span>
+      </button>
+    </div>
+    <mat-paginator [length]="nbTotalElements" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOption" [pageIndex]="indexCurrentPage"
+      (page)="getNumberPage($event)">
+    </mat-paginator>
+
+    <ng2-smart-table class="table-spec siga-marge-tableau" [settings]="settings" [source]="source"></ng2-smart-table>
+
+  </ba-card>
+  <!-- Quitter || Enregistrer -->
+  <div fxLayout="row" fxLayoutAlign="space-around end">
+    <div fxFlex="80">
+
+    </div>
+    <button #button mat-raised-button (click)="close()" type="button" fxFlex="12" tabindex="350000">
+      <em class="ion-close siga-form-cancel"></em> &nbsp;Quitter
+    </button>
+    <div fxFlex="12"> </div>
+    <button #button mat-raised-button [disabled]="!canSubmit || !canAdd" tabindex="350001" type="submit"
+      (keydown.enter)="onSubmit()" (click)="onSubmit()" fxFlex="12">
+      <em [ngClass]="(canSubmit)?'ion-checkmark siga-form-confirm':'ion-checkmark siga-form-invalid'"></em>
+      &nbsp;Enregistrer
+    </button>
+  </div>
+</div>

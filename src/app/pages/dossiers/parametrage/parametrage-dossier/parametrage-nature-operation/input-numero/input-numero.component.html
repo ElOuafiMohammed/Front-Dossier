@@ -1,0 +1,16 @@
+<div *ngIf="rowData.disable" class="disabled-col">
+  <span>{{value}}</span>
+</div>
+
+<div fxLayout="row" fxLayoutAlign="end center" *ngIf="!rowData.disable">
+  <form novalidate [formGroup]="formNatureOperation" (keydown.enter)="$event.preventDefault()">
+    <mat-form-field tabindex="{{index_tab_numero}}">
+      <input matInput maxlength="2" formControlName="numero" (input)="onBlur()">
+      <mat-hint *ngIf="numeroControl.touched && numeroControl.hasError('pattern')" class="siga-error">
+        <strong>
+          {{'messages.numNatureOperation' | translate}}
+        </strong>
+      </mat-hint>
+    </mat-form-field>
+  </form>
+</div>

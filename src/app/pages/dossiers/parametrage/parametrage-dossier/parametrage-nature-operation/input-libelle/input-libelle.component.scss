@@ -1,0 +1,14 @@
+@import 'src/app/theme/sass/conf/_variables.scss';
+
+.libelleClass{
+  width: 350px !important;
+  color : $siga-grey-saisi;
+}
+textarea {
+  resize: none;
+  overflow: auto;
+}
+
+.siga-hidden {
+  overflow:hidden
+}

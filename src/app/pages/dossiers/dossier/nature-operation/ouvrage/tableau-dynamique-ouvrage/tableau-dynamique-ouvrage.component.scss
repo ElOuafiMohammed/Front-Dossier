@@ -1,0 +1,167 @@
+@import 'src/app/theme/sass/conf/_variables.scss';
+@import 'src/app/theme/components/siga-utils-style.scss';
+.trashColor{
+  color:$siga-grey-saisi;
+}
+.mat-table {
+  width: 80%;
+}
+.text{
+  color: $siga-grey-saisi;
+  padding-left: 20px;
+  margin-top: 19px
+}
+
+.alignTableLeft{
+  padding-left:20px;
+}
+
+.floatcss{
+  float:right;
+}
+
+.siga-taille-image-plus{
+  font-size: 1rem;
+}
+
+.siga-form-confirm {
+  color:  $siga-green-content;
+  display: inline-block;
+  -webkit-text-stroke: 0.2px  $siga-green-content;
+}
+
+.cdk-column-numero .mat-column-numero{
+  width: 70px;
+}
+
+.customWidthClass{
+  flex: 0 0 40px;
+  padding-left: 0 !important; 
+}
+
+.customWidthType{
+  flex: 0 0 70px;
+}
+
+.customWidthNumero{
+  flex: 0 0 100px;
+}
+
+.customIntitule{
+  flex: 1 0 240px;
+}
+
+.customEtat{
+  flex: 0 0 100px;
+  margin-right: 80px;
+}
+
+.css-mat{
+  height: 25px !important;
+}
+
+.mat-form-field{
+  text-align: left;
+}
+
+.disabledIntituleTypeOuvrage{
+  color: $siga-grey-saisi;
+  
+}
+.disabledIntitule{
+  color: $siga-grey-saisi;
+  flex: 1 0 240px;
+}
+.disabledEtatOuvrage{
+  color: $siga-grey-saisi;
+  flex: 0 0 100px;
+  margin-right: 80px;
+}
+
+.mat-header-row, .mat-row {
+  padding: 0px;
+  min-height: 35px;
+}
+
+.siga-form-addLine{ 
+  margin: 1.1em 3vw 0.3em 1em;
+  color:  $siga-green-content !important;
+  border: 1px solid  $siga-green-content !important;
+  padding: .3em;
+  width: 187px;
+  em {
+    color:  $siga-green-content;
+  }
+  
+  &.btn.btn-default[disabled] {
+    color: rgba($color: $siga-grey-saisi, $alpha: .42) !important;
+    border: 1px solid rgba($color: $siga-grey-saisi, $alpha: .42) !important;
+  
+    em {
+      color: rgba($color:$siga-grey-saisi, $alpha: .42);
+    }
+  }
+  }
+
+  /deep/ {
+    .width-input-select-ouvrage{
+      width: 70px; 
+      max-width: 75px;
+    }
+    .mat-select-panel {
+      min-width: 112px;
+      max-width: 800px;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-top: 0;
+      padding-bottom: 0;
+      max-height: 256px;
+      font-size: 1.1em !important;
+    
+    }
+    }
+
+     .siga-icon{
+      cursor: pointer;
+      visibility: visible;
+      font-size: 1.2em;
+      padding-left: 14px !important;
+    }
+    
+    .siga-tooltiptext {
+      visibility: hidden;
+      width: 80px;
+      font-size: 70%;
+      background-color: black;
+      color: $siga-grey-white;
+      text-align: center;
+      border-radius: 6px;
+      height: 22px;
+    
+      /* Position the siga-tooltip */
+      position: absolute;
+      z-index: 1 !important;
+      margin-left: -40px; 
+      margin-top: 18px;
+    }
+
+    
+    .siga-tooltip:hover .siga-tooltiptext {
+      visibility: visible;
+    }
+    .ion-checkmark {
+      color: $siga-green-content;
+    }  
+    .disableButton {
+      pointer-events: none !important;
+      opacity: .4 !important;
+    }
+
+    .content1 {
+      margin-top: 20px;
+    }
+
+    .content2 {
+      margin-top: 10px;
+    }
+    

@@ -1,0 +1,224 @@
+<mat-card class="util-padding">
+
+  <div class="siga-spacing-bottom"></div>
+
+  <form novalidate (ngSubmit)="onSubmit(true)" [formGroup]="formCritere" (keydown.enter)="$event.preventDefault()">
+    <div fxLayout="column">
+
+      <div fxLayout="row" fxLayoutAlign="space-around  stretch">
+
+        <!-- choice Thématique -->
+        <mat-form-field fxFlex="9">
+          <div fxLayout="row">
+            <input matInput placeholder="Thématique" [matAutocomplete]="thematicAutoComplete" formControlName="thematique"
+              tabindex="1">
+            <mat-autocomplete class="thematiqueOptionsClass" #thematicAutoComplete="matAutocomplete" [displayWith]="displayThematique"
+              [autoActiveFirstOption]="true">
+              <mat-option *ngFor="let thematique of filteredThematiques | async; trackBy: trackById" [value]="thematique">
+                <span> {{thematique.code}} </span>
+                <span> - </span>
+                <span> {{thematique.libelle}} </span>
+              </mat-option>
+            </mat-autocomplete>
+            <div class="mat-select-arrow-wrapper">
+              <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !thematicAutoComplete.isOpen, 'mat-select-arrow-up': thematicAutoComplete.isOpen}"></div>
+            </div>
+          </div>
+          <button class="space-close" mat-button *ngIf="thematiqueControl.value" matSuffix mat-icon-button aria-label="Clear"
+            (click)="thematiqueControl.setValue('')">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-error *ngIf="!thematiqueControl.hasError('required') && thematiqueControl.touched && thematiqueControl.hasError('thematiqueNotFound')">
+            <strong>
+              {{'messages.erreurChoixOption' | translate}}
+            </strong>
+          </mat-error>
+        </mat-form-field>
+
+
+        <!-- Domaine  -->
+        <mat-form-field fxFlex="7" class="temp-fix-error-display">
+          <div fxLayout="row">
+            <input matInput placeholder="Domaine" [matAutocomplete]="domaineAutoComplete" formControlName="domaine"
+              tabindex="5">
+            <mat-autocomplete #domaineAutoComplete="matAutocomplete" [displayWith]="displayDomaine"
+              [autoActiveFirstOption]="true">
+              <mat-option *ngFor="let domaine of filteredDomaines | async; trackBy: trackById" [value]="domaine">
+                <span> {{domaine.libelle}} </span>
+              </mat-option>
+            </mat-autocomplete>
+            <div class="mat-select-arrow-wrapper">
+              <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !domaineAutoComplete.isOpen, 'mat-select-arrow-up': domaineAutoComplete.isOpen}"></div>
+            </div>
+          </div>
+          <button class="space-close" mat-button *ngIf="domaineControl.value" matSuffix mat-icon-button aria-label="Clear"
+            (click)="domaineControl.setValue('')">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-error *ngIf="!domaineControl.hasError('required') && domaineControl.touched && domaineControl.hasError(domaineValidatorKey)">
+            <strong>
+              {{'messages.erreurSelection' | translate}}
+            </strong>
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Multiple choice of Nautre d'opération -->
+        <div fxFlex="50">
+          <div fxLayout="column" fxLayoutAlign=" stretch" tabindex="1002" class="siga-choix-themes-component dispfinan">
+            <mat-select id="natureOperation" placeholder="+ natures d'opérations" formControlName="nature"
+              [compareWith]="compareListElement" class="siga-theme-dropdown" [attr.disabled]="true" multiple>
+              <mat-select-trigger class="siga-themes-input-text">
+                {{natureControl.value != null && natureControl.value.length > 1 ?
+                formCritere.get('nature').value.length
+                + " natures d'opérations sélectionnées" : ''}} {{natureControl.value != null &&
+                natureControl.value.length
+                == 1 ? " 1 nature d'opération sélectionnée" : ''}}
+              </mat-select-trigger>
+              <mat-option *ngFor="let nature of natures; trackBy: trackById" [value]="nature">
+                {{ nature.ligne }}.{{ nature.numero }} - {{ nature.libelle }}
+              </mat-option>
+            </mat-select>
+            <div *ngIf="natureControl.value != null && natureControl.value.length > 0">
+              <div *ngFor="let nature of natureControl.value; trackBy: trackById" class="siga-theme-card-container">
+                <nature-operation-card [listValeur]="nature" [typeCard]="'nature'" [viewRight]="viewRight"
+                  (deleteEventEmitter)="onDeleteEventNature($event)"></nature-operation-card>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Priorité -->
+        <mat-form-field fxFlex="7" class="temp-fix-error-display">
+          <div fxLayout="row">
+            <input matInput placeholder="Priorité" [matAutocomplete]="niveauPrioriteAutoComplete" formControlName="priorite"
+              tabindex="4">
+            <div class="mat-select-arrow-wrapper">
+              <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !niveauPrioriteAutoComplete.isOpen, 'mat-select-arrow-up': niveauPrioriteAutoComplete.isOpen}"></div>
+            </div>
+          </div>
+          <button class="space-close" mat-button *ngIf="prioriteControl.value " matSuffix mat-icon-button aria-label="Clear"
+            (click)="prioriteControl.setValue(''); prioriteControl.markAsDirty();">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-error *ngIf="!prioriteControl.hasError('required') && prioriteControl.touched && prioriteControl.hasError(prioriteValidatorKey)">
+            <strong>
+              {{'messages.erreurSelection' | translate}}
+            </strong>
+          </mat-error>
+
+          <mat-autocomplete class="prioriteOptionsClass" #niveauPrioriteAutoComplete="matAutocomplete" [displayWith]="displayNiveauPriorite"
+            [autoActiveFirstOption]="true">
+            <mat-option *ngFor="let niveauPriorite of filteredPriorites | async; trackBy: trackById" [value]="niveauPriorite">
+              <span> {{niveauPriorite.code}}</span>
+              <span>-</span>
+              <span> {{niveauPriorite.libelle}}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+
+
+      </div>
+
+
+      <!-- Valider ou Devalider -->
+      <div fxLayout="row" fxLayoutAlign="space-around center">
+        <mat-radio-group fxFlexOffset="1.5" fxFlex="35" formControlName="choix" (change)="onValidationSelectOption($event)">
+          <span class="validation-label">
+            Dossiers à :
+          </span>
+          <mat-radio-button id="affecter" class="mat-radio-button" [value]="'affecter'">Affecter
+          </mat-radio-button>
+          <mat-radio-button id="retirer" class="mat-radio-button" [value]="'retirer'">Retirer
+          </mat-radio-button>
+        </mat-radio-group>
+
+        <!-- Session de décision -->
+        <span class="procedure-label">
+          Session de décision :
+        </span>
+        <mat-form-field fxFlex="13.5" class="temp-fix-error-display">
+          <div fxLayout="row">
+
+            <input matInput placeholder="Procédure décision *" [matAutocomplete]="procedureDecisionAutoComplete"
+              formControlName="procedureDecision" tabindex="2">
+            <div class="mat-select-arrow-wrapper">
+              <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !procedureDecisionAutoComplete.isOpen, 'mat-select-arrow-up': procedureDecisionAutoComplete.isOpen}"></div>
+            </div>
+          </div>
+          <button class="space-close" mat-button *ngIf="procedureDecisionsControl.value" matSuffix mat-icon-button
+            aria-label="Clear" (click)="clearDisplayedDataProcedure()">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-error *ngIf="!procedureDecisionsControl.hasError('required') && procedureDecisionsControl.touched && procedureDecisionsControl.hasError(procedureValidatorKey)">
+            <strong>
+              {{'messages.erreurSelection' | translate}}
+            </strong>
+          </mat-error>
+          <mat-error *ngIf="procedureDecisionsControl.hasError('required')">
+            <strong>
+              {{'messages.recherche' | translate}}
+            </strong>
+          </mat-error>
+          <mat-hint *ngIf="procedureDecisionsControl.value === ''" class="colorText">
+            <strong>
+              {{'messages.recherche' | translate}}
+            </strong>
+          </mat-hint>
+
+          <mat-autocomplete (optionSelected)="onSessionSelect($event)" #procedureDecisionAutoComplete="matAutocomplete"
+            [displayWith]="displayProcedureDecision" [autoActiveFirstOption]="true">
+            <mat-option *ngFor="let procedureDecision of filteredProcedures | async; trackBy: trackById" [value]="procedureDecision">
+              <span> {{procedureDecision.code}}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <!-- Année - n° -->
+        <mat-form-field fxFlex="8" class="margin">
+          <div fxLayout="row">
+            <input matInput placeholder="Année - n°" [matAutocomplete]="sessionDecisionAutoComplete" formControlName="session"
+              tabindex="12">
+            <div class="mat-select-arrow-wrapper">
+              <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !sessionDecisionAutoComplete.isOpen, 'mat-select-arrow-up': sessionDecisionAutoComplete.isOpen}"></div>
+            </div>
+          </div>
+          <button class="space-close" mat-button *ngIf="sessionControl.value" matSuffix mat-icon-button aria-label="Clear"
+            (click)="clearDisplayedDataSession()">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-error *ngIf="!sessionControl.hasError('required') && sessionControl.touched && sessionControl.hasError(sessionValidatorKey)">
+            <strong>
+              {{'messages.erreurSelection' | translate}}
+            </strong>
+          </mat-error>
+          <mat-error *ngIf="sessionControl.hasError('required')">
+            <strong>
+              {{'messages.recherche' | translate}}
+            </strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-autocomplete (optionSelected)="onAnneeSelect($event)" class="sessionDecisionOptionsClass"
+          #sessionDecisionAutoComplete="matAutocomplete" [displayWith]="displaySessionDecision" [autoActiveFirstOption]="true">
+          <mat-option *ngFor="let sessionDecision of filteredSessions | async; trackBy: trackById" [value]="sessionDecision">
+            <span> {{sessionDecision.annee}}</span>
+            <span>-</span>
+            <span> {{sessionDecision.numero}} </span>
+          </mat-option>
+        </mat-autocomplete>
+
+        <!-- Launch search -->
+        <span fxFlex="25" fxLayoutAlign="space-around center">
+          <div fxLayout="row">
+            <button mat-raised-button [disabled]="submitted || !formCritere.valid || message != null" type="submit"
+              fxFlex="30" tabindex="6" (keydown.enter)="onSubmit(true)">
+              <em class="ion-search" [ngClass]="{'siga-form-confirm': formCritere.valid }"></em>
+            </button>
+          </div>
+        </span>
+      </div>
+    </div>
+  </form>
+  <div class="siga-spacing-bottom"></div>
+</mat-card>
+<div class="siga-spacing-bottom"></div>

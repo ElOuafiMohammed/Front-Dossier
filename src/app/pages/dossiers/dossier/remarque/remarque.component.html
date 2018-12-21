@@ -1,0 +1,80 @@
+<div fxLayout="row" class="siga-remark-content">
+  <div fxLayout="column" fxFlex="100">
+    <div fxLayout="row" class="siga-align-nom-date">
+      <mat-form-field class="diplayUnderLine siga-nom-person-remark">
+        <input matInput [formControl]="nomPrenomControl" autocomplete="off" [ngModel]="nomInspecteur">
+      </mat-form-field>
+      <!----------------------------------------------------------------------------------------->
+
+      <!-------------------------------------US 3499 add Dest------------------------------------>
+      <mat-form-field fxFlex="20">
+        <div fxLayout="row">
+          <input id="recipId"  [ngClass]="{'siga-error': !recipientControl.hasError('required') && recipientControl.touched && recipientControl.hasError('responsableTechNotFound')}"  required matInput placeholder="à destinataire" [matAutocomplete]="recipientAutoComplete"
+          [formControl]="recipientControl" tabindex="4" >
+          <div class="mat-select-arrow-wrapper">
+            <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !recipientAutoComplete.isOpen, 'mat-select-arrow-up': recipientAutoComplete.isOpen}"></div>
+          </div>
+        </div>
+        <button mat-button *ngIf="recipientControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="removeRecipient()">
+          <mat-icon>close</mat-icon>
+        </button>
+         <mat-autocomplete #recipientAutoComplete="matAutocomplete" [displayWith]="displayRecipient"
+          [autoActiveFirstOption]="true">
+          <mat-option *ngFor="let recip of filteredResponsablesTech| async; trackBy: trackById" [value]="recip">
+            <span> {{recip?.prenom}} </span>
+            <span> {{recip?.nom}} </span>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <div class="siga-separator"></div>
+      <!----------------------------------------------------------------------------------------->
+      <mat-form-field class="diplayUnderLine siga-date-remark" >
+       <div fxLayout="row">
+        <mat-label  class="siga-label-le">le</mat-label>
+        <input matInput [formControl]="dateDujourControl" autocomplete="off" [ngModel]="dateDuJourAffiche">
+      </div>
+      </mat-form-field>
+      <div class="siga-separator"></div>
+      <mat-form-field class="diplayUnderLine siga-state-remark">
+        <mat-select (selectionChange)="change(etat)" [(value)]="etat">
+          <mat-option *ngFor="let etat of etats; trackBy: trackById" [value]="etat">
+            {{etat}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+    <div fxLayout="row">
+      <div fxFlex="100">
+        <mat-form-field class="diplayUnderLine">
+          <textarea id="remarqueText" [ngClass]="remarkHasResponse? 'siga-textarea-background siga-remark-disabled': 'siga-textarea-background' "
+            matInput (blur)="onBlurRemarque();" [formControl]="remarqueControl" remarque="off" [ngModel]="remarque"></textarea>
+            
+        </mat-form-field>
+      </div>
+      <div fxFlex="2">
+        <button (click)="deleteRemarque()" [ngClass]="remarkHasResponse || disableButtonSupr?  'sam-tooltip sam-icon ion-trash-a siga-icon-trash-design-disabled' : 'sam-tooltip sam-icon ion-trash-a siga-icon-trash-design'"
+          [disabled]="remarkHasResponse || disableButtonSupr">
+          <span [hidden]="remarkHasResponse || disableButtonSupr" class="sam-tooltiptext">Supprimer</span>
+        </button>
+      </div>
+    </div>
+    <!--------------------------------------------------------->
+    <!-------------US 3499 : Recipient is required------------->
+    <div fxFlex="3" *ngIf="recipientIsRequired">
+        <span style="text-align: left; color:#f44336" >
+            <strong>
+                {{'messages.remarque.destinataire' | translate}}
+            </strong>
+          </span>
+    </div>
+        <!--------------------------------------------------------->
+    <div fxFlex="3" class="siga-margin-repondre  siga-background-repondre">
+       <button id="response" mat-button [disabled]="remarkHasResponse || courantPhase ==='T40' || recipientIsRequired" (click)="addResponse()">Répondre</button>
+    </div>
+  </div>
+
+</div>
+<!-- US 530 Add Response -->
+<div #remarqueParent>
+</div>

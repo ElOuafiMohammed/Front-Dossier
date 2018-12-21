@@ -1,0 +1,18 @@
+<!-- TAB Masse Eau -->
+<div class="content">
+
+  <div fxLayout="column" fxFlex="100" class="siga-marge-tableau space-around specifique" [ngClass]="{ disableTable : viewRight|| !currentOperation.localisationPertinente || viewAdministratif }">
+    <span class="text">Masses d'eau</span>
+    <div class="block">
+      <button id="ajouterMasseEau" [disabled]="!canAddNewMasseEau || !disableIsRefused || !currentOperation.localisationPertinente || viewAdministratif"
+        type="button" class="siga-bouton siga-form-addLine btn btn-default" (click)="onAddLine()">
+        <em class="espacement ion-ios-plus-outline siga-taille-image-plus"></em>
+        <span>Ajouter masse d'eau</span>
+      </button>
+    </div>
+    <ng2-smart-table class="table-spec" [settings]="settings" [source]="source" [ngStyle]="{ 'font-size': myCustomSize()}"></ng2-smart-table>
+    <mat-error *ngIf="messageToDisplay">
+      {{messageToDisplay}}
+    </mat-error>
+  </div>
+</div>

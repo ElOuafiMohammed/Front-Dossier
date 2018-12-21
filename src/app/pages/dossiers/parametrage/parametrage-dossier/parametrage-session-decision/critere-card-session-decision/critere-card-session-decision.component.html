@@ -1,0 +1,81 @@
+<mat-card class="util-padding">
+  <div class="siga-spacing-bottom"></div>
+  <form novalidate (ngSubmit)="onSubmit()" [formGroup]="formCritere" (keydown.enter)="$event.preventDefault()">
+    <div fxLayout="column" fxLayoutAlign="space-between stretch" class="rechercheButton">
+
+      <div fxLayout="row" fxLayoutAlign="space-around center">
+        <!-- Type de procédure -->
+        <mat-form-field fxFlex="24" class="thema">
+          <div fxLayout="row">
+            <input matInput placeholder="Type de procédure" [matAutocomplete]="typeProcAutoComplete" formControlName="type"
+              tabindex="1">
+            <div class="mat-select-arrow-wrapper">
+              <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !typeProcAutoComplete.isOpen, 'mat-select-arrow-up': typeProcAutoComplete.isOpen}"></div>
+            </div>
+          </div>
+          <button class="space-close" mat-button *ngIf="procedureDecisionControl.value" matSuffix mat-icon-button
+            aria-label="Clear" (click)="procedureDecisionControl.setValue('')">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-error *ngIf="procedureDecisionControl.touched && procedureDecisionControl.hasError('procedureDecisionNotFound')">
+            <strong>
+              {{'messages.erreurChoixOption' | translate}}
+            </strong>
+          </mat-error>
+          <mat-autocomplete class="thematiqueOptionsClass" #typeProcAutoComplete="matAutocomplete" [displayWith]="displayType"
+            [autoActiveFirstOption]="true">
+            <mat-option *ngFor="let procedureDecision of filteredProcedures | async; trackBy: trackById" [value]="procedureDecision">
+              <span> {{procedureDecision.code}} </span>
+              <span> - </span>
+              <span> {{procedureDecision.libelle}} </span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <!-- Année -->
+        <mat-form-field fxFlex="10" class="temp-fix-error-display">
+          <input matInput autocomplete="off" placeholder="Année" minlength="4" maxlength="4" formControlName="annee"
+            tabindex="2">
+          <mat-error *ngIf="anneeControl.hasError('matDatepickerMax')">
+            <strong>
+              {{'messages.previsionnel.erreurLimitSupAnnee' | translate}}
+            </strong>
+          </mat-error>
+          <mat-error *ngIf="anneeControl.hasError('pattern')" class="message_error">
+            <strong>
+              {{'messages.erreurFormatNumeroDP' | translate}}
+            </strong>
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Numéro -->
+        <mat-form-field fxFlex="8">
+          <input matInput placeholder="Numéro" autocomplete="off" formControlName="numero" tabindex="3" maxlength="2">
+          <button mat-button *ngIf="numeroControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="numeroControl.setValue('')">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-error *ngIf="numeroControl.touched && numeroControl.hasError('pattern')">
+            <strong>
+              {{'messages.numSessionDecision' | translate}}
+            </strong>
+          </mat-error>
+        </mat-form-field>
+
+        <div fxLayout="row" fxLayoutAlign="space-around center">
+          <!-- Launch search -->
+          <span fxFlex="35" fxLayoutAlign="space-around center">
+            <div fxLayout="row">
+              <button mat-raised-button [disabled]="!formCritere.valid " type="submit" fxFlex="30" tabindex="6"
+                (keydown.enter)="onSubmit()">
+                <em class="ion-search" [ngClass]="{'siga-form-confirm': formCritere.valid }"></em>
+              </button>
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="siga-spacing-bottom"></div>
+</mat-card>
+<div class="siga-spacing-bottom"></div>

@@ -1,0 +1,112 @@
+<div id="recherche_beneficiaire">
+  <div fxLayoutAlign="space-between">
+    <p mat-dialog-title>{{data.title}}</p>
+    <button mat-button type="button" matSuffix mat-icon-button aria-label="Clear" (click)="onLeave()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div mat-dialog-content class="critere-font">
+    <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column" fxLayoutAlign="space-between"
+      [formGroup]="formSearchPopup">
+      <mat-form-field fxFlex="15">
+        <input matInput placeholder="Nom" formControlName="nom" class="siga-uppercase-input" tabindex="100001">
+        <em matSuffix class="material-icons styleIconHelp" matTooltip="{{'messages.tooltipValueSearch' | translate}}">help</em>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="14">
+        <div fxLayout="row">
+          <input matInput type="text" placeholder="Département" aria-label="Département" [matAutocomplete]="departementAutoComplete"
+            formControlName="departement" tabindex="100002">
+          <div id="rechDepartement" class="mat-select-arrow-wrapper">
+            <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !departementAutoComplete.isOpen, 'mat-select-arrow-up': departementAutoComplete.isOpen}"></div>
+          </div>
+        </div>
+        <button mat-button class="space-close" *ngIf="departementControl.value" matSuffix mat-icon-button aria-label="Clear"
+          (click)="departementControl.setValue(null); departementControl.reset(); onBlurEventDepartement(departementControl.value);">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error *ngIf="!departementControl.hasError('required') && departementControl.touched && departementControl.hasError(departementValidatorKey)">
+          <strong>{{'messages.erreurChoixOption' | translate}} </strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-autocomplete #departementAutoComplete="matAutocomplete" (optionSelected)="onBlurEventDepartement(departementControl.value)"
+        [autoActiveFirstOption]="true" [displayWith]="displayDepartement">
+        <mat-option *ngFor="let departement of filteredDepartement  | async; trackBy: trackById" [value]="departement">
+          {{departement.numero}} - {{departement.nomDept}}
+        </mat-option>
+      </mat-autocomplete>
+
+      <mat-form-field fxFlex="15">
+        <div fxLayout="row">
+          <input matInput type="text" placeholder="Commune" [matAutocomplete]="communeAutoComplete" formControlName="commune"
+            tabindex="100003">
+          <div class="mat-select-arrow-wrapper">
+            <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !communeAutoComplete.isOpen, 'mat-select-arrow-up': communeAutoComplete.isOpen}"></div>
+          </div>
+        </div>
+        <button mat-button class="space-close" *ngIf="communeControl.value" matSuffix mat-icon-button aria-label="Clear"
+          (click)="communeControl.setValue(null); communeControl.reset();">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error *ngIf="!communeControl.hasError('required') && communeControl.touched && communeControl.hasError(communeValidatorKey)">
+          <strong>{{'messages.erreurChoixOption' | translate}} </strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-autocomplete #communeAutoComplete="matAutocomplete" [displayWith]="displayCommune" [autoActiveFirstOption]="true">
+        <mat-option *ngFor="let commune of filteredCommune  | async; trackBy: trackById" [value]="commune">
+          {{commune.numInsee}} - {{commune.nomCommune}}
+        </mat-option>
+      </mat-autocomplete>
+
+      <mat-form-field fxFlex="7">
+        <input matInput maxlength="9" placeholder="SIREN" (blur)="onBlurEventSiren()" formControlName="siren" tabindex="100004">
+        <mat-hint></mat-hint>
+        <mat-error *ngIf="sirenControl.hasError('pattern')">
+          <strong>
+            {{'messages.sirenCodeFormat' | translate}}
+          </strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="4">
+        <input matInput maxlength="5" placeholder="NIC" formControlName="nic" tabindex="100005">
+        <mat-hint></mat-hint>
+        <mat-error *ngIf="nicControl.hasError('pattern')">
+          <strong>
+            {{'messages.nicCodeFormat' | translate}}
+          </strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="9">
+        <input matInput maxlength="9" placeholder="Numéro Agence" formControlName="numeroAgence" class="siga-uppercase-input"
+          tabindex="100006">
+        <mat-hint></mat-hint>
+        <mat-error *ngIf="numeroAgenceControl.hasError('pattern')">
+          <strong>
+            {{'messages.benefCodeFormat' | translate}}
+          </strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-checkbox class="labelCheckbox" formControlName="inactif" tabindex="100007"> Afficher les inactifs</mat-checkbox>
+
+      <button id="recherche_button" [disabled]="!manageStatusButton() || !formSearchPopup.valid || numeroAgenceControl.hasError('pattern') || sirenControl.hasError('pattern') || nicControl.hasError('pattern')"
+        mat-raised-button tabindex="100008" class="styleButton" (click)="onSearch($event)">
+        <em class="material-icons">search</em>
+        Recherche
+      </button>
+    </div>
+
+    <mat-paginator *ngIf="dataOfTable.length > 0" [length]="nbTotalElements" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOption"
+      [pageIndex]="indexCurrentPage" (page)="getNumeroPage($event)" class="stylePagination">
+    </mat-paginator>
+
+    <ng2-smart-table class="table-spec" [settings]="settings" [source]="source" (userRowSelect)="onTableRowClick($event)"
+      *ngIf="settings.columns != null"></ng2-smart-table>
+
+  </div>
+</div>

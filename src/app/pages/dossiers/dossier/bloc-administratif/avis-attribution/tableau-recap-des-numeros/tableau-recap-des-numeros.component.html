@@ -1,0 +1,25 @@
+<!--  Récapitulatif des numéros d'aide -->
+<div fxLayout="row" class="infos">
+  <div fxFlex="25">
+    <span class="label-infos">Récapitulatif des numéros d'aide </span>
+  </div>
+</div>
+<div class="margin" fxLayout="row" fxLayoutAlign="space-between stretch">
+  <div fxFlex="50">
+    <div fxLayout="column" fxLayoutAlign=" stretch">
+      <ng2-smart-table class="table-spec" [settings]="settings" [source]="source"></ng2-smart-table>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start" class="datesDebutFin">
+      <div fxLayout="column" fxFlex="25">
+        <p>Date d'attribution</p>
+        <p>{{dateAttribution | date: 'dd/MM/yyyy'}}</p>
+      </div>
+      <div fxLayout="column">
+        <p>Date de fin de validité</p>
+        <p>{{dateFinValidite | date: 'dd/MM/yyyy'}}</p>
+      </div>
+
+    </div>
+
+  </div>
+</div>

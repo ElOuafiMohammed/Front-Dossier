@@ -1,0 +1,173 @@
+<div fxLayoutAlign="space-between">
+  <p mat-dialog-title> {{ 'dossier.update.ouvrage.RechercheOuvrageTitre' | translate}} </p>
+  <button id="buttonCloseBoiteDialogRechercheOuvrage" mat-button type="button" matSuffix mat-icon-button aria-label="Clear"
+    tabindex="100001" (click)="onLeave()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div mat-dialog-content class="critere-font">
+  <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column" fxLayoutAlign="space-between"
+    [formGroup]="formSearchPopup">
+    <!-- Maitre d'ouvrage -->
+    <mat-form-field fxFlex="11">
+      <input id="rechMaitreOuvrage" matInput maxlength="9" placeholder="{{'dossier.update.ouvrage.maitre_ouvrage'|translate}}"
+        formControlName="maitreOuvrage" class="siga-uppercase-input" (blur)="onBlurMaitreOuvrage(maitreOuvrageControl.value)"
+        tabindex="100002">
+      <button id="buttonCloseMaitreOuvrage" mat-button class="space-close" *ngIf="maitreOuvrageControl.value" matSuffix
+        mat-icon-button aria-label="Clear" (click)="maitreOuvrageControl.setValue(null); maitreOuvrageControl.reset();">
+        <mat-icon>close</mat-icon>
+      </button>
+      <button mat-button *ngIf="!maitreOuvrageControl.value" type="button" matSuffix mat-icon-button aria-label="search"
+        id="boutonRechercheBenef" (click)="searchMaitreOuvrage()">
+        <mat-icon>search</mat-icon>
+      </button>
+      <mat-hint></mat-hint>
+      <mat-error *ngIf="maitreOuvrageControl.hasError('pattern')">
+        <strong>
+          {{'messages.benefCodeFormat' | translate}}
+        </strong>
+      </mat-error>
+      <mat-error *ngIf="maitreOuvrageControl.hasError('interlocuteurInactif')">
+        <strong>
+          {{'messages.benefInactif' | translate}}
+        </strong>
+      </mat-error>
+      <mat-error *ngIf="maitreOuvrageControl.hasError('interlocuteurNotFound')">
+        <strong>
+          {{message}}
+        </strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="16">
+      <input id="libelleMaitreOuvrag" matInput placeholder="{{'dossier.update.ouvrage.libelle_maitre_ouvrage'|translate}}"
+        formControlName="libelleOuvrage" class="siga-uppercase-input" tabindex="100003">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="6">
+      <div fxLayout="row">
+
+        <input id="typeOuvrage" matInput type="text" placeholder="{{'dossier.update.ouvrage.type'|translate}}"
+          aria-label="Type" [matAutocomplete]="typeAutoComplete" formControlName="type" tabindex="100004">
+        <div class="mat-select-arrow-wrapper">
+          <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !typeAutoComplete.isOpen, 'mat-select-arrow-up': typeAutoComplete.isOpen}"></div>
+        </div>
+      </div>
+      <button id="buttonCloseTypeOuvrage" mat-button class="space-close" *ngIf="typeControl.value" matSuffix
+        mat-icon-button aria-label="Clear" (click)="typeControl.setValue(null); typeControl.reset(); ">
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-error *ngIf="!typeControl.hasError('required') && typeControl.touched && typeControl.hasError(typeValidatorKey)">
+        <strong>{{'messages.erreurChoixOption' | translate}} </strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-autocomplete id="autoCompleteTypeOuvrage" #typeAutoComplete="matAutocomplete" [autoActiveFirstOption]="true"
+      [displayWith]="displayTypeOuvrage">
+      <mat-option *ngFor="let type of filteredType  | async; trackBy: trackById" [value]="type">
+        {{type.code}} - {{type.libelle}}
+      </mat-option>
+    </mat-autocomplete>
+
+    <mat-form-field fxFlex="9">
+      <div fxLayout="row">
+        <input id="etatOuvrage" matInput type="text" placeholder="{{'dossier.update.ouvrage.etat'|translate}}"
+          aria-label="Etat" [matAutocomplete]="etatAutoComplete" formControlName="etat" tabindex="100005">
+
+        <div class="mat-select-arrow-wrapper">
+          <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !etatAutoComplete.isOpen, 'mat-select-arrow-up': etatAutoComplete.isOpen}"></div>
+        </div>
+      </div>
+      <button id="buttonCloseEtatOuvrage" mat-button class="space-close" *ngIf="etatControl.value" matSuffix
+        mat-icon-button aria-label="Clear" (click)="etatControl.setValue(null); etatControl.reset(); ">
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-error *ngIf="!etatControl.hasError('required') && etatControl.touched && etatControl.hasError(etatValidatorKey)">
+        <strong>{{'messages.erreurChoixOption' | translate}} </strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-autocomplete id="autoCompleteEtatOuvrage" #etatAutoComplete="matAutocomplete" [autoActiveFirstOption]="true"
+      [displayWith]="displayEtat">
+      <mat-option *ngFor="let etat of filteredEtat  | async; trackBy: trackById" [value]="etat">
+        {{etat.code}} - {{etat.libelle}}
+      </mat-option>
+    </mat-autocomplete>
+
+    <mat-form-field fxFlex="13">
+      <div fxLayout="row">
+        <input id="departementOuvrage" matInput type="text" placeholder="{{'dossier.update.ouvrage.departement'|translate}}"
+          aria-label="Département" [matAutocomplete]="departementAutoComplete" formControlName="departement" tabindex="100006">
+        <div class="mat-select-arrow-wrapper">
+          <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !departementAutoComplete.isOpen, 'mat-select-arrow-up': departementAutoComplete.isOpen}"></div>
+        </div>
+      </div>
+      <button id="buttonCloseDepartementOuvrage" mat-button class="space-close" *ngIf="departementControl.value"
+        matSuffix mat-icon-button aria-label="Clear" (click)="departementControl.setValue(null); departementControl.reset(); onBlurEventDepartement(departementControl.value);">
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-error *ngIf="!departementControl.hasError('required') && departementControl.touched && departementControl.hasError(departementValidatorKey)">
+        <strong>{{'messages.erreurChoixOption' | translate}} </strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-autocomplete id="autoCompleteDepartementOuvrage" #departementAutoComplete="matAutocomplete" (optionSelected)="onBlurEventDepartement(departementControl.value)"
+      [autoActiveFirstOption]="true" [displayWith]="displayDepartement">
+      <mat-option *ngFor="let departement of filteredDepartement  | async; trackBy: trackById" [value]="departement">
+        {{departement.numero}} - {{departement.nomDept}}
+      </mat-option>
+    </mat-autocomplete>
+
+    <mat-form-field fxFlex="13">
+      <div fxLayout="row">
+        <input id="communeOuvrage" matInput type="text" placeholder="{{'dossier.update.ouvrage.commune'|translate}}"
+          [matAutocomplete]="communeAutoComplete" formControlName="commune" tabindex="100007">
+        <div class="mat-select-arrow-wrapper">
+          <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !communeAutoComplete.isOpen, 'mat-select-arrow-up': communeAutoComplete.isOpen}"></div>
+        </div>
+      </div>
+      <button id="buttonCloseCommuneOuvrage" mat-button class="space-close" *ngIf="communeControl.value" matSuffix
+        mat-icon-button aria-label="Clear" (click)="communeControl.setValue(null); communeControl.reset();">
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-error *ngIf="!communeControl.hasError('required') && communeControl.touched && communeControl.hasError(communeValidatorKey)">
+        <strong>{{'messages.erreurChoixOption' | translate}} </strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-autocomplete id="autoCompletCommuneOuvrage" #communeAutoComplete="matAutocomplete" [displayWith]="displayCommune"
+      [autoActiveFirstOption]="true">
+      <mat-option *ngFor="let commune of filteredCommune  | async; trackBy: trackById" [value]="commune">
+        {{commune.numInsee}} - {{commune.nomCommune}}
+      </mat-option>
+    </mat-autocomplete>
+
+
+    <mat-form-field fxFlex="14">
+      <input id="libelleOuvrage" matInput placeholder="{{'dossier.update.ouvrage.libelle'|translate}}" formControlName="libelle"
+        tabindex="100008">
+      <button id="buttonCloseLibelleOuvrage" mat-button class="space-close" *ngIf="libelleControl.value" matSuffix
+        mat-icon-button aria-label="Clear" (click)="libelleControl.setValue(null); libelleControl.reset();">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <button id="rechercheOuvrage" [disabled]="!manageStatusButton() || !formSearchPopup.valid || maitreOuvrageControl.hasError('pattern')"
+      mat-raised-button tabindex="100009" class="styleButton" (click)="onSearch($event)">
+      <em class="material-icons">search</em>
+      {{ 'dossier.update.ouvrage.RechercheOuvrageRechercher' | translate}}
+    </button>
+  </div>
+
+  <mat-paginator id="paginationRechercheOuvrage" *ngIf="dataOfTable.length > 0" [length]="nbTotalElements" [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOption" [pageIndex]="indexCurrentPage" (page)="getNumeroPage($event)" class="stylePagination">
+  </mat-paginator>
+  <ng2-smart-table class="table-spec" [settings]="settings" [source]="source" *ngIf="settings.columns != null"></ng2-smart-table>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="end">
+  <button id="buttonValidationRechercheOuvrageMultiple" mat-raised-button [disabled]="manageValidButton()" tabindex="100010"
+    (click)="onValidSearch()" class="bouton_valider_ouvrage">
+    <em [ngClass]="(!manageValidButton()) ?'ion-checkmark siga-form-confirm':'ion-checkmark'"></em>
+    {{ 'dossier.update.ouvrage.RechercheOuvrageValider' | translate}}
+  </button>
+</div>

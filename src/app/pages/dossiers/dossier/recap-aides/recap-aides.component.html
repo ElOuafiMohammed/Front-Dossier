@@ -1,0 +1,40 @@
+<div class="content" [formGroup]="formRecaputilatif" (keydown.enter)="$event.preventDefault()" class="recapAides">
+
+    <!-- Encadrement -->
+    <div fxLayout="column" class="encadrement">
+        <div [ngClass]="{ 'toggle-refus':viewRight || viewAdministratif, 'toggle':!viewRight}" fxLayout="row" class="noneContour">
+
+            <mat-slide-toggle formControlName="encadrementComm" tabindex="1003">
+                <span class="label-switch-button">Encadrement communautaire</span>
+            </mat-slide-toggle>
+        </div>
+        <!-- Multiple choice of encadrement -->
+        <div [ngClass]="{ disableDossier : viewRight || viewAdministratif}" fxLayout="row" *ngIf="encadrementControl.value" fxLayoutAlign=""
+            tabindex="1004" class="siga-choix-encd-component">
+            <div fxLayout="column" fxLayoutAlign="start" class="noneContour">
+                <mat-select placeholder="Justification(s)" formControlName="encadrementJUstif" [compareWith]="compareListElement" class="siga-encadrement"
+                    multiple>
+                    <mat-select-trigger class="siga-themes-input-text">
+                        {{justifControl?.value != null && justifControl?.value.length > 1 ? justifControl?.value.length + ' justifications sélectionnées'
+                        : ''}} {{justifControl?.value != null && justifControl?.value.length === 1? '1 justification sélectionnée'
+                        : ''}}
+                    </mat-select-trigger>
+                    <mat-option *ngFor="let justif of justifEncadrements; trackBy: trackById" [value]="justif">
+                        <span>{{ justif.code }}</span>
+                        <span> - </span>
+                        <span>{{ justif.libelle }}</span>
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="(justifControl?.value === null || justifControl?.value.length === 0) && encadrementControl.value">
+                    {{'messages.recap.erreurJustifEncadrement' | translate}}
+                </mat-error>
+                <div *ngIf="justifControl?.value != null && justifControl?.value.length > 0" class="card-encd">
+                    <div *ngFor="let justif of justifControl.value; trackBy: trackById" class="siga-theme-card-container">
+                        <siga-card [listValeur]="justif" [typeCard]="'libelleCard'" [viewRight]="viewRight" (deleteEventEmitter)="onDeleteEventEncadrement($event)"></siga-card>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

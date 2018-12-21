@@ -1,0 +1,20 @@
+@import 'src/app/theme/sass/conf/_variables.scss';
+.test-nat-ope {
+  font-size: 12px !important;
+  color: $siga-grey-saisi;
+  background-color: rgb(235, 231, 231);
+  margin: 5px;
+  width: auto;
+  height: auto;
+  padding: 5px 5px 5px 15px;
+}
+
+.siga-close-button {
+  font-size: 14px;
+}
+
+.siga-close-button, .mat-icon, .mat-icon-button {
+  line-height: 20px;
+  width: 20px;
+  height: 20px;
+}

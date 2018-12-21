@@ -1,0 +1,11 @@
+<mat-card class="test-nat-ope" (click)="$event.stopPropagation()">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <div>{{(typeCard === 'libelleCard' || typeCard === 'libelleCard2' || typeCard === 'engagement' || typeCard ===
+      'disposition' || typeCard === 'action')
+      ? listValeur.libelle : listValeur.code}}</div>
+    <button type="button" id="siga-button-card" mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="(!viewRight && !viewAdministratif) || ((!viewRight && viewAdministratif) && (typeCard === 'libelleCard2' || typeCard === 'engagement' || typeCard === 'disposition'))"
+      (click)="onDeleteEvent($event)" class="siga-close-button-hover">
+      <mat-icon class="siga-close-button">close</mat-icon>
+    </button>
+  </div>
+</mat-card>

@@ -1,0 +1,28 @@
+<div class="content">
+  <div [formGroup]="formThemes" fxFlex="100" fxLayout="column" class="specifique">
+    <span class="text">Thème</span>
+    <!-- Multiple choice of thematique -->
+    <div tabindex="4" class="siga-choix-themes-component">
+      <mat-select id="infosTheme" [disabled]="viewRight || viewAdministratif" placeholder="Thème(s)" formControlName="themes"
+        [compareWith]="compareListElement" class="siga-theme-dropdown" multiple>
+        <mat-select-trigger class="siga-themes-input-text">
+          {{formThemes.get('themes').value != null && formThemes.get('themes').value.length > 1 ?
+          formThemes.get('themes').value.length
+          + ' thèmes sélectionnés' : ''}} {{formThemes.get('themes').value != null &&
+          formThemes.get('themes').value.length
+          == 1 ? ' 1 thème sélectionné' : ''}}
+        </mat-select-trigger>
+        <mat-option *ngFor="let theme of themes; trackBy: trackById" [value]="theme">
+          <span>{{ theme.code }}</span>
+          <span> - </span>
+          <span>{{ theme.libelle }}</span>
+        </mat-option>
+      </mat-select>
+      <div *ngIf="formThemes.get('themes').value != null && formThemes.get('themes').value.length > 0">
+        <div *ngFor="let theme of formThemes.get('themes').value; trackBy: trackById" class="siga-theme-card-container">
+          <siga-card [listValeur]="theme" [typeCard]="'libelleCard'" [viewRight]="viewRight" (deleteEventEmitter)="onDeleteEvent($event)"></siga-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

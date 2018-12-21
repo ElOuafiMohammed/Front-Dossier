@@ -1,0 +1,164 @@
+
+@import 'src/app/theme/components/siga-tableau-component.scss';
+@import 'src/app/theme/sass/conf/_variables.scss';
+
+.colorLineTotal {
+  color: $siga-green-content;
+}
+
+.grasTitle {
+  font-weight: bolder;
+}
+
+.disableButton {
+	pointer-events: none !important;
+	opacity: .4 !important;
+}
+
+.alignIconeRight{
+	text-align: right;
+}
+
+.trashColor{
+	color:$siga-grey-saisi;
+}
+
+.noDisplayRetenu {
+  visibility: hidden;
+}
+
+.siga-tooltiptext {
+	visibility: hidden;
+	width: 80px;
+	font-size: 70%;
+	background-color: black;
+	color: $siga-grey-white;
+	text-align: center;
+	border-radius: 6px;
+	height: 22px;
+
+	position: absolute;
+	z-index: 1 !important;
+	margin-left: -40px; 
+	margin-top: 18px;
+}
+
+.siga-icon{
+	cursor: pointer;
+	visibility: visible;
+	font-size: 1.2em;
+}
+
+.content {
+  padding: 15px;
+  padding-top: 3px;
+  color: #666;
+}
+
+.positionTable {
+padding-left: 10px;
+}
+
+.mat-header-row, .mat-row, .mat-footer-cell, .mat-footer-row {
+  min-height: 35px;
+  display:flex;
+  border: none !important;
+  .positionTextRight {
+    
+ justify-content:flex-end;
+ text-align: right;
+  }
+  .positionTextLeft {
+    text-align: left;
+  }
+  .taille {
+    min-width: 7%;
+    max-width: 7%;
+  }
+}
+
+
+.mat-header-cell{
+  color:rgba(102, 102, 102, .54);
+  }
+
+  .siga-border-bottom {
+   border-bottom: 1px solid $table-border-color !important;
+}
+
+
+  .mat-cell {
+    color: #666;
+    text-align: center !important;
+  }
+
+
+.second-footer-row-style {
+  padding: 0;
+}
+
+.errorUnderline {
+  font-weight: bolder;
+  padding: 0;
+}
+
+
+/deep/ .mat-table  .mat-form-field-underline {
+  display: none !important;
+}
+
+
+.temp-fix-error-display {
+  /deep/ .mat-form-field-wrapper {
+    max-height: 30px;
+    input {
+      position: relative;
+      top: -10px;
+    }
+  }
+}
+
+.errorLine {
+  color: $siga-red-error;
+}
+
+//************************* fin css  mat-table *********************
+textarea, mat-icon {
+  color : $siga-grey-saisi;
+}
+ .specifique{
+	 padding-top: 10px !important;
+	 margin-right: 7px
+ }
+
+  .session-type {
+   padding-left: 10px;
+	padding-bottom: 5px;
+	padding-top: 1px;
+	}
+	.label-plafon{
+		color: #666;
+		margin-top: 25px
+}
+
+.contentOld {
+  padding: 20px;
+  padding-top: 3px;
+  color: #666;
+ 
+}
+
+.siga-align-right {
+  text-align: right;
+}
+
+.siga-form-confirm{
+  margin-right: 5px;
+}
+
+.siga-form-invalid{
+  margin-right: 5px;
+}
+.siga-margin-retenu {
+  margin-top:-60px !important
+}

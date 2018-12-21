@@ -1,0 +1,85 @@
+@import 'src/app/theme/components/siga-tableau-component.scss';
+@import 'src/app/theme/sass/conf/_variables.scss';
+@import 'src/app/theme/components/siga-utils-style.scss';
+
+.styleButton {
+  height: 40px;
+  position: relative;
+  top: 10px;
+}
+
+.labelCheckbox {
+  padding-left: 5px;
+  padding-top: 17px;
+}
+
+
+
+.stylePagination {
+  position: relative;
+  top: 28px;
+}
+
+.barBordure {
+  width: 100%;
+  background-color: black;
+}
+
+.space-close{
+  margin-left: 7px;
+}
+
+.styleIconHelp {
+  font-size: 100%;
+}
+
+
+
+.critere-font {
+  font-size: 0.9rem;
+}
+
+:host /deep/ {
+
+  .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background-color: $siga-grey-saisi;
+    }
+
+  .table-spec {
+     margin-left: 0.8em;
+    
+    th:nth-child(2), td:nth-child(2),
+    th:nth-child(3), td:nth-child(3)
+     {
+       text-align: left !important;
+      };
+
+    table {
+      border-collapse: inherit !important; 
+    }
+  
+    th,td {
+      border: none !important;
+      border-bottom: 1px solid rgba(102, 102, 102, .42) !important;
+      &:not(:first-child) {
+        text-align: left;
+        }
+    } 
+  
+    td:nth-child(1) {
+      line-height: 30px;
+    } 
+  
+    th {
+      font-weight: $font-normal;
+    }
+    
+    ng2-smart-table {
+      a.ng2-smart-sort-link {
+        font-size: 2.2em !important;
+      }
+    }
+  
+    }
+}
+

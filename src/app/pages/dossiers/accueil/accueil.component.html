@@ -1,0 +1,181 @@
+<div class="container topContainer" *ngIf="connected">
+  <p>
+    Bienvenue {{ utilisateurConnecteNomPrenom }} sur la plateforme web SIGA.
+  </p>
+  <p>
+    Ceci est un écran d'accueil temporaire pour cette application.
+    <br> Vous pouvez accéder au module de gestion des Dossiers sur la gauche de l'écran.
+  </p>
+</div>
+
+<div class="container topContainer" *ngIf="!connected">
+  <p>
+    Vous devrez être connecté au préalable pour pouvoir utiliser la plateforme web SIGA.
+  </p>
+</div>
+
+<!-- Dossier Expansion panel -->
+<mat-expansion-panel class="temp-margin" expanded>
+  <mat-expansion-panel-header style="background-color: #539fa8;">
+    <mat-panel-title>
+      <div matBadge="{{prefixTitre}}" matBadgeOverlap="false" matBadgeColor="accent" MatBadgeSize="small"> <span style="margin-right: 5px;">{{'messages.remarque.remarqueATraites'
+          | translate}}</span></div>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <div class="margin">
+    <div fxLayout="row" *ngIf="prefixTitre > 0">
+      <mat-table [dataSource]="dataSource" fxFlex="100">
+
+        <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- NumDos Column -->
+        <ng-container matColumnDef="numDossier">
+          <mat-header-cell *matHeaderCellDef fxFlex="20" fxFlex.gt-xs="5" fxFlex.gt-sm="10" fxFlex.gt-md="15"> Numéro
+            dossier </mat-header-cell>
+          <mat-cell *matCellDef="let element" (click)="onTableRowClick(element)" class="siga-numero-dossier" fxFlex="20"
+            fxFlex.gt-xs="5" fxFlex.gt-sm="10" fxFlex.gt-md="15"> {{element.numeroDossier}} </mat-cell>
+        </ng-container>
+        <!-- Benef Column -->
+        <ng-container matColumnDef="beneficiaire">
+          <mat-header-cell *matHeaderCellDef> Bénéficiaire </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.beneficiaire.raisonSociale}} </mat-cell>
+        </ng-container>
+
+        <!-- Intitule Column -->
+        <ng-container matColumnDef="intitule">
+          <mat-header-cell *matHeaderCellDef> Intitulé </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.intitule}} </mat-cell>
+        </ng-container>
+
+        <!-- Phase Column -->
+        <ng-container matColumnDef="phase">
+          <mat-header-cell *matHeaderCellDef fxFlex="10" fxFlex.gt-xs="5" fxFlex.gt-sm="5" fxFlex.gt-md="5"> Phase
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element" fxFlex="10" fxFlex.gt-xs="5" fxFlex.gt-sm="5" fxFlex.gt-md="5">
+            {{element.phase}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'highlight': selectedRowIndex == row.id}"
+          (mouseover)="highlight(row)" (mouseout)="notHighlight()"></mat-row>
+      </mat-table>
+    </div>
+
+    <div *ngIf="prefixTitre === 0" class="siga-no-data-found">
+      {{'messages.pasdeDonnes' | translate}}
+    </div>
+  </div>
+
+</mat-expansion-panel><br />
+<!-- Dossier Expansion panel -->
+<mat-expansion-panel class="temp-margin" expanded>
+  <mat-expansion-panel-header style="background-color: #e6aca5;">
+    <mat-panel-title>
+      <div matBadge="{{prefixTitreNotResponse}}" matBadgeOverlap="false" matBadgeColor="accent" MatBadgeSize="small">
+        <span style="margin-right: 5px;">Dossiers avec remarques sans réponse</span></div>
+
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+
+  <div class="margin">
+    <mat-table [dataSource]="dataSourceNotResponse" fxFlex="100" *ngIf="prefixTitreNotResponse > 0">
+      <!-- NumDos Column -->
+      <ng-container matColumnDef="numDossier">
+        <mat-header-cell *matHeaderCellDef fxFlex="20" fxFlex.gt-xs="5" fxFlex.gt-sm="10" fxFlex.gt-md="15"> Numéro
+          dossier </mat-header-cell>
+        <mat-cell *matCellDef="let element" (click)="onTableRowClick(element)" class="siga-numero-dossier" fxFlex="20"
+          fxFlex.gt-xs="5" fxFlex.gt-sm="10" fxFlex.gt-md="15"> {{element.numeroDossier}} </mat-cell>
+      </ng-container>
+      <!-- Benef Column -->
+      <ng-container matColumnDef="beneficiaire">
+        <mat-header-cell *matHeaderCellDef> Bénéficiaire </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.beneficiaire.raisonSociale}} </mat-cell>
+      </ng-container>
+
+      <!-- Intitule Column -->
+      <ng-container matColumnDef="intitule">
+        <mat-header-cell *matHeaderCellDef> Intitulé </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.intitule}} </mat-cell>
+      </ng-container>
+
+      <!-- Phase Column -->
+      <ng-container matColumnDef="phase">
+        <mat-header-cell *matHeaderCellDef fxFlex="10" fxFlex.gt-xs="5" fxFlex.gt-sm="5" fxFlex.gt-md="5"> Phase
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10" fxFlex.gt-xs="5" fxFlex.gt-sm="5" fxFlex.gt-md="5">
+          {{element.phase}} </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'highlight': selectedRowIndex == row.id}"
+        (mouseover)="highlight(row)" (mouseout)="notHighlight()"></mat-row>
+    </mat-table>
+    <div *ngIf="prefixTitreNotResponse === 0" class="siga-no-data-found">
+      {{'messages.pasdeDonnes' | translate}}
+    </div>
+  </div>
+
+</mat-expansion-panel> <br />
+<!-- Dossier Expansion panel -->
+<mat-expansion-panel class="temp-margin" expanded>
+  <mat-expansion-panel-header style="background-color: #c3e9b6;">
+    <mat-panel-title>
+      <div matBadge="{{prefixTitreResponse}}" matBadgeOverlap="false" matBadgeColor="accent" MatBadgeSize="small">
+        <span style="margin-right: 5px;">Dossiers avec remarques traitées</span></div>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <div class="margin">
+    <mat-table [dataSource]="dossiersDatasResponses" *ngIf="prefixTitreResponse>0">
+      <!-- lu -->
+      <ng-container matColumnDef="lu">
+        <mat-header-cell *matHeaderCellDef fxFlex="10" fxFlex.gt-xs="5" fxFlex.gt-sm="5" fxFlex.gt-md="5"> Lu
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10" fxFlex.gt-xs="5" fxFlex.gt-sm="5" fxFlex.gt-md="5">
+          <mat-checkbox (change)="rowChecked(element, $event)" [checked]="element.remarqueEmetteurLu"></mat-checkbox>
+        </mat-cell>
+      </ng-container>
+      <!-- NumDos Column -->
+      <ng-container matColumnDef="numDossier">
+        <mat-header-cell *matHeaderCellDef fxFlex="20" fxFlex.gt-xs="5" fxFlex.gt-sm="10" fxFlex.gt-md="15"> Numéro
+          dossier </mat-header-cell>
+        <mat-cell *matCellDef="let element" (click)="onTableRowClick(element)" class="siga-numero-dossier" fxFlex="20"
+          fxFlex.gt-xs="5" fxFlex.gt-sm="10" fxFlex.gt-md="15"> {{element.numeroDossier}} </mat-cell>
+      </ng-container>
+      <!-- Benef Column -->
+      <ng-container matColumnDef="beneficiaire">
+        <mat-header-cell *matHeaderCellDef> Bénéficiaire </mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.beneficiaire.raisonSociale}} </mat-cell>
+      </ng-container>
+
+      <!-- Intitule Column -->
+      <ng-container matColumnDef="intitule">
+        <mat-header-cell *matHeaderCellDef> Intitulé </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.intitule}} </mat-cell>
+      </ng-container>
+
+      <!-- Phase Column -->
+      <ng-container matColumnDef="phase">
+        <mat-header-cell *matHeaderCellDef fxFlex="10" fxFlex.gt-xs="5" fxFlex.gt-sm="5" fxFlex.gt-md="5"> Phase
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10" fxFlex.gt-xs="5" fxFlex.gt-sm="5" fxFlex.gt-md="5">
+          {{element.phase}} </mat-cell>
+      </ng-container>
+
+      <!-- Archive-->
+      <ng-container matColumnDef="archive">
+        <mat-header-cell *matHeaderCellDef fxFlex="10" fxFlex.gt-xs="5" fxFlex.gt-sm="5" fxFlex.gt-md="5"> Archiver
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10" fxFlex.gt-xs="5" fxFlex.gt-sm="5" fxFlex.gt-md="5">
+          <em class="ion-close siga-form-cancel siga-archive-content" (click)="archiver(element)" style="cursor: pointer; text-align: right;"></em>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumnsResponse"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumnsResponse;" [ngClass]="{'highlight': selectedRowIndex == row.id}"
+        (mouseover)="highlight(row)" (mouseout)="notHighlight()"></mat-row>
+    </mat-table>
+    <div *ngIf="prefixTitreResponse === 0 " class="siga-no-data-found">
+      {{'messages.pasdeDonnes' | translate}}
+    </div>
+  </div>
+
+</mat-expansion-panel>

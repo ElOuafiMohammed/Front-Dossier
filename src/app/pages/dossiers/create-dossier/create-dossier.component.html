@@ -1,0 +1,122 @@
+<div id="create-dosier" [fxFlex.xs]="100" [fxFlex.sm]="80" [fxFlex.gt-sm]="50">
+  <form novalidate (ngSubmit)="onSubmit()" [formGroup]="formDossier" (keydown.enter)="$event.preventDefault()">
+    <mat-card fxLayout="column" fxLayoutAlign="space-between stretch">
+
+      <!-- Thematique -->
+      <mat-form-field>
+        <div fxLayout="row">
+          <input id="thematique" matInput placeholder="Thématique" [matAutocomplete]="thematicAutoComplete"
+            formControlName="thematique" tabindex="1">
+          <div class="mat-select-arrow-wrapper">
+            <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !thematicAutoComplete.isOpen, 'mat-select-arrow-up': thematicAutoComplete.isOpen}"></div>
+          </div>
+        </div>
+        <button mat-button *ngIf="thematiqueControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="thematiqueControl.setValue(null); thematiqueControl.reset();">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-hint></mat-hint>
+
+        <mat-error *ngIf="!thematiqueControl.hasError('required') && thematiqueControl.touched && thematiqueControl.hasError(thematiqueValidatorKey)">
+          <strong>{{'messages.erreurChoixOption' | translate}} </strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-autocomplete #thematicAutoComplete="matAutocomplete" [displayWith]="displayThematique"
+        [autoActiveFirstOption]="true">
+        <div id="optionThematique">
+          <mat-option *ngFor="let thematique of filteredThematiques | async; trackBy: trackById" [value]="thematique">
+            <span> {{thematique.code}} </span>
+            <span> - </span>
+            <span> {{thematique.libelle}} </span>
+          </mat-option>
+        </div>
+      </mat-autocomplete>
+
+      <!-- Département -->
+      <mat-form-field>
+        <div fxLayout="row">
+          <input id="departement" type="text" placeholder="Département" aria-label="Number" matInput [matAutocomplete]="deptAutoComplete"
+            formControlName="dept" tabindex="2">
+          <div class="mat-select-arrow-wrapper">
+            <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !deptAutoComplete.isOpen, 'mat-select-arrow-up': deptAutoComplete.isOpen}"></div>
+          </div>
+        </div>
+        <button mat-button *ngIf="deptControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="deptControl.setValue(null)">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-hint></mat-hint>
+        <mat-error *ngIf="!deptControl.hasError('required') && deptControl.touched && deptControl.hasError(deptValidatorKey)">
+          <strong>{{'messages.erreurChoixOption' | translate}} </strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-autocomplete #deptAutoComplete="matAutocomplete" [displayWith]="displayDept" [autoActiveFirstOption]="true">
+        <div id="optionDepartement">
+          <mat-option *ngFor="let dept of filteredDepts | async; trackBy: trackById" [value]="dept">
+            <span> {{dept.numero}} </span>
+            <span> - </span>
+            <span> {{dept.nomDept}} </span>
+          </mat-option>
+        </div>
+      </mat-autocomplete>
+
+      <!-- Intitulé -->
+      <mat-form-field>
+        <input id="champsIntitule" autocomplete="off" matInput maxlength="80" placeholder="Intitulé" formControlName="intitule"
+          tabindex="3">
+        <button mat-button *ngIf="intituleControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="intituleControl.setValue(null)">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-hint align="end">
+          {{intituleControl.value?.length}} / 80
+        </mat-hint>
+      </mat-form-field>
+
+      <div fxLayout="row">
+        <!-- Bénéficiaire part 1 -->
+        <mat-form-field fxFlex="20" class="temp-fix-error-display">
+          <input id="champsBeneficiaire"  matInput maxlength="9" autocomplete="off" placeholder="Bénéficiaire"
+            formControlName="benef_number" class="siga-uppercase-input" tabindex="4">
+          <button id="boutonRechercheBeneficaire" mat-button type="button" matSuffix mat-icon-button aria-label="search"
+            (click)="searchBeneficiary()" tabindex="5" id="boutonRechercheBenef">
+            <mat-icon>search</mat-icon>
+          </button>
+          <mat-hint></mat-hint>
+          <mat-error *ngIf="benefNumberControl.hasError('pattern')">
+            <strong>
+              {{'messages.benefCodeFormat' | translate}}
+            </strong>
+          </mat-error>
+          <mat-error *ngIf="benefNumberControl.hasError('benefInactive')">
+            <strong>
+              {{'messages.benefInactif' | translate}}
+            </strong>
+          </mat-error>
+          <mat-error *ngIf="benefNumberControl.hasError('benefNotFound')">
+            <strong>
+              {{message}}
+            </strong>
+          </mat-error>
+        </mat-form-field>
+        <div class="siga-separator">&nbsp;&nbsp;</div>
+        <!-- Bénéficiaire part 2 -->
+        <mat-form-field fxFlex="80">
+          <input matInput formControlName="benef_libelle">
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="space-around" class="temp-margin">
+        <!-- Quitter -->
+        <button id="quitter" mat-raised-button (click)="close()" type="button" fxFlex="22" tabindex="7">
+          <em class="ion-close siga-form-cancel"></em> &nbsp;Quitter
+        </button>
+        <!-- Valider -->
+        <button id="enrigistrer" mat-raised-button [disabled]="!formDossier.valid || submitted || !beneficiaire?.actif || beneficiaire == null"
+          type="submit" fxFlex="22" tabindex="6" (keydown.enter)="onSubmit()">
+          <em [ngClass]="(formDossier.valid)?'ion-checkmark siga-form-confirm':'ion-checkmark siga-form-invalid'"></em>
+          &nbsp;Enregistrer
+        </button>
+      </div>
+    </mat-card>
+  </form>
+</div>

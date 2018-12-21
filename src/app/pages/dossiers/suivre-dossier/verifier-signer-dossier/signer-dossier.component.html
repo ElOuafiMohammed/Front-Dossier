@@ -1,0 +1,105 @@
+<div class="gvalider-siege-padding">
+  <siga-criteres-signer-recherche-card [sessions]="sessions" [dates]="dates" [responsablesTech]="responsablesTech" [thematiques]="thematiques"
+    [procedureDecisions]="procedureDecisions" [submitted]="submitted" (dossierActionEventEmitter)="changeAction($event)" (searchEventEmitter)="fetchResultatRecherche($event)">
+  </siga-criteres-signer-recherche-card>
+
+  <div *ngIf="searchDone">
+    <ba-card>
+      <div *ngIf="nombreTotalResultats !=0" fxLayout="row" fxFlex="100%">
+        <div fxFlex="25%" class="header-tablevalid-siege">
+          <strong> {{nombreTotalSelectionnees}} </strong>/
+          <strong>{{nombreTotalResultats}}</strong>
+          dossier(s) sélectionné(s)
+        </div>
+        <div fxFlex="74.5%"></div>
+      </div>
+      <mat-checkbox fxFlex="5.5%" class="position-head-card siga-position-header" *ngIf="dossiersDatas.length !== 0" [checked]='checkAll'
+        (change)="onCheckBoxChangeTotal($event)">Tout</mat-checkbox>
+      <div class="g-div-valider-siege-margin">
+        <mat-table #table [dataSource]=dataSource class="siga-style-table">
+          <!-- checkbox -->
+          <ng-container matColumnDef="checkBox">
+            <mat-header-cell *matHeaderCellDef class="customcheckBoxHeader"> </mat-header-cell>
+            <mat-cell *matCellDef="let element" class=" customWidthCheckbox">
+              <label class="container">
+                <mat-checkbox [checked]='element.checked' (change)="onCheckBoxChange(element, $event)"></mat-checkbox>
+                <span class="checkmark"></span>
+              </label>
+            </mat-cell>
+          </ng-container>
+          <!-- numero dossier -->
+          <ng-container matColumnDef="numDossier">
+            <mat-header-cell *matHeaderCellDef class="customNumDosHeader"> Numéro dossier </mat-header-cell>
+            <mat-cell *matCellDef="let element" class=" customWidthNumDos" (click)="consultDossier(element)">
+              {{element?.numeroDossier}}
+            </mat-cell>
+          </ng-container>
+          <!-- Libelle bénéficiaire -->
+          <ng-container matColumnDef="libelleBenef">
+            <mat-header-cell *matHeaderCellDef class="customLibelleHeader"> Libellé bénéficiaire </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="customLibellerow">
+              <div> {{element.beneficiaire.raisonSociale}}
+                <mat-icon *ngIf="!element.beneficiaire.actif" class="icon-info-benef" matTooltip="Bénéficiaire inactif" [matTooltipPosition]="'right'"
+                  matTooltipClass="tooltip-error">info</mat-icon>
+              </div>
+            </mat-cell>
+          </ng-container>
+          <!-- intitule dossier -->
+          <ng-container matColumnDef="intitule">
+            <mat-header-cell *matHeaderCellDef class="customIntituleHeader"> Intitulé </mat-header-cell>
+            <mat-cell *matCellDef="let element" class=" customWidthIntitule">
+              {{element?.intitule}}
+            </mat-cell>
+          </ng-container>
+          <!-- Numéro doc attributif -->
+          <ng-container matColumnDef="docAttributif">
+            <mat-header-cell *matHeaderCellDef class="customDocAttributifHeader"> Numéro doc attributif </mat-header-cell>
+            <mat-cell *matCellDef="let element" class=" customWidthNumDocAttributif">
+              {{element?.numeroAttributif}}
+            </mat-cell>
+          </ng-container>
+          <!-- Vérifier par RA -->
+          <ng-container matColumnDef="verifRa">
+            <mat-header-cell *matHeaderCellDef class="customcheckBoxHeader"> RA</mat-header-cell>
+            <mat-cell *matCellDef="let element" class=" customWidthCheckbox">
+              <label class="container">
+                <em [ngClass]="{'ion-checkmark siga-form-confirm': element.verifRa, 'ion-close siga-form-cancel': !element.verifRa}" class=""></em>
+              </label>
+            </mat-cell>
+          </ng-container>
+          <!-- Vérifier par CAA -->
+          <ng-container matColumnDef="verifCaa">
+            <mat-header-cell *matHeaderCellDef class="customcheckBoxHeader"> CAA</mat-header-cell>
+            <mat-cell *matCellDef="let element" class=" customWidthCheckbox">
+              <label class="container">
+                <em [ngClass]="{'ion-checkmark siga-form-confirm': element.verifCaa, 'ion-close siga-form-cancel': !element.verifCaa}" class=""></em>
+              </label>
+            </mat-cell>
+          </ng-container>
+          <!-- Afficher le motif de l'avis-->
+          <ng-container matColumnDef="expandedMotif">
+            <mat-cell *matCellDef="let detail">
+            </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <!-- mat-row pour l'affichage des différents lignes de la table -->
+          <mat-row *matRowDef="let row; columns: displayedColumns; let index=index" matRipple class="element-row css-mat" [class.expanded]="expandedElement === row"></mat-row>
+          <!-- mat-row pour afficher le motif sur l'avis -->
+          <mat-row *matRowDef="let row; columns: ['expandedMotif']; when: isExpansionMotifDossier" [@detailExpand]="row.element.expanded===true  ? 'expanded' : 'collapsed'"
+            style="overflow: hidden">
+          </mat-row>
+        </mat-table>
+      </div>
+    </ba-card>
+    <!-- Valider || Dévalider -->
+    <div fxLayout="row" fxLayoutAlign="space-around end">
+      <div fxFlex="80">
+      </div>
+      <button id="verifierSigner" #button mat-raised-button *ngIf="dossiersDatas[0]?.phase === 'A05'" [disabled]=" submitted || noCheckedDossier || benefInactif "
+        (click)="verifierSigner() " (keydown.enter)="verifierSigner() " type="button " tabindex="10">
+        <span *ngIf="dossierAction.profil=='RA' || dossierAction.profil=='CAA'">Vérifier</span>
+        <span *ngIf="dossierAction.profil=='DDG'">Signer</span>
+      </button>
+    </div>
+  </div>
+</div>

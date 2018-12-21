@@ -1,0 +1,10 @@
+<div *ngIf="rowData.disable" class="disabledTypeOuvrage">{{rowData.typeOuvrage.code}}</div>
+<div [formGroup]="formOuvrage" class="width-input-select-ouvrage" *ngIf="!rowData.disable">
+  <mat-select id="selectTypeOuvrage" [disabled]="rowData.disable" formControlName="typeOuvrage" (selectionChange)="change(selected)"
+    [(ngModel)]="selected" [compareWith]="compareListElement">
+    <mat-select-trigger id="selectTypeOuvrageTrigger" [ngClass]="{'input-error': rowData.hasError && !rowData.disable}">{{rowData.typeOuvrage.code}}</mat-select-trigger>
+    <mat-option *ngFor="let typeOuvrage of typesOuvrages; trackBy: trackById" [value]="typeOuvrage">
+      {{ typeOuvrage.code }} - {{ typeOuvrage.libelle }}
+    </mat-option>
+  </mat-select>
+</div>

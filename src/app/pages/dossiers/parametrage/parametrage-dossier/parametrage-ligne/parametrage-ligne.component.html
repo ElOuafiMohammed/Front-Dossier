@@ -1,0 +1,144 @@
+<critere-card-ligne [lignes]="lignes" [thematiques]="thematiques" (searchEventEmitter)="fetchResultatRecherche($event)">
+</critere-card-ligne>
+
+
+<div *ngIf="!loading">
+  <ba-card>
+    <div class="block">
+      <button [disabled]="!canAdd" class="siga-bouton siga-form-addLine btn btn-default" type="button" (click)="addLine()">
+        <em [ngClass]="(canAdd)?'ion-ios-plus-outline siga-form-confirm':'ion-ios-plus-outline siga-form-invalid'"
+          class="espacement siga-taille-image-plus"></em>
+        <span>Ajouter une ligne d'intervention</span>
+      </button>
+    </div>
+    <mat-paginator [length]="nbTotalElements" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOption" [pageIndex]="indexCurrentPage"
+      (page)="getNumberPage($event)">
+    </mat-paginator>
+
+    <!--  Table-->
+    <mat-table #table [dataSource]=dataSource>
+
+      <!-- Thématique -->
+      <ng-container matColumnDef="Thematique">
+        <mat-header-cell *matHeaderCellDef class="customThemaHeader" fxFlex="10"> Thématique</mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10" class=" customThemarow">
+          <span *ngIf="!isNew(element)" class="spanColor spansize">{{element?.codeThematique}}</span>
+          <mat-select tabindex="{{generateTabIndex()}}" *ngIf="isNew(element)" [value]="displayAsListThema(element?.codeThematique)"
+            class="width-input-themati" (selectionChange)="changeThematique(element, $event)">
+            <mat-select-trigger>{{element.codeThematique}}
+            </mat-select-trigger>
+            <mat-option *ngFor="let thematique of thematiques; trackBy: trackById" [value]="thematique">
+              {{ thematique.code }}
+            </mat-option>
+          </mat-select>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Code de la ligne  -->
+      <ng-container matColumnDef="CodeLigne">
+        <mat-header-cell *matHeaderCellDef class="customLineHeader" fxFlex="5"> Code </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="5" class="customLinerow">
+          <span *ngIf="!isNew(element)" class="spanColor spansize">{{element?.numero}}</span>
+          <input #codeLine tabindex="{{generateTabIndex()}}" (change)="changeLigne(element, $event)" matInput maxlength="3"
+            [value]="codeLine.value" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key=='Tab' || event.key == 'Delete' || event.key == 'ArrowLeft' || event.key == 'ArrowRight' || event.key =='Backspace'" />
+        </mat-cell>
+      </ng-container>
+      <!-- Libellé -->
+      <ng-container matColumnDef="Libelle">
+        <mat-header-cell *matHeaderCellDef class="customLibelleHeader" fxFlex="85">Libellé </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="85" class="customLibellerow">
+          <input #libelle tabindex="{{generateTabIndex()}}" (blur)="libelleBlur(libelle.value, element)" matInput
+            [value]="element?.libelle" />
+        </mat-cell>
+      </ng-container>
+
+      <!-- Debut validité -->
+
+      <ng-container matColumnDef="DebutValidite">
+        <mat-header-cell *matHeaderCellDef fxFlex="19" class="customDebutValiditeHeader">Début validité
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="19" class="customDebutValiditerow">
+          <span *ngIf="isNew(element)" class="spanColor spansize">{{ today | date: 'dd/MM/yyyy'}}</span>
+          <span *ngIf="!isNew(element)" class="spanColor spansize">{{element?.dateDebutValidite | date: 'dd/MM/yyyy'}}</span>
+          <mat-datepicker #DebutValidite></mat-datepicker>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Fin validité -->
+
+      <ng-container matColumnDef="FinValidite">
+        <mat-header-cell *matHeaderCellDef fxFlex="14" class="customFinValiditeHeader">Fin validité</mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="14" class="customFinValiditerow textFormat">
+
+          <div fxLayout="column">
+            <div fxFlex="100%">
+              <div fxLayout="row">
+                <div fxFlex="100%">
+                  <input #dateFinValid [matDatepicker]="finValidite" matInput autocomplete="off" matInput [min]="element.dateDebutValidite"
+                    (dateChange)="onDateFinValidite(dateFinValid.value, element)" [ngModel]='element?.dateFinValidite' />
+                </div>
+
+              </div>
+
+            </div>
+
+            <div fxFlex="100%">
+              <small *ngIf="element.dateError && inValidDateError" style="color:red">Veuillez saisir une date
+                supérieure à la date de début de validité</small>
+              <small *ngIf="element.dateError && formatDateError" style="color:red">format de date invalide </small>
+            </div>
+          </div>
+          <div fxFlex="100%">
+            <mat-datepicker-toggle matSuffix [for]="finValidite" class="mat-icon-button"></mat-datepicker-toggle>
+            <mat-datepicker #finValidite></mat-datepicker>
+          </div>
+        </mat-cell>
+      </ng-container>
+
+
+      <!-- Actions -->
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="classActionsrow">
+          <em (click)="deleteRow(element)" (keydown.enter)="deleteRow(element)" tabindex="{{generateTabIndex()}}" class="sam-tooltip sam-icon ion-trash-a">
+            <span class="sam-tooltiptext">Supprimer</span>
+          </em>
+        </mat-cell>
+      </ng-container>
+
+
+      <!-- extra -->
+      <ng-container matColumnDef="expandedArea">
+        <mat-header-cell *matHeaderCellDef class="customMontantHeader">Libellé </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="disabledIntitule">
+          {{element?.libelle}}
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <!-- mat-row pour l'affichage des différents lignes de la table -->
+      <mat-row *matRowDef="let row; columns: displayedColumns; let index=index" matRipple class="element-row css-mat"
+        [class.expanded]="expandedElement === row"></mat-row>
+      <!-- mat-row pour afficher le motif sur l'avis -->
+      <mat-row *matRowDef="let row; columns: ['expandedArea']; when: isExpansionMotifDossier" [@detailExpand]="'collapsed'"
+        style="overflow: hidden">
+      </mat-row>
+    </mat-table>
+  </ba-card>
+
+  <!-- Quitter || Enregistrer -->
+  <div fxLayout="row" fxLayoutAlign="space-around end">
+    <div fxFlex="80">
+
+    </div>
+    <button #button mat-raised-button (click)="close()" type="button" fxFlex="12" tabindex="350000">
+      <em class="ion-close siga-form-cancel"></em> &nbsp;Quitter
+    </button>
+    <div fxFlex="12"> </div>
+    <button #button mat-raised-button [disabled]="!canAdd" tabindex="350001" type="submit" (keydown.enter)="onSubmit()"
+      (click)="onSubmit()" fxFlex="12">
+      <em [ngClass]="(canAdd)?'ion-checkmark siga-form-confirm':'ion-checkmark siga-form-invalid'"></em>
+      &nbsp;Enregistrer
+    </button>
+  </div>
+</div>

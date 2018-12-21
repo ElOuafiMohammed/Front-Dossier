@@ -1,0 +1,8 @@
+<div mat-dialog-content>
+  <p>Etes-vous sûr de vouloir supprimer l’opération </p>
+  <h5>"{{operation.natureOperation.ligne}}.{{operation.natureOperation.numero}} - {{operation.natureOperation.libelle}} ({{operation.noOrdre}})"?</h5>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-evenly">
+  <button mat-button (click)="onNoClick()">Annuler</button>
+  <button mat-button (click)="onConfirmClick()" cdkFocusInitial>Supprimer</button>
+</div>

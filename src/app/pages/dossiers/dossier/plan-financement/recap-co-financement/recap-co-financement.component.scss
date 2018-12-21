@@ -1,0 +1,45 @@
+input, span, mat-icon {
+  text-align:right;
+  color : #666;
+}
+span {
+  margin-left: 0.8em;
+}
+mat-form-field  {
+  text-align: right;
+  margin-bottom: -15px !important;
+}
+  
+.content {
+  padding: 24px;
+  color: #666;
+}
+
+.icon-info {
+  color: #666;
+  margin-left: 25%;
+  position: absolute;
+  top: -15px;
+  right: -5px;
+  font-size: 16px;
+}
+.errorMontant {
+  margin-left: 14px;
+}
+.errorMontantAutoFinance{
+  color: red
+}
+
+@media only screen  and (max-width: 1367px) {
+  mat-label{
+     left: 60% !important;
+  }
+}
+
+mat-label{
+  position: absolute;top: -13px; left: 75%;
+}
+
+.align-label{
+  margin-bottom: -15px !important;
+}

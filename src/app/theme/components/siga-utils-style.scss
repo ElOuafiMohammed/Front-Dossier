@@ -1,0 +1,64 @@
+/* Classe pour l'espacement entre la fleche de selection et la croix d'une liste deroulante */
+@import 'src/app/theme/sass/conf/_variables.scss';
+
+/* Pour FF, indiquer un espacement sinon la fleche et la croix sont superposees */
+.space-close{
+  margin-left: 10px;
+}
+
+.disableDossier {
+	pointer-events: none;
+	opacity: .8;
+}
+
+.mat-select-arrow-wrapper > div {
+  display: inline-block;
+  vertical-align: calc(3px);
+  margin: 0;
+}
+
+.siga-underlined {
+  border-bottom: 1px solid #b6b6b6;
+}
+
+.mat-select-arrow-down{
+  border-left: $mat-select-arrow-size solid transparent;
+  border-right: $mat-select-arrow-size solid transparent;
+  border-top: $mat-select-arrow-size solid;
+}
+.siga-uppercase-input {
+  text-transform:uppercase;
+}
+.siga-form-invalid {
+  color: $siga-grey-saisi
+}
+
+.siga-error , .siga-form-cancel{
+  color: $siga-red-error !important;
+}
+.siga-form-confirm {
+  color :$siga-green-content;
+}
+
+.siga-numero-dossier-on-table{
+  display: inline-block;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  width:110px !important;
+  color: $siga-green-content;
+        &:hover {
+          font-weight: bold;
+      }
+}
+
+.siga-disable-color {
+  color :$siga-grey-disable;
+}
+
+
+.siga-no-data-found {
+  text-align: center; 
+  font-size: 16px;
+   margin-top:18px;
+   color: $siga-grey-saisi;
+}

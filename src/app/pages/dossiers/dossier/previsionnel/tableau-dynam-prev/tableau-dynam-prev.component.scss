@@ -1,0 +1,19 @@
+@import 'src/app/theme/components/siga-tableau-component.scss';
+.margin-tableau-previsionel{
+  margin-left: 2em;
+}
+
+:host /deep/ .total-aide-prev-align{margin-right: 8%;} 
+:host /deep/ .total-operation--prev-align{margin-right: 2.5%;} 
+
+@media screen and (min-width: 1361px) {
+  :host /deep/ .total-aide-prev-align{margin-right: 6%;} 
+  :host /deep/ .total-operation--prev-align{margin-right: 3%;} 
+ }
+
+@media screen and (max-width: 1360px) {
+  :host /deep/ .total-aide-prev-align{margin-right: 8%;} 
+  :host /deep/ .total-operation--prev-align{margin-right: 2.5%;} 
+
+}
+

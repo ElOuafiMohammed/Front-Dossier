@@ -1,0 +1,304 @@
+@import 'src/app/pages/dossiers/dossier/dossier.component.scss';
+@import 'src/app/theme/sass/conf/_variables.scss';
+@import 'src/app/theme/components/siga-utils-style.scss';
+// .siga-choix-themes-component {
+//     margin-top: 9px;
+//     margin-left: 20px;
+//     margin-bottom: 10px
+// }
+
+.siga-theme-dropdown {
+  border-bottom: 1px solid #949494;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  width: 80%;
+}
+
+.siga-encadrement{
+  border-bottom: 1px solid #949494;
+  margin-bottom: 5px;
+  min-width: 366px;
+  max-width: 366px;
+}
+
+.format-sld-N-standard {
+  font-size: 12px !important;
+  color: $siga-grey-saisi;
+  background-color: rgb(235, 231, 231);
+  margin: 5px;
+  width: auto;
+  max-width: 580px;
+  height: auto;
+  padding: 8px 5px 5px 15px;
+}
+.inputSldNstd {
+  padding-bottom: -0.75em;
+  margin-bottom: 0px;
+}
+.siga-close-button {
+  font-size: 14px;
+}
+  
+.siga-themes-input-text {
+  color: $siga-grey-saisi;
+}
+
+// TODO : Fix - causes side effects
+/deep/ .test{
+background-color: $siga-red-error;
+}
+.recapAides {
+  display: block !important;
+}
+
+.space-around{
+  margin-bottom : 30px;
+  margin-left: 10px;
+
+}
+.recapp {
+  margin-top: -90px !important;
+  margin-left: 8px;
+}
+
+.textRecapModReduction{
+  margin-top: 27px;
+  margin-left: 18px
+}
+.textRecapModVersement{
+  margin-top: 17px !important;
+  margin-left: 18px
+
+}
+.encadrement{
+  margin-left: 20px;
+}
+
+.dispfinan {
+  margin-bottom: 0px !important;
+ outline: none !important;
+}
+.modVersement {
+  margin-top: 20px !important;
+}
+
+.noneContour {
+  outline: none !important;
+}
+/deep/ .justifOptionsClass {
+  min-width: 700px !important;
+}
+
+.justifEcdr {
+  margin-top: 10px
+}
+
+.mat-radio-button {
+  padding-right: 0px !important;
+}
+
+/deep/ .mat-tab-body-content {
+  overflow: hidden !important;
+}
+
+/deep/ .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+   background-color:$siga-green-content;
+}
+
+/deep/ .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+  background-color: $siga-green-menu;
+}
+/deep/  .toggle-refus {
+    .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+        background-color: $siga-grey-disable;
+    }
+    
+    .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+        background-color: $siga-grey-disable-toogle;
+    }
+    pointer-events: none;
+
+}
+
+.siga-libelle-delai{
+  flex:0 0 20%;
+}
+
+// Largeur de la zone de saisie du delai de validite
+/deep/ .siga-libelle-delai .mat-input-underline {
+  width: 150px;
+}
+
+
+
+.description-generale{
+    margin-top: -9px;
+    margin-left: 20px;
+    margin-bottom: 8px;
+}
+
+.siga-generale{
+  margin-top: 27px;
+}
+
+.procedure-decision {
+  margin-top: 19px ;
+  margin-left: 20px;
+  margin-bottom: 16px;
+}
+
+.procedure-label {
+  padding-right: 9px;
+  color: $siga-grey-saisi;
+}
+
+.justif-descOperation{
+  margin-top: 24px ;
+}
+
+.justif-derogation{
+  margin-top: 12px ;
+}
+
+.label-infos{
+  margin-left: 20px;
+  color: $siga-grey-saisi;
+}
+
+.rt-infos{
+  color: $siga-grey-saisi;
+  margin-bottom: 5px;
+  margin-top: 15px !important;
+}
+
+.typ-doc-attr-contents{
+  color: $siga-grey-saisi;
+  margin-left: 30px;
+}
+
+.typ-doc-attr-infos {
+  color: $siga-grey-saisi;
+  margin-top: 10px;
+  margin-left: 20px;
+  padding-bottom: 1.2em; 
+  padding-top: 1.2em;
+}
+.cnv-infos{
+  color: $siga-grey-saisi;
+  margin-top: 10px;
+}
+.infos-specifiques {
+    border-top: 3px solid #e8e8e8;
+}
+
+input, textarea {
+  color : $siga-grey-saisi;
+}
+
+.infos{
+  margin-bottom: 8px !important;
+  margin-top: 10px;
+}
+
+.prix-eaux   {
+  margin-top: 8px;
+}
+
+.prix-eaux input  {
+  text-align: right;
+}
+.content{
+    overflow: hidden;
+    width:100%;
+    overflow-y: hidden !important;
+
+}
+
+
+.descriptif-tech {
+  border:1px solid #666999;
+  height: 23px;
+  width: 158px;
+  border-radius: 3px;
+  color: $siga-grey-saisi;
+  padding: 3px;
+  font-weight: 405;
+}
+
+.mat-raised-button {
+  line-height: 22px;
+  padding: 0 10px;
+  box-shadow: 0px 0px 0px 1px;
+  font-size: small;
+  color: $siga-grey-saisi;
+}
+
+.icon-descTech{
+  margin-left: 5px;
+}
+
+.detail-descTech {
+    margin: 1px 30px;
+}
+
+.detail-descTech-error{
+  margin: 1px 30px;
+}
+
+.siga-choix-themes-component {
+    margin-top: 4px;
+    margin-left: 20px;
+    margin-bottom: 10px
+}
+  
+
+.siga-choix-encd-component {
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-bottom: 10px
+}
+
+.siga-theme-card-container {
+  display: inline-block;
+}
+
+.siga-form-invalid {
+  color: $siga-grey-saisi
+}
+
+.textRecap{
+  margin-top: 105px !important;
+    margin-bottom: 16px
+}
+
+.dispTech {
+  margin-top: 20px !important;
+  outline: none !important;
+}
+.modReduction {
+  margin-top: -12px !important;
+}
+
+.toggle{
+  margin-bottom: 10px;
+  margin-top: -3px
+}
+
+.mva_rb {
+  margin-top: 15px !important;
+}
+.siga-close-button, .mat-icon, .mat-icon-button {
+  line-height: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.siga-position-des-tec-bottom {
+margin-bottom: 16px;
+}
+
+.siga-piece-non-standard {
+  width: 95.8% !important;
+   padding-bottom: 0px;
+ margin-top: -9px
+}

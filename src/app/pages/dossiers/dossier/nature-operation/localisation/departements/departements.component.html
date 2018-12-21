@@ -1,0 +1,61 @@
+<div [ngClass]="{ disableInput : viewRight || viewAdministratif || !currentOperation.localisationPertinente }">
+  <div fxLayout="row" class="space-around content">
+    <span class="text">Départements</span>
+  </div>
+  <form [formGroup]="formDepartements">
+    <div fxLayout="row" class="space-around content">
+      <mat-form-field fxFlex="25" class="operation-align">
+        <div fxLayout="row">
+          <label class="label-bv-gestion" for="inputDepartement" [hidden]="isHidden">
+            {{ currentOperation.departements !=null && currentOperation.departements.length >1 ?
+            currentOperation.departements.length
+            + ' Départements sélectionnés': currentOperation.departements.length ===1 ? '1 Département sélectionné' :
+            ''}}
+          </label>
+          <span class="input-wrapper-bv-gestion">
+            <input #input matInput id="inputDepartement" placeholder="{{currentOperation.departements !=null && currentOperation.departements.length >0 ? '' : '+ Département(s)' }}"
+              [matAutocomplete]="departementsAutoComplete" formControlName="departements" (focus)="onFocus()" (blur)="onBlur()"
+              (input)="onInput($event)">
+          </span>
+          <div class="mat-select-arrow-wrapper">
+            <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !departementsAutoComplete.isOpen, 'mat-select-arrow-up': departementsAutoComplete.isOpen}"></div>
+          </div>
+        </div>
+        <button mat-button type="button" *ngIf="departementsControl.value" matSuffix mat-icon-button aria-label="Clear"
+          (click)="departementsControl.setValue(null)">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error *ngIf="departementsControl.touched && departementsControl.hasError('departementsNotFound')" class="error-autocomplete">
+          <strong>
+            {{'messages.erreurChoixOption' | translate}}
+          </strong>
+        </mat-error>
+
+        <mat-autocomplete (optionSelected)="onDepartementSelect($event.option.value)" #departementsAutoComplete="matAutocomplete"
+          [autoActiveFirstOption]="true" [displayWith]="displayDepartements">
+          <mat-option *ngFor="let departement of listDepartementsObservable | async; trackBy: trackById;" [value]="departement">
+            <span> {{departement?.numero}}</span>
+            <span> - </span>
+            <span> {{departement?.nomDept}} </span>
+          </mat-option>
+        </mat-autocomplete>
+
+      </mat-form-field>
+    </div>
+
+  </form>
+</div>
+
+<div [ngClass]="{'container-error': departementsControl.touched && departementsControl.hasError('departementsNotFound')}"
+  class="container">
+  <div *ngFor="let departement of currentOperation.departements; trackBy: trackById">
+    <siga-app-localisation-card [departement]="departement" (deleteEventEmitter)="onDeleteDepartement($event)"
+      [localisationPertinente]="currentOperation.localisationPertinente" class="departement"></siga-app-localisation-card>
+  </div>
+</div>
+
+
+<div fxLayout="row">
+  <siga-app-communes [currentOperation]="currentOperation" id="selector-communes" (erreurEventCommune)="onErreurEventCommune($event)"
+    (eventCommuneEditMode)="onEventCommuneEditMode($event)"></siga-app-communes>
+</div>

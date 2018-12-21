@@ -1,0 +1,29 @@
+@import 'src/app/theme/sass/conf/_variables.scss';
+
+/deep/ {
+  .width-input-select-dispositif {
+     min-width: 58px;
+     max-width: 58px;
+  }
+  
+  .mat-autocomplete-panel.mat-autocomplete-visible {
+    width: 300px;
+  }
+
+  .mat-select-panel {
+    min-width: 112px;
+    max-width: 800px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-top: 0;
+    padding-bottom: 0;
+    max-height: 256px;
+    font-size: 1.1em !important;
+  
+  }
+  }
+
+ .nounderline {
+    color: $siga-grey-saisi !important;
+    cursor: pointer !important;
+  }

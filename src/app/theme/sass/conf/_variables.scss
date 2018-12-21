@@ -1,0 +1,64 @@
+$font-family: 'Roboto', sans-serif;
+
+$resXXL: 1280px;
+$resXL: 1170px;
+$resL: 991px;
+$resM: 768px;
+$resS: 660px;
+$resXS: 500px;
+$resXXS: 435px;
+$resMin: 320px;
+
+$top-height: 66px;
+$sidebar-width: 220px;
+
+$small-card-height: 114px;
+$xsmall-card-height: 187px;
+$medium-card-height: 400px;
+$extra-medium-card-height: 550px;
+$large-card-height: 974px;
+$mat-tab-body-min-height:590px !default;
+
+$default-animation-duration: 0.2s;
+$default-animation-style: ease-out;
+
+$assets-root: '/assets';
+$images-root: '/img/';
+$fonts-root: '/fonts/';
+$font-thin: 100;
+$font-light: 300;
+$font-normal: 400;
+$font-bold: 700;
+$font-bolder: 500;
+$font-ultraBold: 900;
+
+$facebook-color: #3b5998;
+$twitter-color: #55acee;
+$google-color: #dd4b39;
+$linkedin-color: #0177B5;
+$github-color: #6b6b6b;
+$stackoverflow-color: #2F96E8;
+$dribble-color: #F26798;
+$behace-color: #0093FA;
+
+// Charte graphique color
+
+//$siga-grey-actif:#666666;
+//$siga-grey-disable:#c5c5c5;
+// $siga-grey-saisi:#ABABAB;
+$siga-grey-white:#FFF;
+$siga-green-content:#1A8278;
+$siga-green-menu: #21A698;
+$siga-green-opa66:#6CBFB7;
+
+$siga-green-opa34:#B4DEDA; // green opacity 34 %
+$siga-red-error:#f44336 ;
+$mat-tab-body-min-height: 590px;
+$mat-select-arrow-size: 5px !default;
+
+$siga-grey-actif:#1a1a1a; // en train de saisir
+$siga-grey-actif-a2:#666666; // pour certain texte ou titre
+$siga-grey-disable:#767676; //disabled
+$siga-grey-saisi:#424242; // déjà renseigner 
+$siga-grey-disable-toogle:#a8a8a8;
+$siga-table-row-hover: #EDEDED;

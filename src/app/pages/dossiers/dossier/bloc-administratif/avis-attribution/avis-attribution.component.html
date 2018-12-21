@@ -1,0 +1,63 @@
+<form [formGroup]="formAvisAttribution" (keydown.enter)="$event.preventDefault()" fxLayout="column" fxLayoutAlign="space-between">
+
+  <!-- Avis -->
+  <div fxLayout="row" class="avis" fxLayoutAlign="space-between" fxLayoutAlign="start">
+    <div fxFlex="20">
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Avis" [matAutocomplete]="avisAutoComplete" formControlName="avis" tabindex="1" fxFlex="100">
+        <div class="mat-select-arrow-wrapper">
+          <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !avisAutoComplete.isOpen, 'mat-select-arrow-up': avisAutoComplete.isOpen}"></div>
+        </div>
+        <button mat-button class="space-close" *ngIf="avisControl.value && !viewRight && !viewAdministratif" matSuffix mat-icon-button
+          aria-label="Clear" (click)="avisControl.setValue(null); avisControl.markAsDirty(); motifAvisControl.setValue(null)">
+          <mat-icon>close</mat-icon>
+        </button>
+
+        <mat-hint></mat-hint>
+
+        <mat-error *ngIf="!avisControl.hasError('required') && avisControl.touched && avisControl.hasError(avisValidatorKey)">
+          <strong>{{'messages.erreurChoixOption' | translate}} </strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <mat-autocomplete #avisAutoComplete="matAutocomplete" [displayWith]="displayAvis" [autoActiveFirstOption]="true">
+      <mat-option *ngFor="let avis of filteredAvis | async; trackBy: trackById" [value]="avis">
+        <span> {{avis.code}} </span>
+        <span> - </span>
+        <span> {{avis.libelle}} </span>
+      </mat-option>
+    </mat-autocomplete>
+  </div>
+
+  <!-- Motif -->
+  <div fxLayout="row" class="motif">
+    <mat-form-field fxFlex="50">
+      <textarea #motif (click)="addLine($event,motif)" (keyup)="addLine($event,motif)" placeholder="Motif" formControlName="motifAvis"
+        matInput rows="5" tabindex="2"></textarea>
+      <mat-error *ngIf="motifAvisControl.hasError('emptyJustif')">
+        <strong>
+          {{'messages.discriptionGenerale.erreurJustifDerogation' | translate}}
+        </strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <!-- Affiché à partir de A05 -->
+  <div *ngIf="this.dossierService.dossier?.dossierAdmin" class="attributifNumDate">
+    <!--  N° doc attributif et Date attribution-->
+    <div fxLayout="row">
+
+      <!--  N° doc attributif -->
+      <div fxLayout="column" class="avisAttr">
+        <mat-form-field fxFlex="10" class="attributifNum">
+          <input matInput placeholder="N° doc attributif" formControlName="numeroAttributif" tabindex="3">
+        </mat-form-field>
+      </div>
+     </div>
+    <div>
+      <span *ngFor="let verification of dossierAdmin.verifsDossier" fxLayout="row" class="rt-infos">
+        {{displayMessage(verification)}}
+      </span>
+    </div>
+
+  </div>
+</form>

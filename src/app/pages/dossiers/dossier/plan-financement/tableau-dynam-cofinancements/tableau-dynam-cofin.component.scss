@@ -1,0 +1,54 @@
+@import 'src/app/theme/sass/conf/conf.scss';
+@import 'src/app/theme/components/siga-tableau-component.scss';
+@import 'src/app/theme/sass/conf/_variables.scss';
+.margin-tableau-cofin{
+  margin-left: 2em;
+}
+
+
+:host /deep/ {
+  .table-spec { 
+    td:nth-child(1) {
+      line-height: 30px;
+     } 
+     table thead  {
+      color: $siga-red-error;
+     } 
+
+     th:nth-child(2) {
+      text-align: left !important;
+    }
+    th:nth-child(3) {
+      text-align: left !important;
+    }
+  }
+
+  ng2-smart-table ng2-smart-table-cell {
+    line-height: 30px;
+    font-size: 0.8em;
+    text-align: left !important;
+  }
+  table {
+    line-height: 1.5em;
+    border-collapse: collapse;
+    border-spacing: 0;
+    display: table;
+    width: 100%;
+    max-width: 100%;
+    min-width: 100% !important;
+    overflow: auto;
+    word-break: normal;
+    word-break: keep-all;
+  }
+}
+
+.siga-form-addLine{ 
+  color: $siga-green-content !important;
+  border: 1px solid $siga-green-content !important;
+  padding: .2em;
+  padding-top: .3em;
+  width: 185px;
+  em {
+    color: $siga-green-content;
+  } 
+}

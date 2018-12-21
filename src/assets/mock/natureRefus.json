@@ -1,0 +1,72 @@
+[
+  {
+    "id": "09",
+    "libelle": "Ariège Testing",
+    "code": "string",
+    "codeParam": "string",
+    "libelleParam": "string"
+  },
+  {
+    "id": 31,
+    "libelle": "Haute-Garonne",
+    "code": "string",
+    "codeParam": "string",
+    "libelleParam": "string"
+  },
+  {
+    "id": 32,
+    "libelle": "Gers",
+    "code": "string",
+    "codeParam": "string",
+    "libelleParam": "string"
+  },
+  {
+    "id": 33,
+    "libelle": "Gironde",
+    "code": "string",
+    "codeParam": "string",
+    "libelleParam": "string"
+  },
+  {
+    "id": 40,
+    "libelle": "Landes",
+    "code": "string",
+    "codeParam": "string",
+    "libelleParam": "string"
+  },
+  {
+    "id": 47,
+    "libelle": "Lot-et-Garonne",
+    "code": "string",
+    "codeParam": "string",
+    "libelleParam": "string"
+  },
+  {
+    "id": 64,
+    "libelle": "Pyrénées-Atlantiques",
+    "code": "string",
+    "codeParam": "string",
+    "libelleParam": "string"
+  },
+  {
+    "id": 65,
+    "libelle": "Hautes-Pyrénées",
+    "code": "string",
+    "codeParam": "string",
+    "libelleParam": "string"
+  },
+  {
+    "id": 81,
+    "libelle": "Tarn",
+    "code": "string",
+    "codeParam": "string",
+    "libelleParam": "string"
+  },
+  {
+    "id": 82,
+    "libelle": "Tarn-et-Garonne",
+    "code": "string",
+    "codeParam": "string",
+    "libelleParam": "string"
+  }
+]

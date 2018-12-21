@@ -1,0 +1,13 @@
+<div *ngIf="rowData.disable" class="disabled-col">
+  <span>{{rowData.type}}</span>
+</div>
+<div *ngIf="!rowData.disable">{{rowData?.type}}
+  <mat-form-field>
+    <mat-select (selectionChange)="change(selected)" [(value)]="selected" tabindex="{{index_tab_type}}">
+      <mat-select-trigger>{{selected?.code}}</mat-select-trigger>
+      <mat-option *ngFor="let procedure of procedures; trackBy: trackById" [value]="procedure">
+        <span> {{ procedure.code }} </span>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

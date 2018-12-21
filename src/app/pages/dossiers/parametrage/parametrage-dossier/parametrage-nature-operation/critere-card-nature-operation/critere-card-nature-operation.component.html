@@ -1,0 +1,102 @@
+<mat-card class="util-padding">
+  <div class="siga-spacing-bottom"></div>
+  <form novalidate (ngSubmit)="onSubmit()" [formGroup]="formCritere" (keydown.enter)="$event.preventDefault()">
+    <div fxLayout="column" fxLayoutAlign="space-between stretch">
+
+      <div fxLayout="row" fxLayoutAlign="space-around center">
+        <!-- Thématique -->
+        <mat-form-field fxFlex="10" class="thema">
+          <div fxLayout="row">
+            <input matInput placeholder="Thématique" [matAutocomplete]="thematicAutoComplete" formControlName="thematique"
+              tabindex="1">
+            <div class="mat-select-arrow-wrapper">
+              <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !thematicAutoComplete.isOpen, 'mat-select-arrow-up': thematicAutoComplete.isOpen}"></div>
+            </div>
+          </div>
+          <button class="space-close" mat-button *ngIf="thematiqueControl.value" matSuffix mat-icon-button aria-label="Clear"
+            (click)="thematiqueControl.setValue('')">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-error *ngIf="!thematiqueControl.hasError('required') && thematiqueControl.touched && thematiqueControl.hasError('thematiqueNotFound')">
+            <strong>
+              {{'messages.erreurChoixOption' | translate}}
+            </strong>
+          </mat-error>
+          <mat-autocomplete class="thematiqueOptionsClass" #thematicAutoComplete="matAutocomplete" [displayWith]="displayThematique"
+            [autoActiveFirstOption]="true">
+            <mat-option *ngFor="let thematique of filteredThematiques | async; trackBy: trackById" [value]="thematique">
+              <span> {{thematique.code}} </span>
+              <span> - </span>
+              <span> {{thematique.libelle}} </span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <!-- ligne -->
+        <mat-form-field fxFlex="10">
+          <div fxLayout="row">
+            <input matInput placeholder="Ligne" [matAutocomplete]="ligneAutoComplete" formControlName="ligne" tabindex="1">
+            <div class="mat-select-arrow-wrapper">
+              <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !ligneAutoComplete.isOpen, 'mat-select-arrow-up': ligneAutoComplete.isOpen}"></div>
+            </div>
+          </div>
+          <button class="space-close" mat-button *ngIf="ligneControl.value" matSuffix mat-icon-button aria-label="Clear"
+            (click)="ligneControl.setValue('')">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-error *ngIf="!ligneControl.hasError('required') && ligneControl.touched && ligneControl.hasError('ligneNotFound')">
+            <strong>
+              {{'messages.erreurChoixOption' | translate}}
+            </strong>
+          </mat-error>
+          <mat-autocomplete class="ligneOptionsClass" #ligneAutoComplete="matAutocomplete" [displayWith]="displayLigne"
+            [autoActiveFirstOption]="true">
+            <mat-option *ngFor="let ligne of filteredLignes | async; trackBy: trackById" [value]="ligne">
+              <span> {{ligne.numero}} </span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <!-- valide -->
+        <mat-form-field fxFlex="10">
+          <div fxLayout="row">
+            <input matInput placeholder="Valide" [matAutocomplete]="validAutoComplete" formControlName="valide"
+              tabindex="1">
+            <div class="mat-select-arrow-wrapper">
+              <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !validAutoComplete.isOpen, 'mat-select-arrow-up': validAutoComplete.isOpen}"></div>
+            </div>
+          </div>
+          <button class="space-close" mat-button *ngIf="valideControl.value" matSuffix mat-icon-button aria-label="Clear"
+            (click)="valideControl.setValue('')">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-error *ngIf="!valideControl.hasError('required') && valideControl.touched && valideControl.hasError('validNotFound')">
+            <strong>
+              {{'messages.erreurChoixOption' | translate}}
+            </strong>
+          </mat-error>
+          <mat-autocomplete class="valideOptionsClass" #validAutoComplete="matAutocomplete" [displayWith]="displayValide"
+            [autoActiveFirstOption]="true">
+            <mat-option *ngFor="let valide of listValide; trackBy: trackById " [value]="valide">
+              <span> {{valide}} </span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <div fxLayout="row" fxLayoutAlign="space-around center">
+          <!-- Launch search -->
+          <span fxFlex="35" fxLayoutAlign="space-around center">
+            <div fxLayout="row">
+              <button mat-raised-button [disabled]="!formCritere.valid " type="submit" fxFlex="30" tabindex="6"
+                (keydown.enter)="onSubmit()">
+                <em class="ion-search" [ngClass]="{'siga-form-confirm': formCritere.valid }"></em>
+              </button>
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="siga-spacing-bottom"></div>
+</mat-card>
+<div class="siga-spacing-bottom"></div>

@@ -1,0 +1,160 @@
+{
+  "general": {
+    "home": "Dossiers",
+    "language": {
+      "french": "Français",
+      "english": "Anglais"
+    },
+    "created_with": "Créé avec"
+  },
+  "dossier": {
+    "create": {
+      "labels": {},
+      "errors": {}
+    },
+    "update": {
+      "previsionnel": {
+        "dispositifs_rattaches": "Dispositifs de partenariat rattachés",
+        "rattacher_DP": "Rattacher DP",
+        "visionner": "Visionner",
+        "type_DP": "Type DP",
+        "numero_DP": "Numéro DP",
+        "complement_intitule": "Complément intitulé",
+        "supprimer": "Supprimer"
+      },
+      "ouvrage": {
+        "maitre_ouvrage": "Maître d'ouvrage",
+        "libelle_maitre_ouvrage": "Libellé maître d'ouvrage",
+        "etat": "Etat",
+        "type": "Type",
+        "commune": "Commune",
+        "departement": "Département",
+        "libelle": "Libellé",
+        "boutonAjouter": "Ajouter ouvrage(s)",
+        "RechercheOuvrageTitre": "Recherche ouvrage",
+        "RechercheOuvrageValider": "Valider",
+        "RechercheOuvrageRechercher": "Rechercher"
+      },
+      "courrier": {
+        "buttonCreate": "Créer un courrier",
+        "titrePopup": "Nouveau courrier - ",
+        "modele": "Modèle",
+        "destinataire": "Destinataire",
+        "titre": "Titre",
+        "dateCreation": "Date création",
+        "raisonSociale": "Raison sociale",
+        "lrAvisReception": "LR avec avis de récéption",
+        "adresse": "Adresse",
+        "contact": "Contact",
+        "codePostal": "Code postal",
+        "vosRef": "Vos références",
+        "nosRef": "Nos références",
+        "copie": "Copie adressée pour information à",
+        "objet": "Objet",
+        "signataire": "Signataire",
+        "annule": "Annuler",
+        "genere": "Générer courrier",
+        "titre_colonne_reference": "Référence",
+        "titre_colonne_destinataire": "Destinataire",
+        "titre_colonne_objet": "Objet",
+        "titre_colonne_redacteur": "Rédacteur"
+      },
+      "pieceJointe": {
+        "titre_colonne_titre": "Titre",
+        "titre_colonne_createur": "Associé Par",
+        "titre_colonne_date_creation": "Crée le",
+        "piece_jointe": "Pièce(s) jointe(s)"
+      },
+      "localisation": {
+        "titreBvGestion": "BV de gestion"
+      }
+    }
+  },
+  "messages": {
+    "tooltipValueSearch": "Le symbole % peut être utilisé en remplacement de texte inconnu. Exemples d'utilisation : <<%syndicat>> signifie que le libellé se termine par le mot syndicat, <<syndicat%>> signifie que le libellé commence par le mot syndicat, <<%syndicat%>> signifie que le mot syndicat est contenu dans le libellé",
+    "erreurMontant": "Saisie incorrecte (Opération >= Eligible >= Retenu)",
+    "erreurAutoFinancement": "L'autofinancement doit être supérieur à 0",
+    "erreurTauxFinancement": "Le taux ne doit pas dépasser 100%",
+    "erreurMail": "E-mail incorrect ",
+    "erreurTelephone": "Numéro Incorrect",
+    "erreurChoixOption": "Sélection incorrecte",
+    "bverrorlist": "Le nom ou le numéro du BV saisi n'existe pas",
+    "erreurSauvegarde": "La création du dossier a échoué. Contacter l'administrateur.",
+    "benefInactif": "Ce bénéficiaire est inactif",
+    "benefCodeFormat": "Format incorrect : 99999999A",
+    "sirenCodeFormat": "Format incorrect : 012345678",
+    "interlocuteurRequis": "Veuillez ajouter un Interlocuteur",
+    "nicCodeFormat": "Format incorrect : 01234",
+    "phoneCodeFormat": "Format incorrect : 0123456789",
+    "formatName": "Un nom ne peut commencer que par une lettre",
+    "numIncrementFormat": "Le format doit être 5 chiffres",
+    "numNatureOperation": "Le format doit être 2 chiffres",
+    "numSessionDecision": "Le format doit être 1 ou 2 chiffres",
+    "sessionDepasse": "Session dépassée",
+    "erreurDateRequise": "Veuillez renseigner la date",
+    "erreurDateLength": "Vérifiez le nombre de chiffres saisis.",
+    "erreurDateFormat": "Le format doit être de type jj/mm/aaaa.",
+    "erreurDateValid": "Veuillez sélectionner / saisir une date valide.",
+    "veuillezSaisirNumeroMasseEau": "Veuillez saisir un numéro de masse d'eau",
+    "erreurLimitInfDate": "Veuillez saisir une date supérieure au 01/01/1950.",
+    "erreurLimitInfDateDemande": "Veuillez saisir une date supérieure à la date de demande",
+    "erreurLimitInfDateDebutValidite": "Veuillez saisir une date supérieure à la date de début de validité",
+    "erreurLimitSupDate": "Veuillez saisir une date inférieure à la date du jour",
+    "erreurLimitPrevDate": "Veuillez saisir une année >= à l'année en cours",
+    "erreurSelection": "Sélection incorrecte",
+    "erreurFormatNumeroDP": "Le format doit être 4 chiffres",
+    "messageErrorDispositifMontantAvance": "Le montant Avance affecté doit être inférieur ou égal au montant avance de Coût/Aides.",
+    "messageErrorDispositifMontantSubvention": "Le montant Subvention affecté doit être inférieur ou égal au montant subvention de Coût/Aides.",
+    "messageErrorDispositifRattache": "Veuillez saisir le type et le numéro du dispositif.",
+    "messageErrorTypeDispositif": "Le format du numéro DP doit être 4 chiffres.",
+    "messageMinDateAttribution": "Veuillez saisir une date supérieure à la date de dernère attribution :",
+    "pasdeDonnes":"Pas de données associées",
+    "discriptionGenerale": {
+      "erreurJustifDerogation": "Veuillez renseigner la justification de la dérogation",
+      "erreurJustifMarge": "Veuillez renseigner la justification de la marge d'avenir",
+      "erreurDelaiValidite": "Veuillez renseigner une valeur >= 48 ou <= 72"
+    },
+    "recherche": "Ce champ est obligatoire",
+    "dateAttributionReq": "Ce champ est obligatoire pour attribuer",
+    "recap": {
+      "erreurJustifEncadrement": "Veuillez sélectionner au moins une justification",
+      "erreurtextModaliteVersement": "Veuillez renseigner le texte associé aux modalités de versement"
+    },
+    "dispositifsRattaches": {
+      "erreurTypeNumero": "Veuillez saisir le bon type et le bon numéro."
+    },
+    "montantAideManuel": {
+      "erreurPourcentAvance": "doit être un pourcentage",
+      "erreurAvanceSupCent": "doit être inférieur à 100",
+      "erreurMontantSupTRetenu": "Montant doit être inférieur au montant de référence"
+    },
+    "previsionnel": {
+      "erreurLimitInfAnnee": "Saisir une année > à 1950.",
+      "erreurLimitSupAnnee": "Saisir une année < à 2050.",
+      "erreurLimitPrev": "Saisir une année >= à l'année en cours",
+      "erreurNumOrdre": "Veuillez saisir un numéro d'ordre"
+    },
+    "pieces": {
+      "messageErreurTechnique": "erreur technique - impossible d'afficher ou d'associer un document"
+    },
+    "autres_infos": {
+      "erreurCumulMontantAvance": "Le cumul des avances rattachées aux différents dispositifs hors CPER ne peut pas être supérieur au montant d’avance du dossier.",
+      "erreurCumulMontantSubvention": "Le cumul des subventions rattachées aux différents dispositifs hors CPER ne peut pas être supérieur au montant d’avance du dossier."
+    },
+    "impact": {
+      "erreurValeurNumber": "La valeur de l'impact '' {0} '' doit être un nombre.",
+      "erreurValeurDateSuperieur": "Veuillez saisir une date inférieure à la date du jour.",
+      "erreurValeurDateInferieur": "Veuillez saisir une année supérieure à '1950'",
+      "erreurValeurDateInexistante": "Veuillez sélectionner / saisir une date valide",
+      "erreurValeurDateformatInvalide": "Le format n'est pas valide. Le format doit être de type jj/mm/aaaa.",
+      "erruerValeurDateVerifierNombreChiffresSaisis": "Vérifiez le nombre de chiffres saisis.",
+      "noData": "aucun impact",
+      "erreurListeValeurChoixUnique": "Sélection de valeur incorrecte pour l'impact '' {0} ''",
+      "erreurGeneriqueImpact": "Au moins une information saisie n'a pas le bon format"
+    },
+    "remarque": {
+      "destinataire": " Veuillez sélectionner un destinataire valide",
+      "remarqueATraites": "Dossiers avec remarques à traiter"
+    }
+  }
+}

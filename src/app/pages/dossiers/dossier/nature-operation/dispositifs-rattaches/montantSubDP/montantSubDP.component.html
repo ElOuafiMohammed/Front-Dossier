@@ -1,0 +1,4 @@
+<input #montantSubDispositif *ngIf="rowData.dispositifPartenariat.complementIntitule && rowData.montantSubvention !== null "
+  maxlength="10" matInput [ngModel]="value | formatMonetaire" [formControl]="control" (input)="onlyNumber(control, $event)"
+  (blur)="onBlurEvent()" (click)="onClick($event)" tabindex="{{indexTabSubvention}}" class="inputMontant erreurCumulMontantSubvention"
+  [ngClass]="{erreurSubventionColor: rowData?.erreurSubvention}" (focus)="onFocus()">

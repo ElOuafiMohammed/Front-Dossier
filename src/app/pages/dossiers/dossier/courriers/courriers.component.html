@@ -1,0 +1,51 @@
+<div fxLayout="row" fxLayoutAlign="end space-between" class="siga-content-add">
+  <button type="button" (click)="createCourrier()" class="siga-bouton btn btn-default siga-form-space font-size-parcourir siga-form-parcourir">
+    <em class="espacement ion-android-mail "></em>
+    <span>{{'dossier.update.courrier.buttonCreate' | translate}}</span>
+  </button>
+</div>
+<!-- Table des courriers -->
+<mat-table id="courrierTable" [dataSource]="courrierDataSource">
+
+  <!-- Colonne référence -->
+  <ng-container matColumnDef="reference">
+    <mat-header-cell *matHeaderCellDef class="siga-table-courrier-reference">
+      {{ 'dossier.update.courrier.titre_colonne_reference' | translate }}
+    </mat-header-cell>
+    <mat-cell *matCellDef="let courrier" class="siga-table-courrier-reference">
+      <span class="siga-numero-dossier-on-table siga-url-courrier" (click)="readCourrier(courrier)">
+        {{ courrier.reference }}
+      </span>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Colonne Destinataire -->
+  <ng-container matColumnDef="destinataire">
+    <mat-header-cell *matHeaderCellDef class="siga-table-courrier-destinataire">
+      {{ 'dossier.update.courrier.titre_colonne_destinataire' | translate }}
+    </mat-header-cell>
+    <mat-cell *matCellDef="let courrier " class="siga-table-courrier-destinataire"> {{ courrier.destinataire }}
+    </mat-cell>
+  </ng-container>
+
+  <!-- Colonne Objet -->
+  <ng-container matColumnDef="objet">
+    <mat-header-cell *matHeaderCellDef class="siga-table-courrier-objet">
+      {{ 'dossier.update.courrier.titre_colonne_objet' | translate }}
+    </mat-header-cell>
+    <mat-cell *matCellDef="let courrier" class="siga-table-courrier-objet"> {{ courrier.objet }} </mat-cell>
+  </ng-container>
+
+  <!-- Colonne Rédacteur -->
+  <ng-container matColumnDef="redacteur">
+    <mat-header-cell *matHeaderCellDef class="siga-table-courrier-redacteur">
+      {{ 'dossier.update.courrier.titre_colonne_redacteur' | translate }}
+    </mat-header-cell>
+    <mat-cell *matCellDef="let courrier" class="siga-table-courrier-redacteur"> {{ courrier.redacteur }} </mat-cell>
+  </ng-container>
+
+  <!-- Configuation des lignes du table -->
+  <mat-header-row *matHeaderRowDef="courrierTableColonne"></mat-header-row>
+  <mat-row *matRowDef="let courrier; columns: courrierTableColonne"></mat-row>
+</mat-table>
+<!-- //Table des courriers -->

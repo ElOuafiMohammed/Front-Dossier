@@ -1,0 +1,36 @@
+<div fxLayout="row" fxLayoutAlign="space-end center" class="siga-position-session">
+  <!-- Libelle CI -->
+  <div fxLayout="column" fxLayoutAlign="end center" class="session-type">
+    <span fxFlex="20"></span>
+    <span class="siga-position-CI">CI</span>
+  </div>
+  <!-- Anne -->
+  <mat-form-field fxFlex="100" class="temp-fix-error-display">
+    <input id="sigaAnnePrev" matInput autocomplete="off" class="siga-position-year" [formControl]="anneeControl"
+      [(ngModel)]="annee" (input)="onlyNumber(anneeControl,$event)" (blur)="onBlur(anneeControl)" [ngClass]="{'siga-error' :errorYear}"
+      maxlength="4" minlength="4">
+  </mat-form-field>
+
+  <!-- Session -->
+  <div fxLayout="row" [ngClass]="{'siga-error-session' :validitySessionDecisionAnnee()}">
+    <span class="marginLeft siga-arrow-position" *ngIf="!partOfList(selected) && selected" fxLayout="column">{{selected?.numero}}</span>
+
+    <mat-form-field fxLayout="column" class="siga-select-position" tabindex="{{indexSelect}}">
+      <mat-select (selectionChange)="change(selected)" [(value)]="selected" [disabled]="!rowData?.beneficiaire?.actif">
+        <mat-select-trigger *ngIf="partOfList(selected)">{{selected?.numero}}</mat-select-trigger>
+        <mat-option *ngFor="let sessionDecision of sessions; trackBy: trackById" [value]="sessionDecision">
+          <span> {{sessionDecision.annee}}</span>
+          <span>-</span>
+          <span> {{sessionDecision.numero}} </span>
+        </mat-option>
+      </mat-select>
+
+    </mat-form-field>
+    <button *ngIf="rowData?.beneficiaire?.actif" id="sigaCloseSession" mat-button matSuffix mat-icon-button aria-label="Clear"
+      (click)="clearSession()">
+      <mat-icon class="siga-position-close">close</mat-icon>
+    </button>
+    <mat-icon *ngIf="validitySessionDecisionAnnee()" class="icon-infoo" matTooltip="Session dépassée"
+      [matTooltipPosition]="'right'" [matTooltipClass]="'tooltip-error'">info</mat-icon>
+  </div>
+</div>

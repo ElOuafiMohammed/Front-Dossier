@@ -1,0 +1,42 @@
+@import 'src/app/theme/sass/conf/_variables.scss';
+.siga-icon{
+  cursor: pointer;
+  visibility: visible;
+  font-size: 1.2em;
+}
+
+.siga-tooltiptext {
+  visibility: hidden;
+  width: 80px;
+  font-size: 70%;
+  background-color: black;
+  color: $siga-grey-white;
+  text-align: center;
+  border-radius: 6px;
+  height: 22px;
+
+  /* Position the siga-tooltip */
+  position: absolute;
+  z-index: 1 !important;
+  margin-left: -40px !important; 
+}
+// SIGA-3634 : suppression code IE
+/*Pour resoudre un probleme d'affichage sur IE*/
+// @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+// 	.siga-tooltiptext {
+//     margin-left: -48px;
+//     margin-top: 22px;
+//   }
+// }
+
+.siga-tooltip:hover .siga-tooltiptext {
+  visibility: visible;
+}
+
+.ion-checkmark {
+  color: $siga-green-content;
+}
+
+
+  
+  

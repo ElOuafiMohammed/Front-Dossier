@@ -1,0 +1,190 @@
+<mat-card class="util-padding">
+
+  <div class="siga-spacing-bottom"></div>
+
+  <form novalidate (ngSubmit)="onSubmit(true)" [formGroup]="formCritere" (keydown.enter)="$event.preventDefault()">
+    <div fxLayout="column" fxLayoutAlign="space-between stretch">
+
+      <div fxLayout="row" fxLayoutAlign="space-around center">
+
+        <!-- Thématique -->
+        <mat-form-field fxFlex="9">
+          <div fxLayout="row">
+            <input id="thematique" matInput placeholder="Thématique" [matAutocomplete]="thematicAutoComplete"
+              formControlName="thematique" tabindex="1">
+            <mat-autocomplete class="thematiqueOptionsClass" #thematicAutoComplete="matAutocomplete" [displayWith]="displayThematique"
+              [autoActiveFirstOption]="true">
+              <mat-option *ngFor="let thematique of filteredThematiques | async; trackBy: trackById" [value]="thematique">
+                <span> {{thematique.code}} </span>
+                <span> - </span>
+                <span> {{thematique.libelle}} </span>
+              </mat-option>
+            </mat-autocomplete>
+            <div class="mat-select-arrow-wrapper">
+              <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !thematicAutoComplete.isOpen, 'mat-select-arrow-up': thematicAutoComplete.isOpen}"></div>
+            </div>
+          </div>
+          <button class="space-close" mat-button *ngIf="thematiqueControl.value" matSuffix mat-icon-button aria-label="Clear"
+            (click)="thematiqueControl.setValue('')">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-error *ngIf="!thematiqueControl.hasError('required') && thematiqueControl.touched && thematiqueControl.hasError('thematiqueNotFound')">
+            <strong>
+              {{'messages.erreurChoixOption' | translate}}
+            </strong>
+          </mat-error>
+        </mat-form-field>
+
+
+
+        <!-- Procédure de décision -->
+        <mat-form-field fxFlex="12" class="temp-fix-error-display">
+          <div fxLayout="row">
+            <input id="procedureDecision" matInput placeholder="Procédure décision" [matAutocomplete]="procedureDecisionAutoComplete"
+              formControlName="procedureDecision" tabindex="2">
+            <div class="mat-select-arrow-wrapper">
+              <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !procedureDecisionAutoComplete.isOpen, 'mat-select-arrow-up': procedureDecisionAutoComplete.isOpen}"></div>
+            </div>
+          </div>
+          <button class="space-close" mat-button *ngIf="procedureDecisionsControl.value" matSuffix mat-icon-button
+            aria-label="Clear" (click)="procedureDecisionsControl.setValue(''); procedureDecisionsControl.markAsDirty();">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-error *ngIf="!procedureDecisionsControl.hasError('required') && procedureDecisionsControl.touched && procedureDecisionsControl.hasError(procedureValidatorKey)">
+            <strong>
+              {{'messages.erreurSelection' | translate}}
+            </strong>
+          </mat-error>
+
+          <mat-autocomplete #procedureDecisionAutoComplete="matAutocomplete" [displayWith]="displayProcedureDecision"
+            [autoActiveFirstOption]="true">
+            <mat-option *ngFor="let procedureDecision of filteredProcedures | async; trackBy: trackById" [value]="procedureDecision">
+              <span> {{procedureDecision.code}}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <!-- Délégation -->
+        <mat-form-field fxFlex="9">
+          <div fxLayout="row">
+            <input id="delegation" matInput placeholder="Délégation" [matAutocomplete]="delegationAutoComplete"
+              formControlName="delegation" tabindex="3">
+            <mat-autocomplete class="DelegationOptionsClass" #delegationAutoComplete="matAutocomplete" [displayWith]="displayDelegation"
+              [autoActiveFirstOption]="true">
+              <mat-option *ngFor="let delegation of filteredDelegations | async; trackBy: trackById" [value]="delegation">
+                <span> {{delegation.code}} </span>
+                <span> - </span>
+                <span> {{delegation.libelle}} </span>
+              </mat-option>
+            </mat-autocomplete>
+            <div class="mat-select-arrow-wrapper">
+              <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !delegationAutoComplete.isOpen, 'mat-select-arrow-up': delegationAutoComplete.isOpen}"></div>
+            </div>
+          </div>
+          <button class="space-close" mat-button *ngIf="delegationControl.value" matSuffix mat-icon-button aria-label="Clear"
+            (click)="delegationControl.setValue('')">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-error *ngIf="!delegationControl.hasError('required') && delegationControl.touched && delegationControl.hasError(delegationsValidatorKey)">
+            <strong>
+              {{'messages.erreurChoixOption' | translate}}
+            </strong>
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Priorité -->
+        <mat-form-field fxFlex="7" class="temp-fix-error-display">
+          <div fxLayout="row">
+            <input id="priorite" matInput placeholder="Priorité" [matAutocomplete]="niveauPrioriteAutoComplete"
+              formControlName="priorite" tabindex="4">
+            <div class="mat-select-arrow-wrapper">
+              <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !niveauPrioriteAutoComplete.isOpen, 'mat-select-arrow-up': niveauPrioriteAutoComplete.isOpen}"></div>
+            </div>
+          </div>
+          <button class="space-close" mat-button *ngIf="prioriteControl.value " matSuffix mat-icon-button aria-label="Clear"
+            (click)="prioriteControl.setValue(''); prioriteControl.markAsDirty();">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-error *ngIf="!prioriteControl.hasError('required') && prioriteControl.touched && prioriteControl.hasError(prioriteValidatorKey)">
+            <strong>
+              {{'messages.erreurSelection' | translate}}
+            </strong>
+          </mat-error>
+
+          <mat-autocomplete class="prioriteOptionsClass" #niveauPrioriteAutoComplete="matAutocomplete" [displayWith]="displayNiveauPriorite"
+            [autoActiveFirstOption]="true">
+            <mat-option *ngFor="let niveauPriorite of filteredPriorites | async; trackBy: trackById" [value]="niveauPriorite">
+              <span> {{niveauPriorite.code}}</span>
+              <span>-</span>
+              <span> {{niveauPriorite.libelle}}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <!-- Domaine  -->
+        <mat-form-field fxFlex="7" class="temp-fix-error-display">
+          <div fxLayout="row">
+            <input di="domaine" matInput placeholder="Domaine" [matAutocomplete]="domaineAutoComplete" formControlName="domaine"
+              tabindex="5">
+            <mat-autocomplete #domaineAutoComplete="matAutocomplete" [displayWith]="displayDomaine"
+              [autoActiveFirstOption]="true">
+              <mat-option *ngFor="let domaine of filteredDomaines | async; trackBy: trackById" [value]="domaine">
+                <span> {{domaine.libelle}} </span>
+              </mat-option>
+            </mat-autocomplete>
+            <div class="mat-select-arrow-wrapper">
+              <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !domaineAutoComplete.isOpen, 'mat-select-arrow-up': domaineAutoComplete.isOpen}"></div>
+            </div>
+          </div>
+          <button class="space-close" mat-button *ngIf="domaineControl.value" matSuffix mat-icon-button aria-label="Clear"
+            (click)="domaineControl.setValue('')">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-error *ngIf="!domaineControl.hasError('required') && domaineControl.touched && domaineControl.hasError(domaineValidatorKey)">
+            <strong>
+              {{'messages.erreurSelection' | translate}}
+            </strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+
+      <!-- Valider ou Devalider -->
+      <div fxLayout="row" fxLayoutAlign="space-around center">
+        <mat-radio-group fxFlexOffset="1.5" fxFlex="25" formControlName="choix" (change)="onValidationSelectOption()"
+          class="sameLine">
+          <span class="validation-label">
+            Dossiers à :
+          </span>
+          <mat-radio-button id="valider" class="mat-radio-button" [value]="'valider'">Valider
+          </mat-radio-button>
+          <mat-radio-button id="devalider" class="mat-radio-button" [value]="'devalider'">Dévalider
+          </mat-radio-button>
+        </mat-radio-group>
+
+        <mat-radio-group fxFlexOffset="1.5" fxFlex="26" formControlName="role" (change)="onValidationSelectOptionService()">
+          <span class="validation-label">
+            Service :
+          </span>
+          <mat-radio-button id="tech" class="mat-radio-button" [value]="'Tech'">Tech
+          </mat-radio-button>
+          <mat-radio-button id="admin" class="mat-radio-button" [value]="'Admin'">Admin
+          </mat-radio-button>
+        </mat-radio-group>
+
+        <!-- Launch search -->
+        <span fxFlex="25" fxLayoutAlign="space-around center">
+          <div fxLayout="row">
+            <button id="recherche" mat-raised-button [disabled]="submitted || !formCritere.valid || message != null"
+              type="submit" fxFlex="30" tabindex="6" (keydown.enter)="onSubmit(true)">
+              <em class="ion-search" [ngClass]="{'siga-form-confirm': formCritere.valid }"></em>
+            </button>
+          </div>
+        </span>
+      </div>
+    </div>
+  </form>
+
+  <div class="siga-spacing-bottom"></div>
+</mat-card>
+<div class="siga-spacing-bottom"></div>

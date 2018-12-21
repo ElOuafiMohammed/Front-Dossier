@@ -1,0 +1,172 @@
+<div class="contentOld" fxLayout="column">
+
+  <div fxLayout="row" fxFlex="100" fxLayoutAlign="start">
+    <div class="space-around" fxFlex="100" fxLayout="row" class="specifique">
+
+      <div class="content" fxLayout="column" fxFlex="70" [ngClass]="{ disableTable : viewRight || viewAdministratif}">
+        <span class="text">
+          Coûts de travaux (HT en €)
+        </span>
+
+        <!---  Bouton Ajouter un coût------------>
+        <div class="block">
+          <button type="button" [disabled]="!canAdd || currentOperation?.erreurMontant" class="siga-bouton siga-form-addLine btn btn-default"
+            (click)="onAddLine()">
+            <em [ngClass]="(canAdd)?'ion-ios-plus-outline siga-form-confirm':'ion-ios-plus-outline siga-form-invalid'"></em>
+            <span>Ajouter un coût</span>
+          </button>
+        </div>
+        <!---------------------------------------->
+
+        <!------------- NOUVEAU TABLEAU ---------->
+        <mat-table [dataSource]="dataSource" class="positionTable" >
+
+          <!-- Colonne Libelle coût --------------->
+          <ng-container matColumnDef="libelleCout">
+            <mat-header-cell *matHeaderCellDef  class="siga-border-bottom"> Libellé coût
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="siga-border-bottom positionTextLeft temp-fix-error-display">
+              <mat-form-field>
+                <input maxlength="60" matInput [(ngModel)]="element.libelleCout" (blur)="onBlurEvent(element, 'libelleCout')"
+                  class="positionTextLeft" required>
+                <mat-hint *ngIf="!element.libelleCout" class="material-hint-error errorMontant errorUnderline">
+                  Veuillez saisir ce champ
+                </mat-hint>
+              </mat-form-field>
+            </mat-cell>
+            <mat-footer-cell *matFooterCellDef class="colorLineTotal grasTitle"> TOTAL </mat-footer-cell>
+          </ng-container>
+          <!------------------------------------------>
+
+          <!-- Colonne Opération --------------------->
+          <ng-container matColumnDef="montantOperation">
+            <mat-header-cell *matHeaderCellDef  class="siga-border-bottom positionTextRight"> Opération
+              (€)
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="siga-border-bottom positionTextRight" [ngClass]=" { errorLine : element.hasError} ">
+              <input maxlength="10" matInput (blur)="onBlurEvent(element, 'montantOperation')" [(ngModel)]="element.montantOperation"
+                 class="positionTextRight"  
+               onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key=='Tab' || event.key == 'Delete' || event.key == 'ArrowLeft' || event.key == 'ArrowRight' || event.key =='Backspace'">
+            </mat-cell>
+            <mat-footer-cell *matFooterCellDef class="colorLineTotal positionTextRight">
+              {{sommeFormat.totalMontantOperation}}
+            </mat-footer-cell>
+          </ng-container>
+          <!-------------------------------------------->
+
+          <!-- Colonne Eligible ------------------------>
+          <ng-container matColumnDef="montantEligible">
+            <mat-header-cell *matHeaderCellDef  class="siga-border-bottom positionTextRight"> Eligible
+              (€)
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="siga-border-bottom positionTextRight" [ngClass]=" { errorLine : element.hasError} ">
+              <input maxlength="10" matInput (blur)="onBlurEvent(element, 'montantEligible')" [(ngModel)]="element.montantEligible"
+                class="positionTextRight" 
+                onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key=='Tab' || event.key == 'Delete' || event.key == 'ArrowLeft' || event.key == 'ArrowRight' || event.key =='Backspace'">
+              </mat-cell>
+            <mat-footer-cell *matFooterCellDef class="colorLineTotal positionTextRight">
+              {{sommeFormat.totalMontantEligible}}
+            </mat-footer-cell>
+          </ng-container>
+          <!------------------------------------------------>
+
+          <!-- Colonne Retenu ----------------------------->
+          <ng-container matColumnDef="montantRetenu">
+            <mat-header-cell *matHeaderCellDef  class="siga-border-bottom positionTextRight">
+              Retenu (€) </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="siga-border-bottom positionTextRight" [ngClass]=" { errorLine : element.hasError} ">
+              <input [disabled]="disableColRetenue" [ngClass]="{noDisplayRetenu : disableColRetenue}" maxlength="10"
+                matInput (blur)="onBlurEvent(element, 'montantRetenu')" [(ngModel)]="element.montantRetenu"
+                class="positionTextRight" 
+                onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key=='Tab' || event.key == 'Delete' || event.key == 'ArrowLeft' || event.key == 'ArrowRight' || event.key =='Backspace'">
+              </mat-cell>
+            <mat-footer-cell *matFooterCellDef [ngClass]="{noDisplayRetenu : disableColRetenue}" class="colorLineTotal positionTextRight">
+              {{sommeFormat.totalMontantRetenu}} </mat-footer-cell>
+          </ng-container>
+          <!---------------------------------------------------->
+
+          <!-- Colonne Bouton supprimer------------------------->
+          <ng-container matColumnDef="suppression">
+            <mat-header-cell *matHeaderCellDef class="positionTextRight taille"> </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="trashColor alignIconeRight positionTextRight taille">
+              <div [ngClass]=" { disableButton : viewRight || viewAdministratif } " (click)="onDeleteApplicationEvent(element) ">
+                <em fxFlex="5 " class="siga-tooltip siga-icon ion-trash-a ">
+                  <span class="siga-tooltiptext ">Supprimer</span>
+                </em>
+              </div>
+            </mat-cell>
+            <mat-footer-cell *matFooterCellDef class="colorLineTotal positionTextRight taille"></mat-footer-cell>
+          </ng-container>
+          <!------------------------------------------------------->
+
+          <!-- Colonne pour gérer les erreurs globales du tableau -->
+          <ng-container matColumnDef="disclaimer">
+            <mat-footer-cell *matFooterCellDef colspan="2" class="second-footer-row-style">
+              <mat-hint class="material-hint-error errorMontant" *ngIf="currentOperation?.erreurMontant">
+                {{ 'messages.erreurMontant' | translate }}
+              </mat-hint>
+            </mat-footer-cell>
+          </ng-container>
+          <!------------------------------------------------------>
+
+          <!------ Pour gérer la ligne du header en lui passant la liste des noms des colonnes à affichier-->
+          <mat-header-row *matHeaderRowDef="displayedColumns;"></mat-header-row>
+          <!------------------------------------------------------>
+
+          <!-------Pour gérer chaque ligne autres que le header et le footer du tableau-->
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          <!------------------------------------------------------>
+
+          <!-------Pour gérer la ligne footer du tableau --------->
+          <mat-footer-row *matFooterRowDef="displayedColumns"></mat-footer-row>
+          <!------------------------------------------------------>
+
+          <!-------Pour gérer la ligne affichant les erreurs globales du tableau-->
+          <mat-footer-row *matFooterRowDef="['disclaimer']"></mat-footer-row>
+          <!----------------------------------------------------->
+        </mat-table>
+        <!--------------- FIN NOUVEAU TABLEAU ------------------->
+      </div>
+
+      <!---------------- Calcul Spécifique --------------------->
+      <div fxLayout="column" fxFlex="30" class="specifique">
+        <form novalidate [formGroup]="formSpecificiteCalcul" (keydown.enter)="$event.preventDefault()" fxLayout="column">
+          <mat-form-field>
+            <div fxLayout="row">
+              <textarea #myTextArea (click)="addLine($event,myTextArea)" (keydown.enter)="addLine($event,myTextArea)"
+                matInput placeholder="Spécificités calcul" formControlName="specificiteCalcul" rows="5"></textarea>
+            </div>
+          </mat-form-field>
+          <mat-hint class="material-hint-error" *ngIf="specificiteCalculControl.touched && specificiteCalculControl.hasError('specificiteCalculTooLong')">
+            La modalité ne peut excéder {{specificiteCalculMaxLength}} caractères
+          </mat-hint>
+        </form>
+      </div>
+    </div>
+  </div> 
+
+  <div>
+    <!------------ Montant Retenu Plafonne ---------------->
+    <form novalidate class="contentOld siga-margin-retenu" [formGroup]="formSpecificiteCalcul" fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="center" [ngClass]="{ disableTable : viewRight || viewAdministratif}">
+        <div fxFlex="5"></div>
+        <span fxFlex="15" class="label-plafon">Total retenu plafonné</span>
+        <mat-form-field fxFlex="10">
+          <input class="siga-align-right" tabindex="10109" id="montantPLafonne" (blur)="montantRetenuPlafonneOnBlur(montantRetenuPLafonneControl.value)"
+            onKeyPress="if(this.value.length==10) return false;" autocomplete="off" maxlength="13" matInput
+            formControlName="montantRetenuPLafonne"  [value]="montantRetenuPLafonneControl.value"
+            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.key=='Tab' || event.key == 'Delete' || event.key == 'ArrowLeft' || event.key == 'ArrowRight' || event.key =='Backspace'">
+            <button mat-button type="button" *ngIf="montantRetenuPLafonneControl.value && !viewRight" matSuffix
+            mat-icon-button aria-label="Clear" (click)="resetMontantRetenuPLafonneInput()">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-error *ngIf="montantRetenuPLafonneControl.hasError('montantOverTotalMontantRetenu')">
+            <strong>
+              {{'messages.montantAideManuel.erreurMontantSupTRetenu' | translate}}
+            </strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+</div>

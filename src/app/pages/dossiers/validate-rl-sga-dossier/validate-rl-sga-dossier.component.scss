@@ -1,0 +1,61 @@
+@import 'src/app/theme/components/siga-tableau-component.scss';
+@import 'src/app/theme/sass/conf/_variables.scss';
+:host /deep/ {
+  .margChecked{
+    margin-left: 1.5%;
+  }
+  .card-body {
+    flex-direction: column;
+    display: initial !important;
+  }
+  
+  .table-spec { 
+
+    th,td {
+      border: none !important;
+      border-bottom: 1px solid rgba(102, 102, 102, .42) !important;
+      &:not(:first-child) {
+        text-align: left;
+        }
+    } 
+    td:nth-child(1) {
+      line-height: 30px;
+    //  text-align: center;
+     } 
+    th:nth-child(6), th:nth-child(5),td:nth-child(6), td:nth-child(5) {
+      text-align: center;
+     } 
+  }
+
+  .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background-color: $siga-grey-saisi;
+  }
+  
+  ng2-smart-table {
+    a.ng2-smart-sort-link {
+      font-size: 2.2em !important;
+    }
+  }
+  .siga-form-cancel {
+    color: $siga-red-error;
+  }
+  .siga-form-confirm {
+    color: $siga-green-content;
+  }
+}
+.gvalider-siege-padding{
+  margin-bottom: -50px;
+  padding-inline-end: 34px;
+}
+.g-div-valider-siege-margin{
+  max-height: 450px !important;
+  padding-bottom: 20px;
+  overflow-y: scroll;
+}
+.header-tablevalid-siege{
+  padding-left: 21px;
+}
+
+.siga-position-header {
+  padding-left: 21px;
+}

@@ -1,0 +1,45 @@
+@import 'src/app/theme/sass/conf/_variables.scss';
+@import 'src/app/theme/components/siga-utils-style.scss';
+
+/*
+ * Temporary
+ */
+.temp {
+  &-margin {
+    margin-top: 20px;
+  }
+
+  &-fix-error-display {
+    /deep/ .mat-form-field-subscript-wrapper {
+      min-width: 250px;
+    }
+
+  }
+
+}
+
+.material-hint-error{
+  color: red
+}
+
+.mat-select-arrow-up {
+  border-top: 0px;
+  border-left: $mat-select-arrow-size solid transparent;
+  border-right: $mat-select-arrow-size solid transparent;
+  border-bottom: $mat-select-arrow-size solid;
+}
+
+input {
+  width: 130px;
+}
+
+button {
+  height: 20px;
+  padding: 0px;
+  line-height: 20px;
+  color: black
+}
+
+.siga-uppercase-input{
+  color :$siga-grey-saisi;
+}

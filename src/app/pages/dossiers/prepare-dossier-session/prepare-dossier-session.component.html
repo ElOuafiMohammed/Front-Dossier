@@ -1,0 +1,62 @@
+<div style="margin-bottom: -50px;">
+  <siga-criteres-prepare-session-recherche [natures]="natures" [sessions]="sessions" [thematiques]="thematiques" [domaines]="domaines"
+    [priorites]="priorites" [procedureDecisions]="procedureDecisions" [submitted]="submitted" (sessionEventEmitter)="changeSession($event)"
+    (searchEventEmitter)="fetchResultatRecherche($event)">
+  </siga-criteres-prepare-session-recherche>
+
+  <div *ngIf="searchDone">
+    <ba-card>
+      <div *ngIf="nombreTotalResultats !=0" fxLayout="row" fxFlex="100%">
+        <div fxFlex="25%" style="padding-left: 21px;">
+          <strong> {{nombreTotalSelectionnees}} </strong>/
+          <strong>{{nombreTotalResultats}}</strong>
+          dossier(s) sélectionné(s)
+        </div>
+
+      </div>
+      <mat-checkbox style="padding: 21px; padding-bottom: 0;" fxFlex="5.5%" class="position-head-card" *ngIf="dossiersDatas.length !== 0"
+        [checked]='checkAll' (change)="onCheckBoxChange($event)">Tout</mat-checkbox>
+      <div style="max-height: 385px !important;  padding-bottom: 19px; overflow-y: scroll">
+        <ng2-smart-table class="table-spec" [settings]="settings" [source]="source"></ng2-smart-table>
+      </div>
+      <div class="siga-total-montant" fxLayout="column">
+        <!-- Total aides dossiers -->
+        <div *ngIf="nombreTotalResultats !=0" fxFlex="100%">
+          <div fxFlex="20%">
+          </div>
+          <div fxFlex="60%" style="text-align: right">
+            <strong>Total aides :</strong>
+          </div>
+          <div fxFlex="20%" class="util-right" style="text-align: right; margin-right: 22px;">
+            <strong>{{ this.formatMonetairePipe.transform(this.summeTotalList[0].totalMontant) }} €</strong>
+          </div>
+        </div>
+
+        <!-- Total aides dossiers séléctionnés -->
+        <div *ngIf="nombreTotalResultats !=0" fxLayout="row" fxFlex="100%">
+          <div fxFlex="20%">
+          </div>
+          <div fxFlex="60%" style="text-align: right">
+            <strong>Total aides dossier(s) sélectionné(s) :</strong>
+          </div>
+          <div fxFlex="20%" class="util-right" style="text-align: right; margin-right: 22px;">
+            <strong>{{ this.formatMonetairePipe.transform(summeTotalListSelectionne[0].totalMontantSelectionnee) }} €</strong>
+          </div>
+        </div>
+      </div>
+
+    </ba-card>
+    <!-- Affecter || Retirer -->
+    <div fxLayout="row" fxLayoutAlign="space-around end">
+      <div fxFlex="80">
+
+      </div>
+      <button id="affecterRetirer" #button mat-raised-button *ngIf="dossiersDatas[0]?.phase === 'T30'|| dossiersDatas[0]?.phase === 'T35'"
+        [disabled]="benefInactif || submitted || noCheckedDossier  || currentSession === null" (click)="validerDevalider()"
+        (keydown.enter)="validerDevalider()" type="button" tabindex="7">
+        <span *ngIf="dossiersDatas[0]?.phase === 'T30'">Affecter à la session</span>
+        <span *ngIf="dossiersDatas[0]?.phase === 'T35'">Retirer de la session</span>
+      </button>
+    </div>
+  </div>
+</div>

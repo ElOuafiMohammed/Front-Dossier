@@ -1,0 +1,75 @@
+@import 'src/app/theme/sass/conf/_variables.scss';
+@import 'src/app/theme/components/siga-utils-style.scss';
+
+
+  
+  .sameLine {
+    max-width: 29% !important;
+  }
+  .siga-spacing-bottom {
+    margin-bottom: 15px !important;
+  }
+  
+ 
+  .siga-hidden {
+    visibility: hidden !important;
+  }
+  
+  .libelle {
+    margin-left: -2%;
+  }
+  
+  .util-padding {
+    padding: 5px;
+  }
+  
+  .wrapper{
+   margin-left: -12%;
+  }
+  
+  /deep/  { 
+   
+    .prioriteOptionsClass {
+      min-width: 350px !important;
+      transform: translateX(-70%);
+    }
+    .thematiqueOptionsClass {
+      min-width: 500px !important;
+    }
+    .departementOptionsClass {
+        min-width: 250px !important;
+      }
+    .responsableOptionsClass {
+      min-width: 300px !important;
+    }
+    .DelegationOptionsClass {
+      min-width: 165px !important;
+    }
+    
+    .natureOptionsClass {
+        min-width: 730px !important;
+      }
+      .ligneOptionsClass {
+        min-width: 100px !important;
+      }
+
+      .valideOptionsClass {
+        min-width: 100px !important;
+      }
+    // Pour qu'au moins la liste Delegation affiche l'ensemble des valeurs sans scrollbar vertical
+    .mat-autocomplete-panel {
+      max-height: 300px !important;
+    }
+  }
+  
+  .validation-label {
+    padding-right: 1%;
+    color: $siga-grey-saisi;
+  }
+  .colorText{
+    color : $siga-green-content !important;
+  }
+  .procedure-label {
+    color: $siga-grey-saisi;
+  }
+   

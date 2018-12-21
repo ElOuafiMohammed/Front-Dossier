@@ -1,0 +1,92 @@
+<div class="content">
+
+  <form novalidate [formGroup]="formPrevisionnel" (keydown.enter)="$event.preventDefault()">
+    <div fxLayout="column" fxLayoutAlign="space-between stretch" [ngClass]="{ disableDossier : viewRight || viewAdministratif}">
+      <div fxLayout="row" fxLayoutAlign="start">
+
+        <!-- Libelle CI -->
+        <div fxLayoutAlign="end center" class="session-type">
+          <span fxFlex="2"></span>
+          <span>CI</span>
+        </div>
+        <div fxFlex="1"></div>
+
+        <!-- Année -->
+        <!-- matDatepickerPrev -->
+        <mat-form-field fxFlex="5" class="temp-fix-error-display">
+          <input id="anneePrevisionnel" matInput autocomplete="off" placeholder="Année" minlength="4" maxlength="4"
+            formControlName="annee" tabindex="11" (input)="onlyNumber(anneeControl,$event)">
+          <mat-error *ngIf="anneeControl.hasError('minlength')">
+            <strong>
+              {{'messages.erreurFormatNumeroDP' | translate}}
+            </strong>
+          </mat-error>
+          <mat-error *ngIf="anneeControl.hasError('matDatepickerMin')">
+            <strong>
+              {{'messages.previsionnel.erreurLimitInfAnnee' | translate}}
+            </strong>
+          </mat-error>
+
+          <mat-error *ngIf="anneeControl.hasError('matDatepickerPrev')">
+            <strong>
+              {{'messages.previsionnel.erreurLimitPrev' | translate}}
+            </strong>
+          </mat-error>
+
+          <mat-error *ngIf="anneeControl.hasError('matDatepickerMax')">
+            <strong>
+              {{'messages.previsionnel.erreurLimitSupAnnee' | translate}}
+            </strong>
+          </mat-error>
+        </mat-form-field>
+
+        <div fxFlex="2">
+        </div>
+
+        <!-- Session -->
+        <div fxLayout="column">
+          <mat-form-field class="temp-fix-error-display" style="width:80px !important;">
+            <div fxLayout="row" [ngClass]="{'siga-error':sessionControl.hasError(sessionValidatorKey)}">
+              <input id="sesionPrevisionnel0" matInput placeholder="Session" [matAutocomplete]="sessionDecisionAutoComplete"
+                formControlName="session" tabindex="12">
+              <div id="sesionPrevisionnel1" class="mat-select-arrow-wrapper">
+                <div id="sesionPrevisionnel2" class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !sessionDecisionAutoComplete.isOpen, 'mat-select-arrow-up': sessionDecisionAutoComplete.isOpen}"></div>
+              </div>
+            </div>
+            <button class="space-close" mat-button *ngIf="sessionControl.value && !viewRight" matSuffix mat-icon-button
+              aria-label="Clear" (click)="ajusterInisialiserSaisie()">
+              <mat-icon>close</mat-icon>
+            </button>
+            <mat-error *ngIf="!sessionControl.hasError('required') && sessionControl.touched && sessionControl.hasError(sessionValidatorKey)">
+              <strong>
+                {{'messages.erreurSelection' | translate}}
+              </strong>
+            </mat-error>
+            <mat-hint *ngIf="sessionControl.hasError(sessionValidatorKey)" class="siga-error">
+              <strong>
+                {{'messages.sessionDepasse' | translate}}
+              </strong>
+            </mat-hint>
+          </mat-form-field>
+        </div>
+        <!-- </div> -->
+        <mat-autocomplete class="sessionDecisionOptionsClass" #sessionDecisionAutoComplete="matAutocomplete"
+          [displayWith]="displaySessionDecision" (optionSelected)="onSessionSelect($event)" [autoActiveFirstOption]="true">
+          <mat-option *ngFor="let sessionDecision of filteredSessions | async; trackBy: trackById" [value]="sessionDecision">
+            <span> {{sessionDecision.annee}}</span>
+            <span>-</span>
+            <span> {{sessionDecision.numero}} </span>
+          </mat-option>
+        </mat-autocomplete>
+
+        <!-- Typologies -->
+        <mat-radio-group fxFlex formControlName="typologie" fxLayoutAlign="end center" (change)="onTypologieSelectOption($event)">
+          <span class="typologie-label">
+            Typologie :
+          </span>
+          <mat-radio-button class="mat-radio-button" *ngFor="let typologie of typologies; trackBy: trackById" [value]="typologie">{{typologie.libelle}}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,14 @@
+
+@import 'src/app/theme/sass/conf/_variables.scss';
+.nounderline {
+  color: $siga-grey-saisi !important;
+  cursor: pointer !important;
+}
+
+/deep/ {
+  .width-input-select-dispositif {
+     min-width: 58px;
+     max-width: 58px;
+  }
+  
+} 

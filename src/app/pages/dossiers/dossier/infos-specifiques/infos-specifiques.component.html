@@ -1,0 +1,58 @@
+<div fxLayout="column" [ngClass]="{ disableDossier : viewRight || viewAdministratif}">
+  <span class="text">
+    Informations spécifiques à {{dossier?.thematique.code}} - {{dossier?.thematique.libelle}} </span>
+
+    <div class="siga-content-agri" *ngIf="infoSpecAgri">
+      <siga-infos-spec-agri [source]="source" [settings]="settings" [currentThema]="currentThema"></siga-infos-spec-agri>
+    </div>
+
+    <div class="siga-content-agri" *ngIf="infoSpecAeep">
+        <siga-infos-spec-agri [source]="source" [settings]="settings"></siga-infos-spec-agri>
+    </div>
+
+    <div class="siga-content-agri" *ngIf="infoSpecIndt">
+        <siga-infos-spec-agri [source]="source" [settings]="settings"></siga-infos-spec-agri>
+    </div>
+
+    <div class="siga-content-agri" *ngIf="infoSpecIntl">
+      <siga-infos-spec-agri [source]="source" [settings]="settings"></siga-infos-spec-agri>
+  </div>
+
+
+    <span class="text" *ngIf="dossier?.thematique.code === 'AEEP' || dossier?.thematique.code === 'ASST'">Prix de l'eau</span>
+    <div class="siga-content-prix-eaux"  fxLayout="column" *ngIf="dossier?.thematique.code === 'AEEP' || dossier?.thematique.code === 'ASST'">
+        <!-- PRIX DE L'EAU -->
+        <div fxLayout="row" 
+          fxLayout="column" class="infos-specifiques">
+          <div fxLayout="row" class="prix-eaux margin-prix-eau">
+            <!-- prix TOTAL -->
+            <mat-form-field>
+              <input id="siga-prix-total"  class="siga-prix-eaux"  name="prixTotal" (blur)="totalOnBlur(prixTotalControl?.value)" matInput placeholder="Prix total (TTC) en €" [formControl]="prixTotalControl"
+                maxlength="5" tabindex="2003" [(ngModel)]="prixTotalEau"   (input)="onlyDecimalMontant(prixTotalControl,prixTotalEau)">
+              <button id="siga-button-close-prix" mat-button type="button" *ngIf="prixTotalControl?.value && !viewRight" matSuffix mat-icon-button aria-label="Clear"
+                (click)="prixTotalControl?.setValue(0)">
+                <mat-icon>close</mat-icon>
+              </button>
+              <mat-error>
+                {{'messages.montantAideManuel.erreurAvanceSupCent' | translate}}
+              </mat-error>
+            </mat-form-field>
+            <div style="width:5%"></div>
+            <!-- prix htva -->
+            <mat-form-field>
+              <input id="siga-prix-htva" class="siga-prix-eaux" name="prixhtva" (blur)="htvaOnBlur(prixHtvControl?.value)" matInput placeholder="Prix {{thematiqueCode}} (HTVA) en €"
+              [formControl]="prixHtvControl" maxlength="5" tabindex="2004" [(ngModel)]="prixHtv" 
+              (input)="onlyDecimalMontant(prixHtvControl,prixHtv)">
+              <button id="siga-prix-htv-close" mat-button type="button" *ngIf="prixHtvControl?.value && !viewRight" matSuffix mat-icon-button aria-label="Clear"
+                (click)="prixHtvControl?.setValue(0)">
+                <mat-icon>close</mat-icon>
+              </button>
+              <mat-error>
+                {{'messages.montantAideManuel.erreurAvanceSupCent' | translate}}
+              </mat-error>
+            </mat-form-field>
+    
+          </div>
+        </div>
+      </div>
+</div>

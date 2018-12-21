@@ -1,0 +1,15 @@
+<div *ngIf="rowData.disable" class="disabled-col">
+  <span>{{rowData.codeThematique}}</span>
+</div>
+<div *ngIf="!rowData.disable">{{rowData?.codeThematique}}
+  <mat-form-field>
+    <mat-select (selectionChange)="change(selected)" [(value)]="selected" tabindex="{{index_tab_thematique}}">
+      <mat-select-trigger>{{selected?.code}}</mat-select-trigger>
+      <mat-option *ngFor="let thematique of thematiques; trackBy: trackById" [value]="thematique">
+        <span> {{ thematique.code }} </span>
+        <span> - </span>
+        <span> {{ thematique.libelle }}</span>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

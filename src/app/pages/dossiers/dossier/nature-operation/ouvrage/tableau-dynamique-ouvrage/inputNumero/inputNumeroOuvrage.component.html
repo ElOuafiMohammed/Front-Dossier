@@ -1,0 +1,7 @@
+<div *ngIf="rowData.disable" class="disabledNumeroOuvrage">
+  <span> {{ value }}</span>
+</div>
+<mat-form-field [formGroup]="formOuvrage" *ngIf="!rowData.disable">
+  <input id="codeAgenceOuvrage" matInput autocomplete="off" maxlength="12" [(ngModel)]="value" formControlName="codeAgence"
+    [attr.disabled]="rowData.disable" (blur)="onBlur()" [ngClass]="{'input-error': rowData.hasError && !rowData.disable}">
+</mat-form-field>

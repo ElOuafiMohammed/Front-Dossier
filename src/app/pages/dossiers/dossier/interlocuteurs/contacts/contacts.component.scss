@@ -1,0 +1,15 @@
+@import 'src/app/theme/components/siga-utils-style.scss';
+@import 'src/app/theme/components/siga-tableau-component.scss';
+@import 'src/app/shared/common-style/siga-criteres-common-style.scss';
+
+.mat-select-arrow-up {
+  border-top: 0px;
+  border-left: $mat-select-arrow-size solid transparent;
+  border-right: $mat-select-arrow-size solid transparent;
+  border-bottom: $mat-select-arrow-size solid;
+}
+.divContact{
+  height: 40px;
+  margin-bottom: 7px
+}
+

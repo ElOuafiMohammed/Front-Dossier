@@ -1,0 +1,101 @@
+@import 'src/app/theme/components/siga-utils-style.scss';
+@import 'src/app/theme/components/siga-tableau-component.scss';
+@import 'src/app/shared/common-style/siga-criteres-common-style.scss';
+
+$mat-select-arrow-size: 5px !default;
+
+.siga-theme-dropdown {
+  border-bottom: 1px solid #949494;
+  margin-bottom: 5px;
+  margin-top: 22px;
+  width: 80%;
+}
+
+.siga-theme-card-container {
+  display: inline-block;
+}
+
+.siga-themes-input-text {
+  color: #676767;
+}
+
+.mat-select-arrow-wrapper>div {
+  display: inline-block;
+  vertical-align: calc(3px);
+  margin: 0;
+}
+
+.mat-select-arrow-down {
+  border-left: $mat-select-arrow-size solid transparent;
+  border-right: $mat-select-arrow-size solid transparent;
+  border-top: $mat-select-arrow-size solid;
+}
+
+.mat-select-arrow-up {
+  border-top: 0px;
+  border-left: $mat-select-arrow-size solid transparent;
+  border-right: $mat-select-arrow-size solid transparent;
+  border-bottom: $mat-select-arrow-size solid;
+}
+
+.siga-spacing-bottom {
+  margin-bottom: 15px !important;
+}
+
+.siga-uppercase-input {
+  text-transform: uppercase;
+}
+
+.siga-hidden {
+  visibility: hidden !important;
+}
+
+.libelle {
+  margin-left: -2%;
+}
+
+.util-padding {
+  padding: 5px;
+}
+
+.wrapper {
+  margin-left: -12%;
+}
+
+/deep/ {
+
+  .prioriteOptionsClass {
+    min-width: 350px !important;
+    transform: translateX(-70%);
+  }
+
+  .thematiqueOptionsClass {
+    min-width: 500px !important;
+  }
+
+  .natureOptionsClass {
+    min-width: 730px !important;
+  }
+
+  // Pour qu'au moins la liste Delegation affiche l'ensemble des valeurs sans scrollbar vertical
+  .mat-autocomplete-panel {
+    max-height: 300px !important;
+  }
+}
+
+.validation-label {
+  padding-right: 1%;
+  color: #666;
+}
+
+.procedure-label {
+  color: #666;
+}
+
+.colorText {
+  color: #209E91;
+}
+
+.margin {
+  margin-left: 2%;
+}

@@ -1,0 +1,74 @@
+<div fxLayout="row" fxLayoutAlign="end space-between" class="siga-content-add">
+  <label for="{{idFile}}" class="siga-bouton btn btn-default siga-form-space font-size-parcourir" [ngClass]="(canAdd)?'siga-form-parcourir':'siga-form-parcourir-disabled'">
+    <em class="ion-android-attach espacement" [ngClass]="(canAdd)?'siga-form-confirm':'siga-form-disabled'"></em>
+    <span>Ajouter fichier</span>
+  </label>
+  <div *ngIf="canAdd">
+    <input type="file" id="{{idFile}}" (change)="onAddLine($event.target.files)" class="input-file" multiple>
+  </div>
+</div>
+
+<!-- Tables des pièces jointes -->
+<mat-table id="piecesJointesTable" [dataSource]="pieceJointeDataSource">
+
+  <!-- Colonne type pièce jointe  -->
+  <ng-container matColumnDef="fichierContentType">
+    <mat-header-cell *matHeaderCellDef class="siga-table-piece-jointe-icon siga-border-bottom"></mat-header-cell>
+    <mat-cell *matCellDef="let pieceJointe" class="siga-table-piece-jointe-icon siga-border-bottom">
+      <a>
+        <em class="sam-tooltip">
+          <img [src]="getIconPieceJointe(pieceJointe)"  alt ="Pièce jointe" height="25" width="25">
+        </em>
+      </a>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Colonne titre -->
+  <ng-container matColumnDef="titre">
+    <mat-header-cell *matHeaderCellDef class="siga-table-piece-jointe-titre siga-border-bottom">
+      {{ 'dossier.update.pieceJointe.titre_colonne_titre' | translate }}
+    </mat-header-cell>
+    <mat-cell *matCellDef="let pieceJointe" class="siga-table-piece-jointe-titre siga-border-bottom">
+      <span class="siga-numero-dossier-on-table siga-url-titre-pice-jointe" (click)="openFile(pieceJointe.urlFichier)">
+        {{ pieceJointe.titre }}
+      </span>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Colonne createur -->
+  <ng-container matColumnDef="createur">
+    <mat-header-cell *matHeaderCellDef class="siga-table-piece-jointe-createur siga-border-bottom">
+      {{ 'dossier.update.pieceJointe.titre_colonne_createur' | translate }}
+    </mat-header-cell>
+    <mat-cell *matCellDef="let pieceJointe" class="siga-table-piece-jointe-createur siga-border-bottom">
+      {{ pieceJointe.createur }}
+    </mat-cell>
+  </ng-container>
+
+  <!-- Colonne date de creation -->
+  <ng-container matColumnDef="dateCreation">
+    <mat-header-cell *matHeaderCellDef class="siga-table-piece-jointe-date-creation siga-border-bottom">
+      {{ 'dossier.update.pieceJointe.titre_colonne_date_creation' | translate }}
+    </mat-header-cell>
+    <mat-cell *matCellDef="let pieceJointe" class="siga-table-piece-jointe-date-creation siga-border-bottom">
+      {{ pieceJointe.dateCreation | date:'dd/MM/yyyy' }}
+    </mat-cell>
+  </ng-container>
+
+  <!-- Colonne action supprimer -->
+  <ng-container matColumnDef="actionSupprimer">
+    <mat-header-cell *matHeaderCellDef class="siga-table-piece-jointe-icon-supprime"></mat-header-cell>
+    <mat-cell *matCellDef="let pieceJointe" class="siga-table-piece-jointe-icon-supprime">
+      <div fxLayout="row" fxLayoutAlign="space-around  center" (click)="onDeleteLine(pieceJointe)">
+        <em class="siga-tooltip sigaicon ion-trash-a">
+          <span class="siga-tooltiptext">Supprimer</span>
+        </em>
+      </div>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Définition des lignes de la table -->
+  <mat-header-row *matHeaderRowDef="tableColonne"></mat-header-row>
+  <mat-row *matRowDef="let piece; columns: tableColonne"></mat-row>
+</mat-table>
+<!-- //Tables des pièces jointes -->

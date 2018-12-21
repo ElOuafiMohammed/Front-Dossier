@@ -1,0 +1,28 @@
+<mat-form-field [formGroup]="formCorrespondant">
+  <div fxLayout="row" class="inoutcode">
+    <input id="referenceInterlocuteur" [formGroup]="formCorrespondant" matInput autocomplete="off" maxlength="9"
+      [(ngModel)]="value" formControlName="referenceCorresp" (blur)="onBlur()" [ngClass]="{'input-error': rowData?.hasError}"
+      class="siga-uppercase-input" tabindex="100004">
+    <button mat-button type="button" (click)="searchInterlocuteur($event)" mat-icon-button id="boutonRecherInterlocuteur">
+      <em fxFlex="10" class="siga-tooltip siga-icon ion-ios-search"></em>
+    </button>
+  </div>
+  <mat-hint *ngIf="!referenceCorrespControl.value" class="material-hint-error">
+    Veuillez ajouter un interlocuteur
+  </mat-hint>
+  <mat-error *ngIf="referenceCorrespControl.hasError('pattern')">
+    <strong>
+      {{'messages.benefCodeFormat' | translate}}
+    </strong>
+  </mat-error>
+  <mat-error *ngIf="referenceCorrespControl.hasError('benefNotFound')">
+    <strong>
+      {{message}}
+    </strong>
+  </mat-error>
+  <mat-error *ngIf="referenceCorrespControl.hasError('required')">
+    <strong>
+      {{'messages.interlocuteurRequis'|translate}}
+    </strong>
+  </mat-error>
+</mat-form-field>

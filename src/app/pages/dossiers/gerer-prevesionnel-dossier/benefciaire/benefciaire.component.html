@@ -1,0 +1,13 @@
+<div fxLayout="row">
+    <div>
+        <span class="nounderline" class="siga-benef" matTooltip="{{rowData?.beneficiaire?.raisonSociale}}" [matTooltipPosition]="'right'">
+            {{benefTrunc}}
+            <span *ngIf="showTooltip">...</span>
+        </span>
+    </div>
+
+    <div class="info-benef">
+        <mat-icon *ngIf="!rowData?.beneficiaire?.actif" class="icon-info-benef" matTooltip="Bénéficiaire inactif" [matTooltipPosition]="'right'"
+            matTooltipClass="tooltip-error">info</mat-icon>
+    </div>
+</div>

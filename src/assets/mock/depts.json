@@ -1,0 +1,162 @@
+[
+  {
+    "id": "01",
+    "code": "01",
+    "libelle": "Ain"
+  },
+  {
+    "id": "09",
+    "code": "09",
+    "libelle": "Ariège"
+  },
+  {
+    "id": "11",
+    "code": "11",
+    "libelle": "Aude"
+  },
+  {
+    "id": "12",
+    "code": "12",
+    "libelle": "Aveyron"
+  },
+  {
+    "id": "15",
+    "code": "15",
+    "libelle": "Cantal"
+  },
+  {
+    "id": "16",
+    "code": "16",
+    "libelle": "Charente"
+  },
+  {
+    "id": "17",
+    "code": "17",
+    "libelle": "Charente-Maritime"
+  },
+  {
+    "id": "19",
+    "code": "19",
+    "libelle": "Corrèze"
+  },
+  {
+    "id": "23",
+    "code": "23",
+    "libelle": "Creuse"
+  },
+  {
+    "id": "24",
+    "code": "24",
+    "libelle": "Dordogne"
+  },
+  {
+    "id": "30",
+    "code": "30",
+    "libelle": "Gard"
+  },
+  {
+    "id": "31",
+    "code": "31",
+    "libelle": "Haute-Garonne"
+  },
+  {
+    "id": "32",
+    "code": "32",
+    "libelle": "Gers"
+  },
+  {
+    "id": "33",
+    "code": "33",
+    "libelle": "Gironde"
+  },
+  {
+    "id": "34",
+    "code": "34",
+    "libelle": "Hérault"
+  },
+  {
+    "id": "40",
+    "code": "40",
+    "libelle": "Landes"
+  },
+  {
+    "id": "46",
+    "code": "46",
+    "libelle": "Lot"
+  },
+  {
+    "id": "47",
+    "code": "47",
+    "libelle": "Lot-et-Garonne"
+  },
+  {
+    "id": "48",
+    "code": "48",
+    "libelle": "Lozère"
+  },
+  {
+    "id": "63",
+    "code": "63",
+    "libelle": "Puy-de-Dôme"
+  },
+  {
+    "id": "64",
+    "code": "64",
+    "libelle": "Pyrénées-Atlantiques"
+  },
+  {
+    "id": "65",
+    "code": "65",
+    "libelle": "Hautes-Pyrénées"
+  },
+  {
+    "id": "79",
+    "code": "79",
+    "libelle": "Deux-Sèvres"
+  },
+  {
+    "id": "81",
+    "code": "81",
+    "libelle": "Tarn"
+  },
+  {
+    "id": "82",
+    "code": "82",
+    "libelle": "Tarn-et-Garonne"
+  },
+  {
+    "id": "86",
+    "code": "86",
+    "libelle": "Vienne"
+  },
+  {
+    "id": "87",
+    "code": "87",
+    "libelle": "Haute-Vienne"
+  },
+  {
+    "id": "971",
+    "code": "971",
+    "libelle": "Guadeloupe"
+  },
+  {
+    "id": "972",
+    "code": "972",
+    "libelle": "Martinique"
+  },
+  {
+    "id": "973",
+    "code": "973",
+    "libelle": "Guyane"
+  },
+  {
+    "id": "974",
+    "code": "974",
+    "libelle": "La Réunion"
+  },
+  {
+    "id": "976",
+    "code": "976",
+    "libelle": "Mayotte"
+  }
+]

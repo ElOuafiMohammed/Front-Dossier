@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.container {
+  width: 100%;
+  padding: 25px 0 0 0px;
+}
+
+.mat-tooltip {
+  font-size: 14px !important;
+}
+// SIGA-3634 : suppression code IE
+// .material-icons {
+//   /* Support for IE */
+//   font-feature-settings: 'liga';
+// }
+.espacement {
+  margin-right: 5px;
+}

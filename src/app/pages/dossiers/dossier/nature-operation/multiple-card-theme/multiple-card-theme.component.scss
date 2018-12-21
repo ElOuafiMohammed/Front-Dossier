@@ -1,0 +1,40 @@
+
+@import 'src/app/theme/sass/conf/_variables.scss';
+@import 'src/app/theme/components/siga-utils-style.scss';
+.siga-theme-dropdown {
+  border-bottom: 1px solid #949494;
+  margin-bottom: 5px;
+  width: 56%;
+}
+
+.siga-themes-input-text {
+  color: $siga-grey-saisi;
+}
+.siga-theme-card-container {
+  display: inline-block;
+}
+// TODO : Fix - causes side effects
+/deep/ .test{
+background-color:$siga-red-error;
+}
+
+.space-around{
+  margin-bottom : 30px;
+  margin-left: 10px;
+
+}
+
+.specifique{
+  padding-top: 10px !important;
+ margin-top: 0.5em !important;
+}
+.content {
+padding: 20px;
+padding-top: 3px;
+color: $siga-grey-saisi;
+}
+
+.siga-choix-themes-component {
+  margin-left: 1.3em !important;
+  margin-top: 1.5em !important;
+}

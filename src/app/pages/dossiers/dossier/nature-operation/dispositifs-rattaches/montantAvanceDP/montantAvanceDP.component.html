@@ -1,0 +1,4 @@
+<input #montantAvanceDispositif *ngIf="rowData.dispositifPartenariat.complementIntitule && rowData.montantAvance!==null "
+  maxlength="10" matInput (input)="onlyNumber(control, $event)" [formControl]="control" [ngModel]="value | formatMonetaire"
+  (blur)="onBlurEvent()" (click)="onClick($event)" tabindex="{{indexTabAvance}}" class="inputMontant erreurCumulMontantAvance"
+  [ngClass]="{erreurAvanceColor: rowData?.erreurAvance}" (focus)="onFocus()">

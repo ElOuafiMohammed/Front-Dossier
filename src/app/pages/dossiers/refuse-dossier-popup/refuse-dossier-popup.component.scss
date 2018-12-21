@@ -1,0 +1,31 @@
+@import './../../../theme/sass/conf/colorSchemes/mint';
+@import 'src/app/theme/sass/conf/_variables.scss';
+@import 'src/app/theme/components/siga-utils-style.scss';
+
+$mat-select-arrow-margin-width: 0px !default;
+$mat-select-arrow-margin-height: 0px !default;
+
+.mat-select-arrow-wrapper {
+  width: 0;
+  height: 0;
+  margin: $mat-select-arrow-margin-height $mat-select-arrow-margin-width;
+  display: table;
+}
+
+
+// .mat-select-arrow-wrapper {
+//   width: 0;
+//   height: 0;
+//   margin: 6px -15px !important;
+//   display: table;
+// }
+/deep/ {
+  .mat-autocomplete-panel.mat-autocomplete-visible {
+    width: 578px;
+  }
+
+}
+
+.remove-padding {
+  padding: 0px !important;
+}

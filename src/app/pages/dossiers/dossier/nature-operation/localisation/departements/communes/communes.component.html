@@ -1,0 +1,52 @@
+<div [ngClass]="{ disableInput : viewRight || viewAdministratif || !currentOperation.localisationPertinente }">
+  <div fxLayout="row" class="space-around content">
+    <span class="text">Communes</span>
+  </div>
+  <form [formGroup]="formCommunes">
+    <div fxLayout="row" class="space-around content">
+      <mat-form-field fxFlex="25" class="operation-align">
+        <div fxLayout="row">
+          <label class="label-bv-gestion" for="inputCommune" [hidden]="isHidden">
+            {{ currentOperation.communes !=null && currentOperation.communes.length >1 ?
+            currentOperation.communes.length + ' Communes
+            sélectionnées': currentOperation.communes.length ===1 ? '1 Commune sélectionnée' : ''}}
+          </label>
+          <span class="input-wrapper-bv-gestion">
+            <input #input matInput id="inputCommune" placeholder="{{currentOperation.communes !=null && currentOperation.communes.length >0 ? '' : '+ Commune(s)' }}"
+              [matAutocomplete]="communesAutoComplete" formControlName="communes" (focus)="onFocus()" (blur)="onBlur()"
+              (input)="onInput($event)">
+          </span>
+          <div class="mat-select-arrow-wrapper">
+            <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !communesAutoComplete.isOpen, 'mat-select-arrow-up': communesAutoComplete.isOpen}"></div>
+          </div>
+        </div>
+        <button mat-button type="button" *ngIf="communesControl.value" matSuffix mat-icon-button aria-label="Clear"
+          (click)="communesControl.setValue(null)">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error *ngIf="communesControl.touched && communesControl.hasError('communesNotFound')">
+          <strong>
+            {{'messages.erreurChoixOption' | translate}}
+          </strong>
+        </mat-error>
+
+        <mat-autocomplete (optionSelected)="onCommuneSelect($event.option.value)" #communesAutoComplete="matAutocomplete"
+          [autoActiveFirstOption]="true" [displayWith]="displayCommunes">
+          <mat-option *ngFor="let commune of listCommunesObservable | async; trackBy: trackById" [value]="commune">
+            <span> {{commune?.numInsee}}</span>
+            <span> - </span>
+            <span> {{commune?.nomCommune}} </span>
+          </mat-option>
+        </mat-autocomplete>
+
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+
+<div [ngClass]="{'container-error': communesControl.touched && communesControl.hasError('communesNotFound')}" class="container">
+  <div *ngFor="let commune of currentOperation.communes; trackBy: trackById">
+    <siga-app-localisation-card [commune]="commune" (deleteEventEmitter)="onDeleteCommune($event)"
+      [localisationPertinente]="currentOperation.localisationPertinente"></siga-app-localisation-card>
+  </div>
+</div>

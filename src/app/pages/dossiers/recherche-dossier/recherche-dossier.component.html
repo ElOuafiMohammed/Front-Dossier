@@ -1,0 +1,14 @@
+<siga-criteres-card [depts]="depts" [thematiques]="thematiques" [responsablesTech]="responsablesTech" [phases]="phases" [submitted]="submitted"
+  (searchEventEmitter)="fetchResultatRecherche($event)">
+</siga-criteres-card>
+
+<div *ngIf="searchDone">
+  <ba-card>
+    <mat-paginator [length]="nbTotalElements" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOption" [pageIndex]="indexCurrentPage"
+      (page)="getNumberPage($event)">
+    </mat-paginator>
+    <div id='ng2-smrtb'>
+      <ng2-smart-table class="table-spec siga-marge-tableau" [settings]="settings" [source]="source"></ng2-smart-table>
+    </div>
+  </ba-card>
+</div>

@@ -1,0 +1,30 @@
+<div class="content">
+  <div fxLayout="row" fxFlex="100" fxLayoutAlign="start">
+    <div class="space-around" fxFlex="100" fxLayout="row" class="specifique">
+      <div fxLayout="column" fxFlex="100" [ngClass]="{ disableTable : viewRight || viewAdministratif}" class="siga-marge-tableau specifique">
+        <span class="text">
+          Dispositifs de partenariat rattachés
+        </span>
+        <div class="block">
+          <button type="button" [disabled]='currentOperation.dispositifRattacheError || disableIsRefused || viewAdministratif' class="siga-bouton siga-form-addLine btn btn-default"
+            (click)="onAddDispositif()">
+            <em [ngClass]="(!currentOperation.dispositifRattacheError && !disableIsRefused)?'ion-ios-plus-outline siga-form-confirm':'ion-ios-plus-outline siga-form-invalid'"
+              class="siga-taille-image-plus"></em>
+            <span>Rattacher DP</span>
+          </button>
+        </div>
+        <ng2-smart-table class="table-spec" *ngIf="settings.columns != null" [settings]="settings" [source]="source" [ngClass]="{ colorErreurCumulMontantAvance: currentOperation.isErreurCumulMontantAvance, colorErreurCumulMontantSubvention: currentOperation.isErreurCumulMontantSubvention }">
+        </ng2-smart-table>
+        <mat-hint class="siga-error errorFormDispositif error-spec" *ngIf="currentOperation.messageErrorDispositif !== ''">
+          {{this.currentOperation.messageErrorDispositif}}
+        </mat-hint>
+        <mat-hint class="siga-error errorFormDispositif error-spec" *ngIf="currentOperation.isErreurCumulMontantAvance">
+          {{'messages.autres_infos.erreurCumulMontantAvance' | translate}}
+        </mat-hint>
+        <mat-hint class="siga-error errorFormDispositif error-spec" *ngIf="currentOperation.isErreurCumulMontantSubvention">
+          {{ 'messages.autres_infos.erreurCumulMontantSubvention' | translate }}
+        </mat-hint>
+      </div>
+    </div>
+  </div>
+</div>

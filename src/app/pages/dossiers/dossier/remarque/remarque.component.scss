@@ -1,0 +1,223 @@
+@import 'src/app/theme/components/siga-tableau-component.scss';
+@import 'src/app/theme/sass/conf/_variables.scss';
+@import 'src/app/theme/components/siga-utils-style.scss';
+
+.mat-form-field-infix {
+  display: block;
+  position: relative;
+  flex: auto;
+  min-width: 300px !important;
+  width: 700px !important;
+}
+
+input, mat-icon, textarea {
+  color : $siga-grey-saisi;
+  }
+
+  .mat-form-field {
+    display: inline-block;
+    position: relative;
+    text-align: left;
+    width: 100%;
+}
+  :host /deep/ .diplayUnderLine .mat-input-underline {
+    display: none;
+}
+
+.align-icon-nom-date {
+  margin-top: -24px !important;
+}
+
+.align-icon-nom {
+  margin-top: 15px !important
+}
+.align-icon-person{
+  margin-top:42px !important;
+  margin-right: 4px !important;
+}
+.style-nom-inspecteur{
+  margin-top:30px; font-size: 10px;
+}
+.style-date-remarque{
+  margin-top: -26px;
+}
+
+.align-icon-supr{
+  margin-top:15px;
+  margin-right: 11px;
+  color : $siga-grey-saisi;
+}
+
+@media only screen  and (min-width: 1366px) {
+  .align-icon-supr{
+    margin-top:20px;
+    color : $siga-grey-saisi;
+  }
+}
+
+.button-align{
+text-align: right;
+margin-right: -4px !important;
+}
+
+#button{
+  text-align: right;
+  font-size: 12px;
+}
+
+.mat-select-arrow {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid;
+  margin: 0 -10px !important;
+
+}
+
+.margin-selector {
+  margin-top: 10px !important;
+}
+
+.siga-icon-trash-design {
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;  
+  color:$siga-grey-saisi;
+  margin-top:25px;
+}
+
+.siga-icon-trash-design-disabled {
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:default;
+  overflow: hidden;  
+  color:$siga-grey-saisi;
+  opacity: 0.38 !important;
+  margin-top:25px;
+}
+
+
+.mat-button, .mat-flat-button, .mat-icon-button, .mat-stroked-button {
+  box-sizing: border-box;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  outline: 0;
+  border: none;
+  -webkit-tap-highlight-color: transparent;
+  display: inline-block;
+  white-space: nowrap;
+  text-decoration: none;
+  vertical-align: baseline;
+  text-align: center;
+  margin: 0;
+  line-height: auto;
+  border-radius: 2px;
+  overflow: visible;
+  margin-top: -8px;
+
+}
+@media screen and (max-width: 1360px) {
+.siga-margin-repondre {
+  margin-right: 50px;
+  margin-bottom: -18px !important;
+  text-align: right;
+}
+}
+ .siga-margin-repondre {
+  margin-right:12px;
+  text-align: right;
+  margin-bottom: -18px !important;
+  color:$siga-grey-saisi !important;
+  border-radius: inherit !important;
+}
+
+.siga-background-repondre /deep/ .mat-button-focus-overlay{
+  background-color: transparent;
+}
+
+.siga-align-nom-date {
+height: 28px !important;
+}
+
+
+.siga-remark-disabled {
+  color: rgba(0, 0, 0, 0.38) !important;
+}
+
+.siga-textarea-background{
+  background: $siga-grey-white;
+  margin-bottom: -20px !important;
+  height: 60px !important;
+}
+
+.mat-button.mat-accent[disabled], .mat-button.mat-primary[disabled], .mat-button.mat-warn[disabled], .mat-button[disabled][disabled], .mat-icon-button.mat-accent[disabled], .mat-icon-button.mat-primary[disabled], .mat-icon-button.mat-warn[disabled], .mat-icon-button[disabled][disabled], .mat-stroked-button.mat-accent[disabled], .mat-stroked-button.mat-primary[disabled], .mat-stroked-button.mat-warn[disabled], .mat-stroked-button[disabled][disabled] {
+  color: rgba(0,0,0,.26);
+  cursor: default;
+
+}
+
+.mat-input-element:disabled {
+  color: rgba(0, 0, 0, 0.58);
+}
+
+.siga-remark-content{
+  max-width: 97%;
+   margin-left: 24px !important; 
+   font-size: 12px;
+
+   /deep/ .mat-form-field-underline {
+    display: none;
+  }
+
+}
+
+
+@media screen and (max-width: 1369px) {
+  .siga-remark-content{
+    max-width: 96.5%;
+     margin-left: 24px !important; 
+     font-size: 12px;
+  }
+  .siga-margin-repondre {
+    margin-right:6px;
+    text-align: right;
+    margin-bottom: -18px !important;
+    color:$siga-grey-saisi !important;
+    border-radius: inherit !important;
+  }
+  }
+
+  .siga-nom-person-remark{
+    max-width: 200px;
+  }
+
+  .siga-date-remark{
+    max-width: 115px;
+  }
+ 
+
+  .siga-state-remark{
+    max-width: 80px;
+  }
+  .siga-textarea-style{
+    margin-top: -8px; 
+    font-size: 12px;
+  }
+
+  .siga-separator {
+    width : 80px !important;
+  }
+
+  .siga-label-le {
+    color: rgba(0, 0, 0, 0.54);
+     margin-right: 5px;
+  }
+ 

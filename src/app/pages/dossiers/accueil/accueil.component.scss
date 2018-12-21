@@ -1,0 +1,74 @@
+@import './../../../theme/sass/conf/conf.scss';
+@import 'src/app/theme/sass/conf/_variables.scss';
+@import 'src/app/theme/components/siga-utils-style.scss';
+
+
+
+.topContent{
+  margin-top: 4%;
+}
+.topContainer{
+  margin-top: 2%;
+}
+
+
+.siga-title-table-style{
+  padding-left: 19px;
+}
+
+.mat-column-numDossier{
+  flex: 0 0 180px;
+}
+
+
+.siga-mouseOverStyle {
+  background-color: #539fa8;
+}
+
+.highlight{
+  background: #ebf4f5;
+}
+
+.mat-badge {
+  margin-top: 11px !important;
+}
+
+ .mat-row{
+  min-height: 30px !important
+}
+
+.mat-badge-accent .mat-badge-content {
+  background: $siga-grey-saisi;
+  color: #fff;
+}
+
+
+.siga-numero-dossier{
+  cursor: pointer !important;
+  color: $siga-green-content;
+        &:hover {
+          font-weight: bold;
+      }
+}
+
+:host /deep/ {
+
+  .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background-color: $siga-grey-saisi;
+  }
+
+  .mat-checkbox-layout {
+    cursor: inherit;
+    align-items: baseline;
+    vertical-align: middle;
+    display: inline-flex;
+    white-space: nowrap;
+    margin-bottom: 1px;
+}
+  }
+
+  .siga-archive-content {
+    margin-left: 40% !important;
+  }
+
+

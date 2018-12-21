@@ -1,0 +1,196 @@
+@import 'src/app/theme/components/siga-tableau-component.scss';
+//@import 'src/app/theme/sass/conf/_variables.scss';
+
+.mat-row:hover {
+  background-color:#EDEDED;
+}
+
+
+.element-row {
+  min-height: 30px;
+}
+:host /deep/ {
+
+     .mat-datepicker-toggle-default-icon  {
+       width: 15px;
+    } 
+     .mat-button-ripple {
+      bottom: 6px !important; right: 4px !important; left: 7px !important; top: 3px !important;
+      
+    }
+    
+    
+ 
+    
+  .table-spec { 
+    table {
+      border-collapse: inherit !important; 
+      table-layout: fixed !important;
+    }
+
+    th,td {
+      border: none !important;
+      border-bottom: 1px solid rgba(102, 102, 102, .42) !important;
+      &:not(:first-child) {
+        text-align: left;
+        }
+    } 
+
+    td:nth-child(1) {
+      line-height: 30px;
+     } 
+     td:nth-child(5) {
+      color:  $siga-grey-disable !important;
+     } 
+
+     th {
+      font-weight: $font-normal;
+    }
+  }
+
+  ng2-smart-table {
+    a.ng2-smart-sort-link {
+      font-size: 2.2em !important;
+    }
+  }
+}
+.block {
+  text-align: right !important;
+}
+.textFormat {
+  color: $siga-grey-saisi;
+}
+.customThemaHeader {
+  font-size: 0.95em !important;
+  color:  $siga-grey-disable; 
+}
+.customThemarow {
+  line-height: 25px;
+}
+.spansize{
+  font-size: .87rem !important;
+}
+
+.customLineHeader {
+  font-size: 0.95em !important;
+  color:  $siga-grey-disable; 
+   padding: .0em !important;
+
+}
+.customLinerow {
+  font-size: .87rem !important;
+  line-height: 25px;
+  flex: 0 0 15%;
+
+}
+.customDebutValiditeHeader {
+  font-size: 0.95em !important;
+  padding: .0em !important;
+}
+.mat-icon-button {
+  line-height: 5px;
+  left: -15px;
+  height: 40px;
+}
+
+.customFinValiditeHeader {
+  font-size: 0.95em !important;
+   padding: .0em !important;
+}
+.customDebutValiditerow {
+  font-size: .87rem !important;
+  line-height: 25px;
+}
+.customFinValiditerow {
+  font-size: .87rem !important;
+  line-height: 25px;
+}
+
+.spanColor{
+  color: $siga-grey-disable;
+}
+
+.customLibelleHeader {
+  font-size: 0.95em !important;
+  color:  $siga-grey-disable;
+    flex: 0 0 50%;
+}
+.customLibellerow {
+  font-size: .87rem !important;
+  font-family: 'Roboto',  Helvetica, Arial, Verdana, Tahoma ,sans-serif;
+
+  line-height: 25px;
+  flex: 0 0 50%;
+}
+
+
+.customValidHeader {
+  font-size: 0.95em !important;
+  color: $siga-grey-disable;
+  padding: .0em !important;
+}
+
+.classActionsrow{
+  text-align: center;
+  line-height: 30px;
+}
+
+.siga-form-addLine{ 
+  width: 265px;
+  }
+
+    .width-input-themati {
+      width: 70px; 
+      max-width: 75px;
+    }
+
+    .width-input-param {
+      width: 140px; 
+      max-width: 140px;
+    }
+    .mat-select-panel {
+      min-width: 112px;
+      max-width: 800px;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-top: 0;
+      padding-bottom: 0;
+      max-height: 256px;
+      font-size: 1.1em !important;
+    
+    }
+
+    .sam-icon{
+      cursor: pointer;
+      visibility: visible;
+      font-size: 1.2em;
+      color:$siga-grey-saisi;
+    }
+    
+    .sam-tooltiptext {
+      visibility: hidden;
+      width: 80px;
+      font-size: 73%;
+      background-color: rgba($color: #000000, $alpha: .8);
+      color:$siga-grey-white;
+      text-align: center;
+      border-radius: 6px;
+      position: absolute;
+      z-index: 1;
+      margin-left: -45px;
+      margin-top: 25px;
+    }
+  
+    .sam-tooltiptext-noretrait {
+      margin-left: 0px;
+    }
+  
+    .sam-tooltip div {
+      font-style: normal;
+    }
+    
+    .sam-tooltip:hover .sam-tooltiptext {
+      visibility: visible;
+    }
+   
+  

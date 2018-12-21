@@ -1,0 +1,52 @@
+<div *ngIf="region" [ngClass]="localisationPertinente && dossierService.dossier?.phase !=='T40' ? 'test-nat-ope' : 'opacity-card'"
+  fxLayoutAlign="space-between center">
+  <div>
+    <span>{{region.nomRegion}}</span>
+  </div>
+  <button *ngIf="localisationPertinente && dossierService.dossier?.phase !=='T40' ;else noButton" mat-button matSuffix mat-icon-button
+    aria-label="Clear" (click)="onDeleteEvent()" class="siga-close-button-hover">
+    <mat-icon class="siga-close-button">close</mat-icon>
+  </button>
+  <ng-template #noButton>
+    <div class="no-button"></div>
+  </ng-template>
+</div>
+
+<div *ngIf="departement" [ngClass]="localisationPertinente && dossierService.dossier?.phase !=='T40' ? 'test-nat-ope' : 'opacity-card'"
+  fxLayoutAlign="space-between center">
+  <div>
+    <span>{{departement.numero}}</span> -
+    <span>{{departement.nomDept}}</span>
+  </div>
+  <button *ngIf="localisationPertinente && dossierService.dossier?.phase !=='T40' ;else noButton" mat-button matSuffix mat-icon-button
+    aria-label="Clear" (click)="onDeleteEvent()" class="siga-close-button-hover">
+    <mat-icon class="siga-close-button">close</mat-icon>
+  </button>
+  <ng-template #noButton>
+    <div class="no-button"></div>
+  </ng-template>
+</div>
+
+<div *ngIf="commune" [ngClass]="localisationPertinente && dossierService.dossier?.phase !=='T40' ? 'test-nat-ope' : 'opacity-card'"
+  fxLayoutAlign="space-between center">
+  <div>{{commune.nomCommune}}</div>
+  <button *ngIf="localisationPertinente && dossierService.dossier?.phase !=='T40' ;else noButton" mat-button matSuffix mat-icon-button
+    aria-label="Clear" (click)="onDeleteEvent()" class="siga-close-button-hover">
+    <mat-icon class="siga-close-button">close</mat-icon>
+  </button>
+  <ng-template #noButton>
+    <div class="no-button"></div>
+  </ng-template>
+</div>
+
+<div *ngIf="bvGestion" [ngClass]="localisationPertinente && dossierService.dossier?.phase !=='T40' ? 'test-nat-ope' : 'opacity-card'"
+  fxLayoutAlign="space-between center">
+  <div>{{bvGestion.nom}}</div>
+  <button *ngIf="localisationPertinente && dossierService.dossier?.phase !=='T40' ;else noButton" mat-button matSuffix mat-icon-button
+    aria-label="Clear" (click)="onDeleteEvent()" class="siga-close-button-hover">
+    <mat-icon class="siga-close-button">close</mat-icon>
+  </button>
+  <ng-template #noButton>
+    <div class="no-button"></div>
+  </ng-template>
+</div>

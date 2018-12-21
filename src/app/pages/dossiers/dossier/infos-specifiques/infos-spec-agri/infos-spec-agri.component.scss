@@ -1,0 +1,63 @@
+@import 'src/app/theme/components/siga-tableau-component.scss';
+
+
+:host /deep/ {
+
+    .table-spec { 
+      margin-left: 2%;
+      table {
+        border-collapse: inherit !important; 
+      }
+  
+      th,td {
+        border: none !important;
+        border-bottom: 1px solid rgba(102, 102, 102, .42) !important;
+        &:not(:first-child) {
+          text-align: left;
+          }
+      } 
+  
+      td:nth-child(1) {
+        line-height: 30px;
+       } 
+  
+       th {
+        font-weight: normal;
+        padding: 0em !important;
+      }
+    }
+  
+    ng2-smart-table {
+     a.ng2-smart-sort-link {
+        font-size: 2.2em !important;
+      }
+    }
+
+  }
+
+  .siga-content-Info-spec{
+    width:  65%;
+  }
+
+  .siga-content-Info-spec-agri{
+    width:  30%;
+  }
+
+  .siga-content-Info-spec-indt{
+    width:  40%;
+  }
+
+  @media screen and (max-width: 1370px) {
+    .siga-content-Info-spec{
+     width: 80%;
+    }
+
+    .siga-content-Info-spec-agri{
+      width:  40%;
+    }
+
+    .siga-content-Info-spec-indt{
+      width:  50%;
+    }
+  
+  }

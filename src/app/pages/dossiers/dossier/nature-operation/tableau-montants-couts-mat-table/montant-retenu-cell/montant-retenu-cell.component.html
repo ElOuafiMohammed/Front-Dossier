@@ -1,0 +1,7 @@
+<div fxLayout="row">
+  <mat-form-field fxFlex="100" class="temp-fix-error-display">
+    <input [ngClass]="{'errorMontant':rowData.hasError || rowDataHasError}" matInput (blur)="onBlur(control)"
+      [formControl]="control" autocomplete="off" [ngModel]="value" (input)="onlyNumber(control, $event) " maxlength="10"
+      tabindex="{{indexTabRetenu}}" (click)="onClick(control, $event)">
+  </mat-form-field>
+</div>

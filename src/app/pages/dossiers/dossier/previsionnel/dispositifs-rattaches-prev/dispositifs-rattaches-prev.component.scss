@@ -1,0 +1,154 @@
+@import 'src/app/theme/components/siga-tableau-component.scss';
+@import 'src/app/theme/sass/conf/_variables.scss';
+@import 'src/app/theme/components/siga-utils-style.scss';
+
+.content {
+	padding: 20px;
+	color: $siga-grey-saisi;
+}
+
+.titleDpPrev{
+	margin-left: 10px;
+	padding-top: 50px;
+	color: $siga-grey-saisi;
+}
+
+.error-spec {
+	margin-left: 0.8em;
+}
+
+.siga-form-addLine {
+	.mat-select-panel {
+		min-width: 112px;
+		max-width: 800px;
+		overflow: auto;
+		-webkit-overflow-scrolling: touch;
+		padding-top: 0;
+		padding-bottom: 0;
+		max-height: 256px;
+		font-size: 1.1em !important;
+	
+	}
+}
+
+.float-right{
+	float:right;
+	margin-right: 150px;
+}
+
+.customWidthClass{
+  flex: 0 0 60px;
+}
+
+.customWidthType{
+  flex: 0 0 100px;
+}
+
+.customIntitule{
+  flex: 1 0 370px;
+}
+
+.trashColor{
+	color:$siga-grey-saisi;
+}
+
+.alignIconeRight{
+	text-align: right;
+}
+
+.alignIconeCenter{
+	text-align: center;
+}
+
+.mat-table {
+	width: 70%;
+}
+
+.text{
+  color: $siga-grey-saisi;
+}
+
+.alignTableLeft{
+  padding-left:15px;
+}
+
+.siga-icon{
+	cursor: pointer;
+	visibility: visible;
+	font-size: 1.2em;
+}
+
+.siga-pointer {
+	cursor: pointer;
+}
+
+.siga-tooltiptext {
+	visibility: hidden;
+	width: 80px;
+	font-size: 70%;
+	background-color: black;
+	color: $siga-grey-white;
+	text-align: center;
+	border-radius: 6px;
+	height: 22px;
+
+	/* Position the siga-tooltip */
+	position: absolute;
+	z-index: 1 !important;
+	margin-left: -40px; 
+	margin-top: 18px;
+}
+
+.siga-tooltip:hover .siga-tooltiptext {
+	visibility: visible;
+}
+
+.ion-checkmark {
+	color: $siga-green-content;
+}  
+
+.disableButton {
+	pointer-events: none !important;
+	opacity: .4 !important;
+}
+
+.siga-taille-image-plus{
+  font-size: .9rem;
+}
+
+.siga-form-confirm {
+  color:  $siga-green-content;
+  display: inline-block;
+  -webkit-text-stroke: 0.2px  $siga-green-content;
+}
+
+.css-mat{
+  min-height: 35px !important;
+}
+
+.disabledComplementIntituleDispositif{
+	color: $siga-grey-saisi;
+  flex: 1 0 280px;
+}
+
+.disabledIntituleTypeDispositif{
+  color: $siga-grey-saisi;
+  
+}
+
+.mat-header-row, .mat-row {
+	padding: 0px;
+}
+
+.mat-header-cell{
+color:rgba(102, 102, 102, .54);
+}
+
+// Pour que que le choix du type de DP reste sur le Select
+mat-cell {
+  display:
+initial;
+  min-height:
+initial;
+}
+

@@ -1,0 +1,66 @@
+@import 'src/app/theme/components/siga-utils-style.scss';
+@import 'src/app/theme/sass/conf/_variables.scss';
+.mat-select-arrow-up {
+  border-top: 0px;
+  border-left: $mat-select-arrow-size solid transparent;
+  border-right: $mat-select-arrow-size solid transparent;
+  border-bottom: $mat-select-arrow-size solid;
+}
+.siga-width-session{
+width: 102px !important;
+}
+.content {
+  padding: 30px;
+  padding-top: 0px;
+  color: $siga-grey-saisi;
+
+  .session-type {
+    padding-bottom: 5px;
+    padding-top: 1px;
+  }
+}
+
+.typologie-label {
+  height: 28px;
+  padding-right: 9px;
+  margin-top: 5.5px;
+  width: 80px;
+}
+
+/deep/  { 
+  .sessionDecisionOptionsClass {
+    min-width: 120px;
+  }
+
+  .mat-radio-button {
+    padding-right: 16px;
+  }
+}
+
+/*
+ * Temporary
+ */
+ .temp {
+  &-margin {
+    margin-top: 20px;
+  }
+
+  &-fix-error-display {
+    /deep/ .mat-form-field-subscript-wrapper {
+      min-width: 250px;
+    }
+  }  
+}
+
+.space-top {
+  margin-top: 1em;
+  color: $siga-grey-saisi;
+  margin-left: 0.8em;
+}
+
+/deep/ .typeDispositifClass {
+  min-width: 500px;
+}
+
+
+

@@ -1,0 +1,51 @@
+<div>
+  <!-- Valeur de type number -->
+  <mat-form-field *ngIf="rowData.parametreDonneeSpec.typeDonnee === valeurType[0]">
+    <input matInput id="idValeurImpactNumber" #valeurImpactNumber [formControl]="controlValeurNumber" (blur)="onBlurNumberEvent()"
+      (input)="onlyNumber(controlValeurNumber, $event)" maxlength="10" [ngModel]="valueCurrentNumber | formatMonetaire"
+      (click)="onClick(controlValeurNumber, $event)">
+  </mat-form-field>
+
+  <!-- Valeur de type Text -->
+  <mat-form-field *ngIf="rowData.parametreDonneeSpec.typeDonnee === valeurType[1]" [ngClass]="{'errorMontant': rowData.erreurValeur}"
+    class="siga-position-texte">
+    <input matInput id="idValeurImpactText" [ngClass]="{'errorMontant': rowData.erreurValeur}" [formControl]="controlValeur"
+      [ngModel]="valueCurrentText" (blur)="onBlurStringEvent()" maxlength="200" />
+  </mat-form-field>
+
+  <!-- Valeur de type Liste de valeur à choix unique -->
+  <mat-form-field [ngClass]="{'errorMontant': rowData.erreurValeur}" *ngIf="rowData.parametreDonneeSpec.typeDonnee == valeurType[2]"
+    class="siga-position-valeur-liste-unique">
+    <div fxLayout="row">
+      <input matInput id="idValeurImpactChoixUnique" [matAutocomplete]="listeAutoComplete" [formControl]="controlValeurImpactListeChoixUnique">
+      <mat-autocomplete #listeAutoComplete="matAutocomplete" (optionSelected)="onChangeImpactListeValeurChoixUnique()"
+        [autoActiveFirstOption]="true" [displayWith]="displayListeValeur">
+        <mat-option *ngFor="let valeur of impactListeValeurChoixUniqueObservable | async; trackBy: trackById" [value]="valeur">
+          <span> {{ valeur.code }} - {{ valeur.libelle }}</span>
+        </mat-option>
+      </mat-autocomplete>
+      <div class="mat-select-arrow-wrapper-liste-valeur">
+        <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !listeAutoComplete.isOpen, 'mat-select-arrow-up': listeAutoComplete.isOpen}"></div>
+      </div>
+    </div>
+    <button mat-button id="idButtonCloseAutoCompleteValeurImpact" *ngIf="controlValeurImpactListeChoixUnique.value"
+      matSuffix mat-icon-button aria-label="Clear" (click)="controlValeurImpactListeChoixUnique.setValue('')">
+      <mat-icon *ngIf="!viewRight">close</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <!-- Valeur de type Date -->
+  <mat-form-field *ngIf="rowData.parametreDonneeSpec.typeDonnee == valeurType[3]" class="siga-position-valeur-liste-unique"
+    [ngClass]="{'errorMontant': rowData.erreurValeur}">
+    <input id="idValeurImpactDate" (blur)="onBlurDateEvent()" matInput autocomplete="off" [min]="minDate" [max]="maxDate"
+      [matDatepicker]="valeurImpactDate" [formControl]="controlValeurDate" />
+    <mat-datepicker-toggle matSuffix [for]="valeurImpactDate"></mat-datepicker-toggle>
+    <mat-datepicker #valeurImpactDate></mat-datepicker>
+  </mat-form-field>
+
+  <!-- Valeur de type reel-->
+  <mat-form-field *ngIf="rowData.parametreDonneeSpec.typeDonnee === valeurType[4]" [ngClass]="{'errorMontant': rowData.erreurValeur}">
+    <input matInput id="idValeurImpactReel" #valeurImpactReel [formControl]="controlValeurReel" (blur)="onBlurReelEvent()"
+      (input)="onlyReel(controlValeurReel, $event)" maxlength="14" [ngModel]="valueCurrentReel" (click)="onClick(controlValeurReel, $event)">
+  </mat-form-field>
+</div>

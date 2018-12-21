@@ -1,0 +1,8 @@
+<div class="margin" [ngClass]="{ disableTable : viewRight || viewAdministratif}" fxLayout="row" fxLayoutAlign="space-between stretch">
+  <div fxFlex="100">
+    <div fxLayout="column" fxLayoutAlign=" stretch">
+      <ng2-smart-table class="table-spec" [settings]="settings" [source]="source"></ng2-smart-table>
+      <ng2-smart-table class="table-spec-total" [settings]="settingsTotals" [source]="sourceTotals"></ng2-smart-table>
+    </div>
+  </div>
+</div>

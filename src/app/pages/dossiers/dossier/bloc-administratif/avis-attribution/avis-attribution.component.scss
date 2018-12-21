@@ -1,0 +1,23 @@
+@import 'src/app/pages/dossiers/dossier/dossier.component.scss';
+@import 'src/app/theme/components/siga-tableau-component.scss';
+
+.avis {
+    margin-left: 24px;
+    margin-top: 24px;
+}
+.motif {
+    margin-left: 24px;
+}
+.attributifNum {
+    margin-right: 20px;
+}
+.attributifNumDate {
+    margin-left: 24px;
+    margin-bottom: 18px;
+    margin-top: 0px;
+}
+.rt-infos{
+    color: $siga-grey-saisi;
+    margin-bottom: 5px;
+    margin-top: 15px !important;
+  }

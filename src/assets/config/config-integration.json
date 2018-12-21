@@ -1,0 +1,4 @@
+{
+  "BACKEND": "http://integration.siga.akka.eu:9090/siga",
+  "FRONT_DISPOSITIF": "http://integration.siga.akka.eu:81"
+}

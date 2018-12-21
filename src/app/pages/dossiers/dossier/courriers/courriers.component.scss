@@ -1,0 +1,77 @@
+@import 'src/app/theme/components/siga-tableau-component.scss';
+@import 'src/app/theme/sass/conf/_variables.scss';
+@import 'src/app/theme/components/siga-utils-style.scss';
+
+.font-size-parcourir{
+  font-size:0.9rem;
+  font-weight: normal;
+  font-family: sans-serif;
+}
+
+.siga-form-space{
+  margin-top: 15px;
+}
+
+.siga-form-parcourir{ 
+  color: $siga-green-content !important;
+  border: 1px solid $siga-green-content !important;
+  padding: .3rem;
+  width: 150px !important;
+}
+
+
+
+.margin {
+  margin-left: 8px;
+}
+
+.siga-content-add {
+  margin-right: 4%;
+}
+:host /deep/ .icon-eye {
+  font-size:medium;
+  color:$siga-grey-saisi;
+}
+
+/************* CSS table courrier mat-table *************/
+
+.mat-table {
+  margin-left: 30px;
+  margin-right: 4%;
+}
+
+.mat-header-row, .mat-row {
+  padding: 0px;
+  min-height: 35px;
+}
+
+.mat-cell {
+  color: $siga-grey-actif-a2;
+}
+
+.mat-row:hover {
+  background-color: $siga-table-row-hover;
+}
+
+.siga-table-courrier-reference{
+  padding-left: 1em;
+  flex: 0 0 268px;
+}
+
+.siga-table-courrier-destinataire{
+  padding-left: 1em;
+}
+
+.siga-table-courrier-objet{
+  padding-left: 1em;
+  flex: 0 0 321px;
+}
+
+.siga-table-courrier-redacteur{
+  padding-left: 1em;
+  flex: 0 0 205px;
+}
+
+.siga-url-courrier {
+  width: auto !important;
+}

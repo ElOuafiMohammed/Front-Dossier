@@ -1,0 +1,149 @@
+@import 'src/app/theme/components/siga-tableau-component.scss';
+@import 'src/app/theme/sass/conf/_variables.scss';
+@import 'src/app/theme/components/siga-utils-style.scss';
+
+.margin {
+  margin-left: 2em;
+}
+
+.siga-content-add {
+  margin-right: 2%;
+}
+
+.siga-form-space{
+  padding: .4em;
+  // margin: auto;
+  margin-top: 15px;
+  width: 170px;
+}
+
+.font-size-parcourir{
+  font-size:0.9rem;
+  font-weight: normal;
+  font-family: sans-serif;
+  width: 125px !important;
+}
+
+.siga-form-parcourir{ 
+  color: $siga-green-content !important;
+  border: 1px solid $siga-green-content !important;
+  em {
+    color: $siga-green-content;
+  }
+  margin-right: 4%;
+}
+
+.siga-form-parcourir-disabled{
+  color: $siga-grey-saisi !important;
+  border: 1px solid $siga-grey-saisi !important;
+  &:hover{
+    cursor:not-allowed;
+  }
+  margin-right: 84px;
+}
+
+.siga-form-disabled{
+  color: $siga-grey-saisi;
+  display: inline-block;
+  -webkit-text-stroke: 0.5px $siga-grey-saisi;
+}
+
+.input-file {
+  display:none;
+}
+
+.siga-icon{
+  cursor: pointer;
+  visibility: visible;
+  font-size: 1.2em;
+}
+
+.siga-tooltiptext {
+  visibility: hidden;
+  width: 80px;
+  font-size: 80%;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  height: 22px;
+
+  /* Position the siga-tooltip */
+  position: absolute;
+  z-index: 1 !important;
+  margin-left: -40px; 
+  margin-top: 17px;
+}
+
+.siga-tooltip:hover .siga-tooltiptext {
+  visibility: visible;
+}
+
+.ion-checkmark {
+  color: green;
+}
+
+.disableButton {
+	pointer-events: none !important;
+  opacity: .4 !important;
+}
+
+/************* CSS table courrier mat-table *************/
+
+.mat-table {
+  margin-left: 30px;
+  margin-right: 2%;
+}
+
+.mat-header-row, .mat-row {
+  padding: 0px;
+  min-height: 35px;
+  border: none !important;
+}
+
+.siga-border-bottom {
+  border-bottom: 1px solid $table-border-color !important;
+}
+
+
+.mat-cell {
+  color: $siga-grey-actif-a2;
+}
+
+.mat-row:hover {
+  background-color: $siga-table-row-hover;
+}
+
+.siga-table-piece-jointe-icon{
+  padding-left: 1em;
+  flex: 0 0 7%;
+}
+
+.siga-table-piece-jointe-titre{
+  padding-left: 1em;
+  flex: 0 0 42%;
+}
+
+.siga-table-piece-jointe-createur{
+  padding-left: 1em;
+  flex: 0 0 30%;
+}
+
+.siga-table-piece-jointe-date-creation{
+  padding-left: 1em;
+  flex: 0 0 17%;
+}
+
+.siga-table-piece-jointe-icon-supprime{
+  border: none !important;
+  padding-left: 1em;
+  flex: 0 0 5%;
+}
+
+.siga-url-titre-pice-jointe {
+ width: auto !important;
+}
+
+
+
+

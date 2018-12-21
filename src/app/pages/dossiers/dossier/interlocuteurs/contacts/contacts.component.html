@@ -1,0 +1,81 @@
+<div fxLayout="row" fxLayoutAlign="none stretch" [formGroup]="formCorrespondant" class="width-input-select-ouvrage">
+
+
+  <div fxLayout="row" fxLayoutAlign="space-around center none stretch space-between none" class="divContact">
+    <!-- nom prenom -->
+    <mat-form-field fxFlex="290px">
+      <div fxLayout="row">
+        <input id="nom" autocomplete="off" matInput maxlength="80" placeholder="Nom-Prénom" formControlName="nom"
+          (blur)='updateNom(nomControl.value)'>
+      </div>
+      <button mat-button *ngIf="nomControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="nomControl.setValue(null)">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <div class="siga-separator">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+    <!-- qualite -->
+
+    <mat-form-field fxFlex="140px">
+      <div fxLayout="row">
+        <input id="qualite" matInput placeholder="Qualité" aria-label="qualite" [matAutocomplete]="autoCompleteQualite"
+          formControlName="qualite">
+
+        <div class="mat-select-arrow-wrapper">
+          <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !autoCompleteQualite.isOpen, 'mat-select-arrow-up': autoCompleteQualite.isOpen}"></div>
+        </div>
+      </div>
+      <button id="buttonCloseRole" mat-button class="space-close" *ngIf="qualiteControl.value" matSuffix
+        mat-icon-button aria-label="Clear" (click)="qualiteControl.setValue(null); qualiteControl.reset(); ">
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-error *ngIf="!qualiteControl.hasError('required') && qualiteControl.touched && qualiteControl.hasError(qualiteValidatorKey)">
+        <strong>{{'messages.erreurChoixOption' | translate}} </strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-autocomplete id="autoCompleteQualite" #autoCompleteQualite="matAutocomplete" [autoActiveFirstOption]="true"
+      [displayWith]="displayQualite">
+      <mat-option *ngFor="let qualite of filteredQualite  | async; trackBy: trackById" [value]="qualite">
+        {{qualite.libelle}}
+      </mat-option>
+    </mat-autocomplete>
+    <div class="siga-separator">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+    <!-- numero Tel -->
+
+    <mat-form-field fxFlex="140px">
+      <div fxLayout="row">
+        <input id="numeroTel" autocomplete="off" matInput maxlength="13" placeholder="Téléphone" formControlName="numeroTel"
+          (blur)='updateNumeroTel(numeroTelControl.value)' (input)="onlyNumber(numeroTelControl, $event)">
+      </div>
+      <button mat-button *ngIf="numeroTelControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="numeroTelControl.setValue(null)">
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-error *ngIf=" numeroTelControl.hasError('pattern')">
+        <strong>
+          {{'messages.erreurTelephone' | translate}}
+        </strong>
+      </mat-error>
+    </mat-form-field>
+    <div class="siga-separator">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+    <!-- mail -->
+
+    <mat-form-field fxFlex="240px">
+      <div fxLayout="row">
+        <input id="mail" autocomplete="off" matInput maxlength="80" placeholder="E-mail" formControlName="mail" (blur)='updateMail(mailControl.value)'>
+      </div>
+      <button mat-button *ngIf="mailControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="mailControl.setValue(null)">
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-hint></mat-hint>
+      <mat-error *ngIf=" mailControl.hasError('pattern')">
+        <strong>
+          {{'messages.erreurMail' | translate}}
+        </strong>
+      </mat-error>
+    </mat-form-field>
+
+  </div>
+</div>

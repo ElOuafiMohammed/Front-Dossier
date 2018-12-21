@@ -1,0 +1,19 @@
+<div [ngClass]="{ disableTable : viewRight || viewAdministratif}" fxLayout="row" fxFlex="100" fxLayoutAlign="start">
+  <div [ngClass]="{ disableTable : viewRight || viewAdministratif}" class="space-around" fxFlex="78" class="specifiques">
+    <div fxLayout="column" class="siga-marge-tableau margin-tableau-cofin">
+      <ng2-smart-table class="table-spec" *ngIf="settings?.columns != null" [settings]="settings" [source]="source"></ng2-smart-table>
+    </div>
+    <div fxLayoutAlign="end">
+      <mat-error class="errorMontant" *ngIf="tauxError">
+        {{ 'messages.erreurTauxFinancement' | translate }}
+      </mat-error>
+    </div>
+  </div>
+  <div fxLayout="column" fxFlex="15">
+    <button id="ajouterCoFinanceur" [disabled]="!canAdd || viewAdministratif" class="siga-bouton siga-form-addLine btn btn-default space-around"
+      type="button" (click)="onAddLine()">
+      <em class="espacement" [ngClass]="(canAdd)?'ion-ios-plus-outline siga-form-confirm':'ion-ios-plus-outline siga-form-invalid'"></em>
+      <span>Ajouter co-financeur</span>
+    </button>
+  </div>
+</div>

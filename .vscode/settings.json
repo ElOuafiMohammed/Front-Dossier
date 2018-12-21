@@ -1,0 +1,8 @@
+{
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "sonarlint.connectedMode.project": {
+    "serverId": "SIGA_SonarQube",
+    "projectKey": "siga:siga-dossiers-front"
+  }
+}

@@ -1,0 +1,23 @@
+@import 'src/app/theme/sass/conf/_variables.scss';
+@import 'src/app/theme/components/siga-utils-style.scss';
+.text {
+  color: $siga-grey-saisi;
+  padding-left: 24px;
+  padding-top: 24px;
+}
+
+.siga-content-agri {
+   padding-left: 32px;
+}
+
+.siga-content-prix-eaux{
+  padding-top: 18px;
+  padding-left: 42px; // 24 + 18 
+
+}
+
+.siga-prix-eaux {
+  text-align: right;
+  color: $siga-grey-saisi;
+}
+

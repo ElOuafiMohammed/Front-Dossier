@@ -1,0 +1,85 @@
+@import 'src/app/theme/components/siga-tableau-component.scss';
+@import 'src/app/theme/components/siga-tooltip.scss';
+@import 'src/app/theme/sass/conf/_variables.scss';
+:host /deep/ {
+  .margChecked{
+    margin-left: 1.5%;
+  }
+  .card-body {
+    flex-direction: column;
+    display: initial !important;
+  }
+
+  .table-spec { 
+
+    th,td {
+      border: none !important;
+      border-bottom: 1px solid rgba(102, 102, 102, .42) !important;
+      &:not(:last-child) {
+        text-align: left;
+        }
+    }  
+    th:nth-child(6) {
+      text-align: right;
+        }
+  }
+
+  .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background-color: $siga-grey-saisi;
+  }
+  
+  ng2-smart-table {
+   a.ng2-smart-sort-link {
+      font-size: 2.2em !important;
+    }
+  }
+  .siga-form-cancel {
+    color: $siga-red-error;
+  }
+  .siga-form-confirm {
+    margin-right: 5px;
+    color: $siga-green-content;
+  }
+  .siga-form-invalid{
+    margin-right: 5px;
+    color: $siga-grey-saisi
+  }
+
+}
+
+.mat-select-arrow-up {
+  border-top: 0px;
+  border-left: $mat-select-arrow-size solid transparent;
+  border-right: $mat-select-arrow-size solid transparent;
+  border-bottom: $mat-select-arrow-size solid;
+}
+
+.siga-total-montant{
+  padding-top: 15px;
+  color: $siga-green-content !important;
+}
+.gdiv-gere-prev-margin{
+  max-height: 450px !important;
+  padding-bottom: 19px;
+  overflow-y: scroll;
+}
+.gvalider-dossier-padding{
+  margin-bottom: -50px;
+}
+
+.color {
+ color:  $siga-green-content
+}
+.margin{
+  padding-left: 21px;
+  padding-bottom: 17px;
+}
+
+
+.siga-position-total {
+margin-right: 22px;
+}
+
+.siga-position-total-libelle, .siga-position-total{
+text-align: right;
+}

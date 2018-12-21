@@ -1,0 +1,8 @@
+<mat-form-field class="width-input-select-local" tabindex="{{indexSelect}}">
+  <mat-select (selectionChange)="change(selected)" [(value)]="selected">
+    <mat-select-trigger>{{selected?.libelle}}</mat-select-trigger>
+    <mat-option *ngFor="let line of freeLines; trackBy: trackById" [value]="line">
+      {{ line.libelle }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

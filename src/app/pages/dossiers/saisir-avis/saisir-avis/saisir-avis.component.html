@@ -1,0 +1,133 @@
+<div class="gsaisir-avis-padding">
+  <siga-criteres-saisir-avis class="siga-psotion-criterea" [thematiques]="thematiques" [procedureDecisions]="procedureDecisions"
+    [sessions]="sessions" [submitted]="submitted" (searchEventEmitter)="fetchResultatRecherche($event)">
+  </siga-criteres-saisir-avis>
+  <div class="g-div-saisi-avis-margin">
+    <ba-card *ngIf="showResult">
+
+      <div fxFlex="100%"></div>
+      <div fxFlex="25%" class="nbr-dossiers-trouves">
+        <strong> {{nombreTotalResultats}} </strong> dossier(s) trouvé(s)
+      </div>
+      <div fxFlex="74.5%" class="position-head-card">
+      </div>
+
+      <!--  Table saisir avis-->
+      <form novalidate [formGroup]="formResultatRecherche">
+        <mat-table #table [dataSource]=dataSource class="siga-style-table">
+          <!-- numero dossier -->
+          <ng-container matColumnDef="numDossier">
+            <mat-header-cell *matHeaderCellDef class="customNumDosHeader"> Numéro dossier </mat-header-cell>
+            <mat-cell *matCellDef="let element" class=" customWidthNumDos"  (click)="consultDossier(element)" [ngClass]="{'siga-error': element.avis.code !== 'F' && !element.motifAvis, 'siga-correct-value-style': element.avis.code !== 'F' && element.motifAvis}">
+              {{element?.numeroDossier}}
+            </mat-cell>
+          </ng-container>
+          <!-- Libelle bénéficiaire -->
+          <ng-container matColumnDef="libelleBenef">
+            <mat-header-cell *matHeaderCellDef class="customLibelleHeader"> Libellé bénéficiaire </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="customLibellerow">
+              <div> {{element.beneficiaire.raisonSociale}}
+                <mat-icon *ngIf="!element.beneficiaire.actif" class="icon-info-benef" matTooltip="Bénéficiaire inactif" [matTooltipPosition]="'right'"
+                  matTooltipClass="tooltip-error">info</mat-icon>
+              </div>
+            </mat-cell>
+          </ng-container>
+          <!-- montant des aides -->
+          <ng-container matColumnDef="montantAide">
+            <mat-header-cell *matHeaderCellDef class="customMontantHeader"> Montant des aides </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="disabledIntitule customMontantWidth">
+              {{element.totalMontantAide |formatMonetaire}}
+            </mat-cell>
+          </ng-container>
+          <!-- avis sur le dossier -->
+          <ng-container matColumnDef="avis">
+            <mat-header-cell *matHeaderCellDef class="customAvis"> Avis </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="disabledIntitule customAvis">
+              <mat-form-field class="siga-avis-style">
+                <mat-select [disabled]="!element.beneficiaire.actif" [value]="element.avis" (selectionChange)="createAvisDossier(element, $event)"
+                  [compareWith]="compareListElement">
+                  <mat-select-trigger>{{element.avis.code}} - {{element.avis.libelle}}
+                  </mat-select-trigger>
+                  <mat-option *ngFor="let avis of listAvis;trackBy: trackById" [value]="avis">
+                    {{ avis.code }} - {{ avis.libelle }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </mat-cell>
+          </ng-container>
+          <!-- button expanded Row -->
+          <ng-container matColumnDef="actionsColumn">
+            <mat-header-cell *matHeaderCellDef class="customWidthMotif">Motif</mat-header-cell>
+            <mat-cell *matCellDef="let row" class="customWidthMotif">
+              <div *ngIf="row.avis.code !== 'F'">
+                <button id="editButton" *ngIf="row.expanded === false " class="element-row" [class.expanded]="expanded" (click)="toggleDetailsRow(row)"
+                  mat-icon-button>
+                  <mat-icon svgIcon="editIcon" class="siga-icon-edit"></mat-icon>
+                </button>
+                <button id="arrowDownButton" *ngIf="row.expanded === true" class="element-row" [class.expanded]="expanded" (click)="toggleDetailsRow(row)"
+                  mat-icon-button>
+                  <em fxFlex="10" class="siga-tooltip siga-icon ion-ios-arrow-down"></em>
+                </button>
+              </div>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Afficher le motif de l'avis-->
+          <ng-container matColumnDef="expandedMotif">
+            <mat-cell *matCellDef="let detail">
+              <div>
+                <mat-form-field class="siga-motif-style" [ngClass]="{'diplayUnderLine' : (!motifValue.value && detail.element.avis.code !== 'F')}">
+                  <textarea id="textArea" [disabled]="detail.element.avis === null || detail.element.avis.code === 'F' || !detail.element.beneficiaire.actif"
+                    matInput #motifValue (blur)="motifBlur(motifValue.value, detail)" value="{{detail.element.motifAvis}}">
+
+                  </textarea>
+                </mat-form-field>
+                <span *ngIf="(!motifValue.value && detail.element.avis.code !== 'F')" class="siga-error-message">
+                  Ce champ est obligatoire
+                </span>
+              </div>
+              <br>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <!-- mat-row pour l'affichage des différents lignes de la table -->
+          <mat-row *matRowDef="let row; columns: displayedColumns; let index=index" matRipple class="element-row css-mat" [class.expanded]="expandedElement === row"></mat-row>
+          <!-- mat-row pour afficher le motif sur l'avis -->
+          <mat-row *matRowDef="let row; columns: ['expandedMotif']; when: isExpansionMotifDossier" [@detailExpand]="row.element.expanded===true  ? 'expanded' : 'collapsed'"
+            style="overflow: hidden">
+          </mat-row>
+        </mat-table>
+      </form>
+
+      <!-- Total aides dossiers -->
+      <div *ngIf="nombreTotalResultats !=0" fxLayout="row" fxFlex="100%" class="siga-total-montant">
+        <div fxFlex="39%">
+        </div>
+        <div fxFlex="15%">
+          <strong>Total aides :</strong>
+        </div>
+        <div fxFlex="15%">
+          <strong>{{ this.formatMonetairePipe.transform(this.summeTotalList[0].totalMontantAide) }} €</strong>
+        </div>
+        <div fxFlex="31">
+        </div>
+      </div>
+    </ba-card>
+
+    <div fxLayout="row">
+      <div fxFlex="70"></div>
+      <!-- Quitter  -->
+      <button id="cancelAvis" #button mat-raised-button (click)="close()" type="button" fxFlex="12">
+        <em class="ion-close siga-form-cancel"></em> &nbsp;Quitter </button>
+      <div fxFlex="3"> </div>
+      <!-- Enregistrer  -->
+      <button id="saveAvis" *ngIf="showResult" #button mat-raised-button type="submit" [disabled]="benefInactif || submitted || motifIsRequerid || nombreTotalResultats ===0"
+        (keydown.enter)="saveAvis()" (click)="saveAvis()" fxFlex="15">
+        <em class="ion-checkmark siga-form-confirm"></em> &nbsp;Enregistrer</button>
+      <div fxFlex="3"> </div>
+      <!-- Valider  -->
+      <button id="validAvis" *ngIf="showResult" #button mat-raised-button type="submit" [disabled]="benefInactif || submitted || motifIsRequerid || nombreTotalResultats ===0"
+        (keydown.enter)="aviser()" (click)="aviser()" fxFlex="12">Valider</button>
+    </div>
+  </div>
+</div>

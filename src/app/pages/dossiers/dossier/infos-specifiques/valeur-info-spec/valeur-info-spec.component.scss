@@ -1,0 +1,81 @@
+@import 'src/app/theme/sass/conf/_variables.scss';
+@import 'src/app/theme/components/siga-utils-style.scss';
+
+$mat-select-arrow-margin-width: 15px !default;
+$mat-select-arrow-margin-height: 4px !default;
+
+.mat-select-arrow-down {
+    border-left: $mat-select-arrow-size solid transparent;
+    border-right: $mat-select-arrow-size solid transparent;
+    border-top: $mat-select-arrow-size solid;
+  }
+  
+  .mat-select-arrow-up { 
+     border-top: 0px;
+      border-left: $mat-select-arrow-size solid transparent;
+    border-right: $mat-select-arrow-size solid transparent;
+  }
+  
+  .mat-select-arrow-wrapper-liste-valeur> div {
+    display: inline-block;
+    vertical-align: calc(3px);
+    margin: 0;
+  }
+
+
+  // Surcharge de la taille de la liste et agrandissement
+  /deep/ {
+    .mat-autocomplete-panel.mat-autocomplete-visible {
+      width: 600px !important;
+    }
+  }
+
+.siga-content-info-date{
+    width: 30%;
+
+}
+
+@media screen and (max-width: 1370px) {
+    .siga-content-info-date{
+       width: 30%;
+    }
+  }
+  
+  .siga-valeur-number{
+      width: 100% !important;
+  }
+
+  .siga-valeur-number-underline {
+    border-bottom: solid 1px;
+    text-align: right;
+  }
+
+  .siga-choix-encd-component {
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-bottom: 10px
+  }
+  .siga-encadrement{
+    border-bottom: 1px solid #949494;
+    margin-bottom: 5px;
+    min-width: 366px;
+    max-width: 366px;
+  }
+  
+
+  .siga-theme-card-container {
+    display: inline-block;
+  }
+
+  .siga-choose-value{
+    font-size: 12px;
+    margin-top:-2px;
+  }
+
+  .siga-valeur-liste-unique {
+    width:100%;
+  }
+
+  .siga-valeur-liste-multiple {
+    width:97%
+  }

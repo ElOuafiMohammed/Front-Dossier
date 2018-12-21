@@ -1,0 +1,61 @@
+@import 'src/app/theme/sass/conf/_variables.scss';
+
+.test-nat-ope {
+  font-size: 12px !important;
+  color: $siga-grey-actif-a2;
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12);
+  background-color: #F0F0F0;
+  margin: 5px;
+  float: left;
+  width: auto;
+  height: 24px;
+  padding: 4px 4px 4px 8px;
+  border-radius: 2px;
+}
+
+.siga-close-button {
+  font-size: 12px;
+}
+
+.siga-close-button, .mat-icon, .mat-icon-button {
+  line-height: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.display-none {
+  color: $siga-grey-white;
+
+  &:hover {
+    background-color:$siga-grey-white;
+  }
+}
+
+.siga-close-button-hover {
+  &:hover {
+    background-color: $siga-grey-white !important;
+    border-radius: 100%;
+  }
+}
+
+.opacity-card {
+  font-size: 12px !important;
+  opacity: 1 !important;
+  color: $siga-grey-saisi;
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12);
+  background-color: $siga-grey-white;
+  margin: 5px;
+  float: left;
+  width: auto;
+  height: 24px;
+  padding: 4px 4px 4px 8px;
+  border-radius: 2px;
+}
+
+.no-button {
+  min-height: 20px;
+  min-width: 20px;
+  width: 20px;
+  height: 20px;
+  background-color: $siga-grey-white;
+}

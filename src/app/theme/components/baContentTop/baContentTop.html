@@ -1,0 +1,11 @@
+<div class="content-top clearfix" fxLayout="row" fxLayoutAlign="space-between center">
+
+  <h1 class="al-title" fxFlex="30" translate>
+    {{ activePageTitle }}
+    <span *ngIf="state.dossier">
+      : {{ state.dossier.numeroDossier }}
+    </span>
+  </h1>
+  <div fxFlex="2">
+  </div>
+</div>

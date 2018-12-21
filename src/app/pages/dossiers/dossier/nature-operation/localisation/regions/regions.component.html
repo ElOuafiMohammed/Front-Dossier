@@ -1,0 +1,52 @@
+<div [ngClass]="{ disableInput : viewRight || viewAdministratif || !currentOperation.localisationPertinente }">
+  <div fxLayout="row" class="space-around content">
+    <span class="text">Régions</span>
+  </div>
+  <form [formGroup]="formRegions">
+    <div fxLayout="row" class="space-around content">
+      <mat-form-field fxFlex="25" class="operation-align">
+        <div fxLayout="row">
+          <label class="label-bv-gestion" for="inputRegion" [hidden]="isHidden">
+            {{ currentOperation.regions !=null && currentOperation.regions.length >1 ? currentOperation.regions.length
+            + ' Régions sélectionnées':
+            currentOperation.regions.length ===1 ? '1 Région sélectionnée' : ''}}
+          </label>
+          <span class="input-wrapper-bv-gestion">
+            <input #input matInput id="inputRegion" placeholder="{{currentOperation.regions !=null && currentOperation.regions.length >0 ? '' : '+ Régions(s)' }}"
+              [matAutocomplete]="regionsAutoComplete" formControlName="regions" (focus)="onFocus()" (blur)="onBlur()"
+              (input)="onInput($event)">
+          </span>
+          <div class="mat-select-arrow-wrapper">
+            <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !regionsAutoComplete.isOpen, 'mat-select-arrow-up': regionsAutoComplete.isOpen}"></div>
+          </div>
+        </div>
+        <button mat-button type="button" *ngIf="regionsControl.value" matSuffix mat-icon-button aria-label="Clear"
+          (click)="regionsControl.setValue(null)">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error *ngIf="regionsControl.touched && regionsControl.hasError('regionsNotFound')" class="error-autocomplete">
+          <strong>
+            {{'messages.erreurChoixOption' | translate}}
+          </strong>
+        </mat-error>
+
+        <mat-autocomplete (optionSelected)="onRegionSelect($event.option.value)" #regionsAutoComplete="matAutocomplete"
+          [autoActiveFirstOption]="true" [displayWith]="displayRegions">
+          <mat-option *ngFor="let region of listRegionsObservable | async; trackBy: trackById;" [value]="region">
+            <span> {{region?.numero}}</span>
+            <span> - </span>
+            <span> {{region?.nomRegion}} </span>
+          </mat-option>
+        </mat-autocomplete>
+
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+
+<div [ngClass]="{'container-error': regionsControl.touched && regionsControl.hasError('regionsNotFound')}" class="container">
+  <div *ngFor="let region of currentOperation.regions; trackBy: trackById">
+    <siga-app-localisation-card [region]="region" (deleteEventEmitter)="onDeleteRegion($event)"
+      [localisationPertinente]="currentOperation.localisationPertinente" class="region"></siga-app-localisation-card>
+  </div>
+</div>

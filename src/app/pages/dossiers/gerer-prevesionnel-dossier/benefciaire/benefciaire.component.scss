@@ -1,0 +1,26 @@
+
+
+@import 'src/app/theme/sass/conf/_variables.scss';
+@import 'src/app/theme/components/siga-tooltip.scss';
+.siga-benef{
+  white-space: nowrap; 
+  max-width: 150px !important;
+}
+.space-benef{
+  margin-left: 5px
+}
+.info-benef{
+  margin-top: 3px;
+  margin-left: 2px
+}
+
+.icon-info-benef{
+  color: $siga-red-error !important;
+  font-size: 17px !important ;
+}
+@media (min-width: 1368px) {
+  .siga-benef{
+    white-space: nowrap; 
+  }
+}
+

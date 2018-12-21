@@ -1,0 +1,62 @@
+<!-- Titre -->
+<h1 mat-dialog-title>
+  <div *ngIf="!viewRight">
+    Refuser le dossier {{dossierService.dossier?.numeroDossier}}
+  </div>
+  <div *ngIf="viewRight">
+    Motif de refus du dossier {{dossierService.dossier?.numeroDossier}}
+  </div>
+</h1>
+
+<div mat-dialog-content>
+  <form novalidate (ngSubmit)="onSubmit()" [formGroup]="formRefus" (keydown.enter)="$event.preventDefault()">
+    <div fxLayout="column" fxLayoutAlign="space-between stretch">
+      <!--  Refus nature -->
+      <mat-form-field>
+        <div fxLayout="row">
+          <input matInput placeholder="Nature" [matAutocomplete]="natureAutoComplete" formControlName="nature" tabindex="1001">
+          <div class="mat-select-arrow-wrapper">
+            <div *ngIf="!viewRight" class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !natureAutoComplete.isOpen, 'mat-select-arrow-up': natureAutoComplete.isOpen}"></div>
+          </div>
+        </div>
+        <button mat-button *ngIf="natureControl.value && !viewRight" matSuffix mat-icon-button aria-label="Clear" (click)="natureControl.setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error *ngIf="!natureControl.hasError('required') && natureControl.touched && natureControl.hasError(natureValidatorKey)">
+          <strong>
+            {{'messages.erreurChoixOption' | translate}}
+          </strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-autocomplete #natureAutoComplete="matAutocomplete" [displayWith]="displayNature" [autoActiveFirstOption]="true">
+        <mat-option *ngFor="let nature of filteredNatures | async; trackBy: trackById" [value]="nature">
+          <span> {{nature.libelle}} </span>
+        </mat-option>
+      </mat-autocomplete>
+
+      <!-- Motif -->
+      <mat-form-field>
+        <textarea #myTextArea (click)="addLine($event,myTextArea)" (keyup)="addLine($event,myTextArea)" matInput maxlength="240"
+          placeholder="Motif" formControlName="motif" tabindex="1002" matTextareaAutosize class="remove-padding"></textarea>
+        <button mat-button *ngIf="motifControl.value && !viewRight" matSuffix mat-icon-button aria-label="Clear" (click)="motifControl.setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error align="end">{{motifControl.value.length}} / 240</mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+
+<div mat-dialog-actions fxLayoutAlign="space-around">
+  <!-- Annuler -->
+  <button id="annuler" mat-raised-button (click)="onNoClick()" type="button" fxFlex="17" tabindex="1004">
+    <em class="ion-close siga-form-cancel"></em> Annuler
+
+  </button>
+  <!-- Refuser -->
+  <button id="refuser" *ngIf="!viewRight" mat-raised-button [disabled]="submitted || !formRefus.valid" type="button" fxFlex="17"
+    tabindex="1003" (click)="onSubmit()" (keydown.enter)="onSubmit()">
+    <em [ngClass]="(formRefus.valid)?'ion-checkmark siga-form-confirm':'ion-checkmark'"></em> Refuser
+
+  </button>
+</div>

@@ -1,0 +1,11 @@
+<div fxLayout="row" fxLayoutAlign="space-between center" class="test-nat-ope" ng-mouseover="viewLivelle=!viewLivelle"
+  ng-mouseleave="viewLivelle=!viewLivelle">
+  <div>
+    {{(typeCard === 'nature') ? listValeur.ligne+' - '+listValeur.numero:''}}
+  </div>
+  <mat-icon class="icon-infoo" calss="opacity-card" matTooltip="Libellé : {{listValeur.libelle}}" [matTooltipClass]="'my-tooltipp'">info</mat-icon>
+  <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="(!viewRight && !viewAdministratif) || ((!viewRight && viewAdministratif) && (typeCard === 'libelleCard2' || typeCard === 'engagement' || typeCard === 'disposition'))"
+    (click)="onDeleteEvent()" class="siga-close-button-hover">
+    <mat-icon class="siga-close-button">close</mat-icon>
+  </button>
+</div>

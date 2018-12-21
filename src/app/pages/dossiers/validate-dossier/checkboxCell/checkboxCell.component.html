@@ -1,0 +1,4 @@
+<label class="container">
+  <mat-checkbox [disabled]="!rowData.beneficiaire?.actif" [checked]='value && rowData.beneficiaire?.actif' (change)="onCheckBoxChange($event)"></mat-checkbox>
+  <span class="checkmark"></span>
+</label>

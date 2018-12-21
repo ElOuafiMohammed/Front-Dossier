@@ -1,0 +1,293 @@
+@import 'src/app/theme/sass/conf/conf.scss';
+@import 'src/app/theme/sass/conf/_variables.scss';
+$table-hover-color: #dbd5d5;
+$table-border-color: rgba(102,102,102, .54);
+
+.space-around{
+  margin-bottom : 5px;
+  margin-left: 5px;
+}
+
+
+:host /deep/ .widgets {
+  .smart-table-container {
+    width: 100%;
+  }
+}
+
+
+:host /deep/ {
+  .table-spec {
+    th:not(:last-child),
+    td:not(:last-child) {
+      border: none !important;
+      border-bottom: 1px solid $table-border-color !important;
+    }
+
+    tbody tr {
+      &:hover {
+        background: $table-hover-color
+      }
+    }
+
+    th, td {
+      line-height: 1em;
+      vertical-align: middle;
+      &:not(:first-child) {
+      text-align: right;
+      }
+    }
+    &-total {
+      th:not(:last-child),
+      td:not(:last-child) {
+        border: none !important;
+      }
+			table tr {
+				color: $siga-green-content;
+			}
+		}
+  }
+
+  ng2-smart-table {
+    color: $default-text;
+
+    th, td {
+      line-height: 10px;
+      vertical-align: middle;
+      text-align: left;
+      &:not(:first-child) {
+        text-align: right;
+      }
+      background: #ffffffc4;
+      font-size: 1.1em !important;
+    }
+ 
+    th:not(:last-child), td:not(:last-child) {
+      border: 2px groove $border-light !important;
+    }
+
+    table tr td {
+      padding: .05em 1em;
+    }
+
+    ng2-smart-table-cell {
+      line-height: 30px;
+      font-size:0.8em;
+      /deep/ .mat-form-field-underline {
+      display: none;
+    }
+    }
+
+      .mat-form-field-infix {
+        // sinon la taille des colonnes définies dans les component.ts n'est pas respectee commentaire added
+        width:100%;
+        // limiter les bordure au max commentaire added
+        border:0.05em;
+      }
+  
+      // suppression du trait de saisie dans le tableau (permet de réduire la hauteur des lignes) commentaire added
+      .mat-input-underline {
+        display:none !important;
+      }
+      
+      // retrecissement des lignes du tableau commentaire added
+      .mat-form-field-wrapper {
+        padding-bottom:0.20em;
+      }
+
+
+    
+    thead {
+      .ng2-smart-filters {
+        display: none;
+      }
+   }
+
+    tbody {
+      tr {
+        color: $default-text;
+      }
+        tr:hover {
+        background: rgba(0, 0, 0, 0.03);
+      }
+    }
+
+    .util-right {
+      text-align: right;
+    }
+    .util-left {
+      text-align: left;
+    }
+
+    a.ng2-smart-sort-link {
+      font-size: 2em !important;
+      color:rgba(102, 102, 102, .54);
+      font-weight: $font-bolder;
+
+      &.sort {
+
+        &::after {
+          border-bottom-color: $default-text !important;
+        }
+      }
+    }
+    .ng2-smart-row {
+      tr {
+
+        line-height: 20px;
+      }
+    }
+    .ng2-smart-actions {
+      width: 70px;
+      text-align: center;
+
+      .actions {
+        float: none;
+        text-align: center;
+      }
+    }
+    
+    .ng2-smart-actions-title-add {
+      text-align: center;
+    }
+
+    a.ng2-smart-action, .ng2-smart-title {
+      font-size: 6px !important;
+      color: $default-text;
+      padding: 0 0px;
+      display: inline-block;
+
+      &.ng2-smart-action-add-add {
+        font-size: 25px !important;
+      }
+    }
+
+    nav.ng2-smart-pagination-nav {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+
+  ng2-smart-table + ng2-smart-table {
+    .ng2-smart-titles th {
+      height: 0;
+      padding: 0 1em;
+      line-height: 0;
+      border: 0 transparent !important;
+    }
+}
+  
+}
+
+
+.tableDeleteButton {
+  -webkit-border-radius: 9;
+  -moz-border-radius: 9;
+  border-radius: 9px;
+  text-shadow: 3px 3px 2px #050505;
+  font-family: Arial;
+  color: $siga-grey-white;
+  font-size: 17px;
+  background: $siga-red-error;
+  padding: 5px 10px 5px 10px;
+  text-decoration: none;
+  border: solid #1f628d 0px;
+} 
+
+.tableDeleteButton:hover {
+  background: #b35555;
+  text-decoration: none;
+} 
+
+.space-around{
+  margin-bottom : 5px;
+  margin-left: 5px;
+}
+// marge autour du tableau
+.siga-marge-tableau{
+  margin : 5px;
+}
+
+
+nb-card {
+  transform: translate3d(0, 0, 0);
+}
+
+.temp-fix-error-display div {
+  text-align: left !important;
+}
+.position-head-card {
+  text-align: right !important;
+}
+
+.siga-form {
+&-confirm {
+  color: $siga-green-content;
+}
+
+&-cancel {
+  color: $siga-red-error
+}
+  
+&-invalid {
+  color: $siga-grey-saisi;
+}
+
+&-addLine {
+  margin: 0.3em 3vw 0.3em 1em;
+}
+}
+
+.siga-form-addLine{ 
+margin: 1.1em 3vw 0.3em 1em;
+color: $siga-green-content !important;
+border: 1px solid $siga-green-content !important;
+padding: .3em;
+width: 160px;
+em {
+  color: $siga-green-content;
+}
+
+&.btn.btn-default[disabled] {
+  color: rgba($color: $siga-grey-saisi, $alpha: .42) !important;
+  border: 1px solid rgba($color: $siga-grey-saisi, $alpha: .42) !important;
+
+  em {
+    color: rgba($color:$siga-grey-saisi, $alpha: .42);
+  }
+}
+}
+.siga-form-confirm {
+color: $siga-green-content;
+display: inline-block;
+-webkit-text-stroke: 0.5px $siga-green-content;
+}
+.siga-form-invalid {
+color: $siga-grey-saisi;
+display : inline-block
+}
+
+.block {
+text-align: right;
+}
+
+.errorMontant {
+	color: $siga-red-error;
+}
+
+.disableTable {
+	pointer-events: none;
+	opacity: .8;
+}
+.text {
+	// display: flex;
+	color: $siga-grey-saisi;
+  margin-bottom: -20px;
+  }
+
+  ng2-smart-table .ng2-smart-title {
+    font-size: 6px !important;
+    color: $siga-grey-saisi;
+    padding: .0em !important;
+}

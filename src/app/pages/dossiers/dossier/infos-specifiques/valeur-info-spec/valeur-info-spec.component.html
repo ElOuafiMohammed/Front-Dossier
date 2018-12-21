@@ -1,0 +1,80 @@
+<div>
+  <!-- Valeur de type number -->
+  <mat-form-field *ngIf="rowData?.parametreDonneeSpec.typeDonnee === typeEntier">
+    <input id="siga-valeur-number" matInput [formControl]="controlValeurE" (blur)="onBlurNumberEvent()" (focus)="onFocusNumber()"
+      class="siga-valeur-number siga-valeur-number-underline"  onkeypress="return ((event.charCode >= 48 && event.charCode <= 57) || event.key==='Tab' || event.key === 'Delete')" maxlength="{{rowData?.parametreDonneeSpec.tailleDonnee}}"
+      [ngModel]="valueCourantE | formatMonetaire">
+  </mat-form-field>
+  <!-- Valeur de type Text -->
+  <mat-form-field *ngIf="rowData?.parametreDonneeSpec.typeDonnee === typeTexte" class="siga-valeur-number">
+    <input id="siga-valeur-texte" matInput [formControl]="controlValeurT" [ngModel]="rowData?.valeurString" (blur)="onBlurStringEvent()"
+      maxlength="200" />
+  </mat-form-field>
+  <!-- Valeur de type Liste de valeur à choix unique -->
+  <mat-form-field *ngIf="rowData?.parametreDonneeSpec?.typeDonnee === typeListe  ||
+    (rowData?.parametreDonneeSpec?.typeDonnee === typeListe && rowData?.parametreDonneeSpec?.codeListe ==='ENJEU' && rowData?.codeDiscriminant !== 'ASST')
+    "
+    class="siga-valeur-liste-unique">
+    <div fxLayout="row">
+      <input id="siga-valeur-liste-doc" matInput [matAutocomplete]="listeAutoComplete" [formControl]="controlValeurListe">
+      <mat-autocomplete #listeAutoComplete="matAutocomplete" (optionSelected)="onChangeTypeListeValeur()"
+        [autoActiveFirstOption]="true" [displayWith]="displayListeValeurWtih">
+        <mat-option *ngFor="let valeur of filteredListeValeur | async; trackBy: trackById" [value]="valeur">
+          <span> {{ valeur.code }} - {{ valeur.libelle }}</span>
+        </mat-option>
+      </mat-autocomplete>
+      <div class="mat-select-arrow-wrapper-liste-valeur">
+        <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !listeAutoComplete.isOpen, 'mat-select-arrow-up': listeAutoComplete.isOpen}"></div>
+      </div>
+    </div>
+    <button *ngIf="(viewRight || !viewAdministratif) && controlValeurListe?.value" type="button" id="siga-button-close"
+      mat-button matSuffix mat-icon-button aria-label="Clear" (click)="closeListeValeur(controlValeurListe , $event);">
+      <mat-icon>close</mat-icon>
+    </button>
+    <mat-error *ngIf="controlValeurListe?.touched && controlValeurListe.hasError(typeDocValidatorKey)">
+      <strong>
+        {{'messages.erreurSelection' | translate}}
+      </strong>
+    </mat-error>
+  </mat-form-field>
+  <!-- Valeur de type Date -->
+  <mat-form-field *ngIf="rowData?.parametreDonneeSpec.typeDonnee === typeDate" class="siga-content-info-date">
+    <input id="siga-valeur-date" matInput autocomplete="off" [min]="minDate" [matDatepicker]="valeurDate" [formControl]="controlValeurDate" />
+    <mat-datepicker-toggle matSuffix [for]="valeurDate"></mat-datepicker-toggle>
+    <mat-datepicker #valeurDate></mat-datepicker>
+    <mat-error *ngIf="controlValeurDate?.hasError('dateLength')">
+      <strong>
+        {{'messages.erreurDateLength' | translate}}
+      </strong>
+    </mat-error>
+    <mat-error *ngIf="controlValeurDate?.hasError('wrongFormat')">
+      <strong>
+        {{'messages.erreurDateFormat' | translate}}
+      </strong>
+    </mat-error>
+    <mat-error *ngIf="controlValeurDate?.hasError('matDatepickerParse')">
+      <strong>
+        {{'messages.erreurDateValid' | translate}}
+      </strong>
+    </mat-error>
+    <mat-error *ngIf="controlValeurDate?.hasError('matDatepickerMin')">
+      <strong>
+        {{'messages.erreurLimitInfDate' | translate}}
+      </strong>
+    </mat-error>
+  </mat-form-field>
+  <!--Liste de valeur à choix multiple -->
+  <mat-form-field class="siga-valeur-liste-multiple" *ngIf="rowData?.parametreDonneeSpec.typeDonnee === typeListeMultiChoix">
+    <mat-select [formControl]="controlValeurListeMiltiChoix" multiple [compareWith]="compareListElement">
+      <mat-select-trigger>
+      </mat-select-trigger>
+      <mat-option *ngFor="let valeurMulti of listevaleursMultiChoix; trackBy: trackById" [value]="valeurMulti">{{valeurMulti.code}}
+        - {{valeurMulti.libelle}}</mat-option>
+    </mat-select>
+    <div *ngIf="(controlValeurListeMiltiChoix?.value !== null && controlValeurListeMiltiChoix?.value.length > 0) || true">
+      <div *ngFor="let action of controlValeurListeMiltiChoix?.value; trackBy: trackById" class="siga-theme-card-container">
+        <siga-card [listValeur]="action" [typeCard]="'action'" [viewRight]="viewRight" (deleteEventEmitter)="onDeleteEventActionPrio($event)"></siga-card>
+      </div>
+    </div>
+  </mat-form-field>
+</div>

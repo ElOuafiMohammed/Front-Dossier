@@ -1,0 +1,5 @@
+<div fxLayout="row">
+  <mat-form-field fxFlex="100">
+    <input id="precision" matInput maxlength="40" (blur)="onPrevBlur()" [(ngModel)]="value" [formControl]="control" tabindex="{{indexPrecision}}">
+  </mat-form-field>
+</div>

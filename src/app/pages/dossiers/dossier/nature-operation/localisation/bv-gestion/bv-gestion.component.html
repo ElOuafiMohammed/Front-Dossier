@@ -1,0 +1,58 @@
+<div class="content" [formGroup]="formBvGestion" (keydown.enter)="$event.preventDefault()" class="recapAides">
+
+  <div fxLayout="row" fxLayoutAlign="space-between stretch">
+    <div class="temp-margin modReduction" fxFlex="50">
+      <div fxLayout="column" fxLayoutAlign=" stretch" tabindex="1001" class="siga-choix-themes-component noneContour">
+        <div class="titre-bg-gestion" [ngClass]="{'disabled-bv-gestion': viewRight || viewAdministratif || !currentOperation.localisationPertinente}">
+          <label> {{'dossier.update.localisation.titreBvGestion' | translate}}</label>
+        </div>
+        <div [ngClass]="{'disabled-bv-gestion': viewRight || !currentOperation.localisationPertinente || viewAdministratif}"
+          class="block-bv">
+          <mat-form-field class="mat-form-field-bv-gesion" fxFlex="25">
+            <div fxLayout="row">
+              <label class="label-bv-gestion" for="inputBV" [hidden]="isHidden">
+                {{ currentOperation.bvGestionNatureOperations !=null &&
+                currentOperation.bvGestionNatureOperations.length >1 ?
+                currentOperation.bvGestionNatureOperations.length
+                + ' BV sélectionnés': currentOperation.bvGestionNatureOperations.length ===1 ? '1 BV sélectionné' :
+                ''}}
+              </label>
+              <span class="input-wrapper-bv-gestion">
+                <input #input matInput id="inputBV" placeholder="{{currentOperation.bvGestionNatureOperations !=null && currentOperation.bvGestionNatureOperations.length >0 ? '' : '+ Bv de gestion' }}"
+                  [matAutocomplete]="bvGestionAutoComplete" formControlName="bvGestionControl" (focus)="onFocus()"
+                  (blur)="onBlur()" (input)="onInput($event)">
+              </span>
+              <div class="mat-select-arrow-wrapper">
+                <div class="mat-select-arrow" [ngClass]="{'mat-select-arrow-down': !bvGestionAutoComplete.isOpen, 'mat-select-arrow-up': bvGestionAutoComplete.isOpen}"></div>
+              </div>
+            </div>
+            <button mat-button type="button" *ngIf="bvGestionsControl.value" matSuffix mat-icon-button aria-label="Clear"
+              (click)="bvGestionsControl.setValue(null)">
+              <mat-icon>close</mat-icon>
+            </button>
+            <mat-error *ngIf="bvGestionsControl.touched && bvGestionsControl.hasError('bgNotFound')">
+              <strong>
+                {{'messages.erreurChoixOption' | translate}}
+              </strong>
+            </mat-error>
+            <mat-autocomplete (optionSelected)="OnOptionSelected($event)" #bvGestionAutoComplete="matAutocomplete"
+              [autoActiveFirstOption]="true">
+              <mat-option *ngFor="let bvGestion of listBvGestionObservable | async; trackBy: trackById" [value]="bvGestion">
+                <span> {{bvGestion.numero}}</span>
+                <span> - </span>
+                <span> {{bvGestion.nom}} </span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div [ngClass]="{'container-error': bvGestionsControl.touched && bvGestionsControl.hasError('bgNotFound')}" class="container little-margin">
+  <div *ngFor="let bvgestion of currentOperation.bvGestionNatureOperations; trackBy: trackById">
+    <siga-app-localisation-card [bvGestion]="bvgestion" (deleteEventEmitter)="onDeleteEvent($event)"
+      [localisationPertinente]="currentOperation.localisationPertinente"></siga-app-localisation-card>
+  </div>
+</div>

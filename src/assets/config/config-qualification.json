@@ -1,0 +1,4 @@
+{
+  "BACKEND": "https://qualification-siga.akka.eu:9090/siga",
+  "FRONT_DISPOSITIF": "https://qualification-siga.akka.eu:81"
+}

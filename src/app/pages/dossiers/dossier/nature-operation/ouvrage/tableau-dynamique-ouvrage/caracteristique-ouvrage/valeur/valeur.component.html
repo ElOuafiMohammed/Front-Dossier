@@ -1,0 +1,7 @@
+<div fxLayout="row">
+  <form novalidate [formGroup]="formValeurCaracteristique" (keydown.enter)="$event.preventDefault()">
+    <mat-form-field>
+      <input id="inputValeurCaracteristique" matInput readonly formControlName="valeurCaracteristique">
+    </mat-form-field>
+  </form>
+</div>

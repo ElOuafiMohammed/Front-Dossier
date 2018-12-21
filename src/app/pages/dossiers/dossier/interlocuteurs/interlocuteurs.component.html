@@ -1,0 +1,296 @@
+<div class="content" class="interlocuteurs">
+  <!-- RESPONSABLE TECHNIQUE -->
+  <div>
+    <br />
+    <div fxLayout="row">
+      <span class="cnv-infos"
+        ><strong>Correspondants Agence de l'eau</strong></span
+      >
+    </div>
+    <div fxLayout="row">
+      <span class="rt-infos"
+        >Responsable Technique :
+        {{ currentDossier?.responsableTechnique.prenom }}
+        {{ currentDossier?.responsableTechnique.nom }}
+      </span>
+    </div>
+    <!-- CORRESPONDANT ADMINISTRATIF -->
+    <div fxLayout="row">
+      <div fxLayout="column">
+        <span class="rt-infos">Responsable Administratif : </span>
+        <!-- RESPONSABLE ADMINISTRATIF -->
+      </div>
+      <div fxLayout="column">
+        <form
+          class="rt-space"
+          [formGroup]="formCorrespondant"
+          [ngClass]="{ disableDossier: viewRight }"
+        >
+          <mat-form-field fxFlex="50">
+            <div fxLayout="row">
+              <input
+                id="responsableAdministratif"
+                matInput
+                [matAutocomplete]="responsableAdministratifAutoComplete"
+                matInput
+                formControlName="responsableAdministratif"
+                tabindex="100003"
+              />
+              <mat-autocomplete
+                class="responsableOptionsClass"
+                #responsableAdministratifAutoComplete="matAutocomplete"
+                [displayWith]="displayResponsableAdministratif"
+                [autoActiveFirstOption]="true"
+              >
+                <mat-option
+                  *ngFor="
+                    let responsableAdministratif of (filteredResponsablesAdministratif
+                      | async);
+                    trackBy: trackById
+                  "
+                  [value]="responsableAdministratif"
+                >
+                  <span> {{ responsableAdministratif?.prenom }} </span>
+                  <span> {{ responsableAdministratif?.nom }} </span>
+                </mat-option>
+              </mat-autocomplete>
+              <div class="mat-select-arrow-wrapper">
+                <div
+                  class="mat-select-arrow"
+                  [ngClass]="{
+                    'mat-select-arrow-down': !responsableAdministratifAutoComplete.isOpen,
+                    'mat-select-arrow-up':
+                      responsableAdministratifAutoComplete.isOpen
+                  }"
+                ></div>
+              </div>
+            </div>
+            <button
+              mat-button
+              *ngIf="!viewRight && respAdministratifControl?.value"
+              matSuffix
+              mat-icon-button
+              aria-label="Clear"
+              (click)="removeAdmin($event)"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+            <mat-error
+              *ngIf="
+                !respAdministratifControl.hasError('required') &&
+                respAdministratifControl.touched &&
+                respAdministratifControl.hasError(
+                  'responsableAdministratifNotFound'
+                )
+              "
+            >
+              <strong> {{ "messages.erreurSelection" | translate }} </strong>
+            </mat-error>
+          </mat-form-field>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESPONSABLE ADMINISTRATIF -->
+
+  <!-- Interlocuteur -->
+  <br />
+  <div fxLayout="row" fxLayoutAlign="space-between none">
+    <div>
+      <span class="cnv-infos"><strong>Interlocuteurs</strong></span>
+    </div>
+    <div class=".floatcss">
+      <button
+        id="addInterlocuteur"
+        [ngClass]="
+          canAdd
+            ? 'ion-ios-plus-outline siga-form-confirm'
+            : 'ion-ios-plus-outline siga-form-invalid'
+        "
+        class="siga-button siga-form-confirm siga-taille-image-plus siga-form-addLine btn btn-default"
+        type="button"
+        (click)="onAddInterLocteur()"
+        [disabled]="!canAdd"
+      >
+        <em class="siga-form-confirm siga-taille-image-plus"></em>
+        <span class="textButton"> {{ "Ajouter interlocuteur" }} </span>
+      </button>
+    </div>
+  </div>
+  <div>
+    <div fxFlex="row">
+      <!-- Table Interlocuteur mat-table -->
+      <form novalidate [formGroup]="formCorrespondant">
+        <div class="alignTableLeft">
+          <mat-table #table [dataSource]="dataSource" multiTemplateDataRows>
+            <!-- button expanded Row -->
+            <ng-container matColumnDef="actionsColumn">
+              <mat-header-cell
+                *matHeaderCellDef
+                [ngClass]="'customWidthClass'"
+              ></mat-header-cell>
+              <mat-cell *matCellDef="let row" [ngClass]="'customWidthClass'">
+                <button
+                  id="expandedRowDown"
+                  [disabled]="row.correspondant.reference == ''"
+                  *ngIf="row.expanded == false"
+                  class="element-row"
+                  [class.expanded]="expanded"
+                  (click)="toggleContactsRow(row)"
+                  mat-icon-button
+                >
+                  <em
+                    fxFlex="10"
+                    class="siga-tooltip siga-icon ion-ios-arrow-down"
+                    *ngIf="!row.hasError"
+                  >
+                  </em>
+                  <em
+                    fxFlex="10"
+                    class="siga-tooltip siga-icon ion-ios-arrow-down error"
+                    *ngIf="row.hasError"
+                  >
+                  </em>
+                </button>
+                <button
+                  id="expandedRowUp"
+                  [disabled]="row.correspondant.reference == ''"
+                  *ngIf="row.expanded == true"
+                  class="element-row"
+                  [class.expanded]="expanded"
+                  (click)="toggleContactsRow(row)"
+                  mat-icon-button
+                >
+                  <em
+                    fxFlex="10"
+                    class="siga-tooltip siga-icon ion-ios-arrow-up"
+                    *ngIf="!row.hasError"
+                  >
+                  </em>
+                  <em
+                    fxFlex="10"
+                    class="siga-tooltip siga-icon ion-ios-arrow-up error"
+                    *ngIf="row.hasError"
+                  >
+                  </em>
+                </button>
+              </mat-cell>
+            </ng-container>
+
+            <!-- Column référence interlicuteur -->
+            <ng-container matColumnDef="interlocuteur">
+              <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthNumero'"
+                >Interlocuteur</mat-header-cell
+              >
+              <mat-cell *matCellDef="let row" [ngClass]="'customWidthNumero'">
+                <siga-input-reference-interlocuteur
+                  [rowData]="row"
+                  (updateCorrespondantEvent)="onBlur($event)"
+                  (notifyCheckParentComponent)="
+                    notifyCheckParentComponent($event)
+                  "
+                ></siga-input-reference-interlocuteur>
+              </mat-cell>
+            </ng-container>
+
+            <!-- Column libelle intelocuteur -->
+            <ng-container matColumnDef="libelle">
+              <mat-header-cell
+                *matHeaderCellDef
+                [ngClass]="'customLibelle'"
+              ></mat-header-cell>
+              <mat-cell
+                *matCellDef="let element"
+                [ngClass]="'customLibelle'"
+                class="disabledIntitule"
+              >
+                {{
+                  element.correspondant.raisonSociale
+                    ? element.correspondant.raisonSociale
+                    : ""
+                }}
+              </mat-cell>
+            </ng-container>
+
+            <!-- Role Correspondant -->
+            <ng-container matColumnDef="role">
+              <mat-header-cell *matHeaderCellDef [ngClass]="'customRole'"
+                >Rôle</mat-header-cell
+              >
+              <mat-cell *matCellDef="let element" [ngClass]="'customRole'">
+                <siga-role-interlocuteur-select
+                  [rowData]="element"
+                  [listRoleCorrespondant]="listRoleCorrespondant"
+                  (updateCorrespondantvent)="change($event)"
+                ></siga-role-interlocuteur-select>
+              </mat-cell>
+            </ng-container>
+
+            <!-- Supression -->
+            <ng-container matColumnDef="suppression">
+              <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthTrash'">
+              </mat-header-cell>
+              <mat-cell
+                *matCellDef="let element"
+                class="trashColor"
+                [ngClass]="'customWidthTrash'"
+              >
+                <div
+                  id="supprimeLigneCorrespondant"
+                  (click)="deleteRow(element)"
+                >
+                  <em fxFlex="5" class="siga-tooltip siga-icon ion-trash-a">
+                    <span class="siga-tooltiptext">Supprimer</span>
+                  </em>
+                </div>
+              </mat-cell>
+            </ng-container>
+
+            <!-- contacts -->
+            <ng-container matColumnDef="expandedDetail">
+              <mat-cell *matCellDef="let element" class="contactsCell">
+                <div fxLayout="column" fxFlex="100">
+                  <div
+                    *ngFor="let i of nbContactsParCorrespondant"
+                    class="contacts"
+                  >
+                    <siga-contacts
+                      [rowData]="element"
+                      [indexContact]="i"
+                      [listQualiteContact]="listQualiteContact"
+                      (updateCorrespondantEvent)="change($event)"
+                      (notifyCheckParentComponent)="
+                        notifyCheckParentComponent(element, $event)
+                      "
+                    ></siga-contacts>
+                  </div>
+                </div>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row
+              *matHeaderRowDef="displayedColumns"
+            ></mat-header-row>
+            <!-- mat-row pour l'affichage des différents lignes de la table -->
+            <mat-row
+              *matRowDef="let row; columns: displayedColumns; let index = index"
+              matRipple
+              class="element-row css-mat"
+              [class.expanded]="expandedElement == row"
+            ></mat-row>
+
+            <!-- mat-row pour afficher la liste des contacts -->
+            <mat-row
+              *matRowDef="let row; columns: ['expandedDetail']; when: false"
+              [@detailExpand]="row.expanded === true ? 'expanded' : 'collapsed'"
+              style="overflow: hidden"
+            >
+            </mat-row>
+          </mat-table>
+          <!-- affichage dans le cas d'existence d'un message d'erreur -->
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+.width-input-select-local {
+  width: 100px; 
+  max-width: 250px;
+  min-width: 250px;
+}
+
+input {
+  text-align:center;
+}
+
+/deep/ {
+  .width-input-select {
+    width: 90px; 
+  }
+  
+  .mat-autocomplete-panel.mat-autocomplete-visible {
+    width: 300px;
+  }
+} 

@@ -1,0 +1,11 @@
+<mat-select *ngIf="!rowData.complementIntitule" class="width-input-select-dispositif" [compareWith]="compareFn"
+  [formControl]="control" (selectionChange)="change(this.rowData.typeDispositifPartenariat)">
+  <mat-select-trigger class="siga-dispositif-input-text">{{rowData.typeDispositifPartenariat.code}}
+  </mat-select-trigger>
+  <mat-option *ngFor="let typeDispositif of typesDispositif; trackBy: trackById" [value]="typeDispositif">
+    {{ typeDispositif.code }} - {{ typeDispositif.libelle }}
+  </mat-option>
+</mat-select>
+
+<div *ngIf="rowData.typeDispositifPartenariat.code && rowData.complementIntitule" class="width-input-select-dispositif nounderline"
+  (click)="goOtherWindow($event)">{{rowData.typeDispositifPartenariat.code}}</div>

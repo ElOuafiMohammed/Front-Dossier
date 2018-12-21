@@ -1,0 +1,36 @@
+<div class="gvalider-siege-padding">
+  <siga-criteres-rl-sga-card-recherche [delegations]="delegations" [thematiques]="thematiques" [domaines]="domaines"
+    [priorites]="priorites" [procedureDecisions]="procedureDecisions" [submitted]="submitted"
+    (dossierActionEventEmitter)="changeAction($event)" (searchEventEmitter)="fetchResultatRecherche($event)">
+  </siga-criteres-rl-sga-card-recherche>
+
+  <div *ngIf="searchDone">
+    <ba-card>
+      <div *ngIf="nombreTotalResultats !=0" fxLayout="row" fxFlex="100%">
+        <div fxFlex="25%" class="header-tablevalid-siege">
+          <strong> {{nombreTotalSelectionnees}} </strong>/
+          <strong>{{nombreTotalResultats}}</strong>
+          dossier(s) sélectionné(s)
+        </div>
+        <div fxFlex="74.5%"></div>
+      </div>
+      <mat-checkbox  fxFlex="5.5%" class="position-head-card siga-position-header" *ngIf="dossiersDatas.length !== 0"
+        [checked]='checkAll' (change)="onCheckBoxChange($event)">Tout</mat-checkbox>
+      <div class="g-div-valider-siege-margin">
+        <ng2-smart-table class="table-spec" [settings]="settings" [source]="source"></ng2-smart-table>
+      </div>
+    </ba-card>
+    <!-- Valider || Dévalider -->
+    <div fxLayout="row" fxLayoutAlign="space-around end">
+      <div fxFlex="80">
+      </div>
+      <button id="validerDevalider" #button mat-raised-button *ngIf="dossiersDatas[0]?.phase === 'T20'|| dossiersDatas[0]?.phase === 'T25'"
+        [disabled]=" submitted || noCheckedDossier || benefInactif " (click)="validerDevalider() " (keydown.enter)="validerDevalider() "
+        type="button " tabindex="7 ">
+        <span *ngIf="dossiersDatas[0]?.phase==='T20' && !currentCriteres.devaliderSiege ">Valider</span>
+        <span *ngIf="dossiersDatas[0]?.phase==='T25' || (currentCriteres.devaliderSiege && dossiersDatas[0]?.phase==='T20'
+        ) ">Dévalider</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,282 @@
+<div class="content" [formGroup]="formDescription" (keydown.enter)="$event.preventDefault()" class="recapAides">
+  <!-- DESCRIPTION DE L'OPERATION -->
+  <div class="description-generale" fxLayout="column" fxLayoutAlign="space-between">
+    <div fxLayout="row" fxLayoutAlign="space-between" class="justif-descOperation">
+      <mat-form-field fxFlex="98">
+        <textarea id="descriptionOperation" #myTextArea maxlength="{{maxLength}}" (click)="addLineDescOperation($event,myTextArea)"
+          (keydown.enter)="addLineDescOperation($event,myTextArea)" placeholder="Description de l'opération"
+          formControlName="descriptionOperation" matInput rows="5" tabindex="2000"></textarea>
+        <mat-hint fxFlex="5" align="end">
+          {{descriptionOperationControl.value?.length}} / {{maxLength}}
+        </mat-hint>
+      </mat-form-field>
+    </div>
+
+    <!-- DESCRIPTIF TECHNIQUE -->
+    <div fxLayout="row" [ngClass]="{ disableDossier : (viewRight || dossier?.displayDescGenerale) && !this.descriptifTechnique?.urlOffice}">
+      <div class="siga-position-des-tec-bottom">
+        <button id="descriptifTechnique" *ngIf="!this.descriptifTechnique?.urlOffice" [ngClass]="(canCreateDescTech)?'siga-form-confirm':'siga-form-disabled'"
+          mat-raised-button (click)="createDescreptifTech()" type="button">
+          <em class="espacement icon ion-edit icon-descTech"></em>
+          <span>Descriptif technique</span>
+        </button>
+        <button *ngIf="this.descriptifTechnique?.urlOffice" [ngClass]="(canCreateDescTech)?'siga-form-confirm':'siga-form-disabled'"
+          (click)="readDescriptifTech()" mat-raised-button type="button">
+          <em class="icon ion-edit icon-descTech"></em>
+          <span>Descriptif technique</span>
+        </button>
+        <span *ngIf="!gcdIndisponible && this.descriptifTechnique?.dateModification" class="detail-descTech">Créé le :
+          {{this.dateModification}} à {{this.heurModification}} par {{this.descriptifTechnique?.createur}} </span>
+        <span *ngIf="gcdIndisponible" class="detail-descTech-error siga-error">{{
+          'messages.pieces.messageErreurTechnique' | translate }} </span>
+      </div>
+    </div>
+    <!-- DESCRIPTION Resultats-attendus -->
+    <div fxLayout="row" fxLayoutAlign="space-between" class="justif-descOperation">
+      <mat-form-field fxFlex="98%">
+        <textarea id="resultatsAttendus" #textArearesulattend maxlength="{{maxLength}}" (click)="addLineResultatsAttendus($event,textArearesulattend)"
+          (keydown.enter)="addLineResultatsAttendus($event,textArearesulattend)" placeholder="Résultats attendus"
+          formControlName="resultatsAttendus" matInput rows="5" tabindex="2000"></textarea>
+        <mat-hint fxFlex="5" align="end">
+          {{resultatsAttendusControl.value?.length}} / {{maxLength}}
+        </mat-hint>
+      </mat-form-field>
+    </div>
+
+    <!-- DEROGATOIRE -->
+    <div [ngClass]="{'toggle-refus':viewRight || viewAdministratif || dossier?.displayDescGenerale}" fxLayout="row">
+      <mat-slide-toggle formControlName="derogation" fxFlex="20" (change)="onChangeDerogatoir($event)">
+        <span id="boutonDergatoir" class="label-switch-button">Dérogatoire</span>
+      </mat-slide-toggle>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between" class="justif-derogation">
+      <mat-form-field *ngIf="derogationControl.value" fxFlex="60">
+        <textarea #justif (click)="addLine($event,justif)" (keydown.enter)="addLine($event,justif)" placeholder="Justification de la dérogation"
+          formControlName="justifDerogation" matInput rows="5" tabindex="2001"></textarea>
+        <mat-error *ngIf="justifDerogationControl.hasError('emptyJustif')">
+          <strong>
+            {{'messages.discriptionGenerale.erreurJustifDerogation' | translate}}
+          </strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- DEPASSEMENT VMR / MARGE D'AVENIR -->
+    <div [ngClass]="{ 'toggle-refus':viewRight || viewAdministratif || dossier?.displayDescGenerale}" fxLayout="row">
+      <mat-slide-toggle formControlName="margeAvenir" fxFlex="30" (change)="onChangeMargeAvenir($event)">
+        <span id="boutonDepassementVmr" class="label-switch-button">Dépassement VMR/Marge d'avenir</span>
+      </mat-slide-toggle>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between" class="justif-derogation">
+      <mat-form-field *ngIf="margeAvenirControl.value" fxFlex="60">
+        <textarea #justifMarge (click)="addLineMarge($event,justifMarge)" (keydown.enter)="addLineMarge($event,justifMarge)"
+          placeholder="Justification de la marge d'avenir" formControlName="margeAvenirJustif" matInput rows="5"
+          tabindex="2002"></textarea>
+        <mat-error *ngIf="margeAvenirJustifControl.hasError('emptyJustif')">
+          <strong>
+            {{'messages.discriptionGenerale.erreurJustifMarge' | translate}}
+          </strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row">
+      <span class="cnv-infos">
+        Informations convention</span>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between stretch">
+      <div fxFlex="50">
+        <!-- Multiple choice of Disposition -->
+        <div fxLayout="column" fxLayoutAlign=" stretch" tabindex="1002" class="siga-choix-themes-component dispfinan">
+          <mat-select id="piecesPourSolde" [disabled]="viewRight" placeholder="Pièce(s) pour solde" formControlName="dispositions"
+            [compareWith]="compareListElement" class="siga-theme-dropdown" multiple>
+            <mat-select-trigger class="siga-themes-input-text">
+              {{dispositionsControl.value != null && dispositionsControl.value.length > 1 ?
+              formDescription.get('dispositions').value.length
+              + ' pièces pour solde sélectionnées' : ''}} {{dispositionsControl.value != null &&
+              dispositionsControl.value.length
+              == 1 ? ' 1 pièce pour solde sélectionnée' : ''}}
+            </mat-select-trigger>
+            <mat-option *ngFor="let disposition of dispositions; trackBy: trackById" [value]="disposition">
+              <span>{{ disposition.code }}</span>
+              <span> - </span>
+              <span>{{ disposition.libelle }}</span>
+            </mat-option>
+          </mat-select>
+          <div *ngIf="dispositionsControl.value != null && dispositionsControl.value.length > 0">
+            <div *ngFor="let disposition of dispositionsControl.value; trackBy: trackById" class="siga-theme-card-container">
+              <siga-card [listValeur]="disposition" [typeCard]="'disposition'" [viewRight]="viewRight"
+                (deleteEventEmitter)="onDeleteEventList($event,dispositionsControl)"></siga-card>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div fxFlex="49.5" [ngClass]="{ disableDossier : viewRight}">
+        <!-- add solde-non-standard -->
+        <mat-form-field fxLayout="column" fxLayoutAlign=" stretch" tabindex="1002" class="siga-piece-non-standard noneContour">
+          <div>
+            <input id="inputSoldeNonStandard" class="inputSldNstd" name="textSoldeNonStandard" (keydown.enter)="addSoldeNonStandard($event);"
+              (blur)="addSoldeNonStandard($event);" matInput maxlength="200em" placeholder="Ajouter une pièce pour solde non standard">
+          </div>
+        </mat-form-field>
+        <div *ngFor="let sldNstand of this.soldesNonStandard;  let i=index; trackBy: trackById" class="siga-theme-card-container">
+          <mat-card class="format-sld-N-standard">
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <div>{{sldNstand.textSoldeNonStandard}}</div>
+              <button *ngIf="dossierService.dossier?.phase !=='T40' ;else noButton" mat-button matSuffix
+                mat-icon-button aria-label="Clear" (click)="onDeleteEventSldNonStandard(i)" class="siga-close-button-hover">
+                <mat-icon class="siga-close-button">close</mat-icon>
+              </button>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+
+    <!-- Multiple choice of engagement -->
+    <div fxLayout="row" fxLayoutAlign="space-between stretch">
+      <div fxFlex="50">
+        <div fxLayout="column" fxLayoutAlign=" stretch" tabindex="1001" class="siga-choix-themes-component dispfinan">
+          <mat-select id="dispositionTechniqueParticuliere" [disabled]="viewRight" placeholder="Disposition(s) technique(s) particulière(s)"
+            formControlName="engagements" [compareWith]="compareListElement" class="siga-theme-dropdown" multiple>
+            <mat-select-trigger class="siga-themes-input-text">
+              {{engagementsControl.value != null && engagementsControl.value.length > 1 ?
+              formDescription.get('engagements').value.length
+              + ' dispositions techniques particulières sélectionnées' : ''}} {{engagementsControl.value != null &&
+              engagementsControl.value.length
+              === 1? '1 disposition technique particulière sélectionnée' : ''}}
+            </mat-select-trigger>
+            <mat-option *ngFor="let engagement of engagements; trackBy: trackById" [value]="engagement">
+              <span>{{ engagement.code }}</span>
+              <span> - </span>
+              <span>{{ engagement.libelle }}</span>
+            </mat-option>
+          </mat-select>
+          <div *ngIf="engagementsControl.value != null && engagementsControl.value.length > 0">
+            <div *ngFor="let engagement of engagementsControl.value; trackBy: trackById" class="siga-theme-card-container">
+              <siga-card [listValeur]="engagement" [typeCard]="'engagement'" [viewRight]="viewRight"
+                (deleteEventEmitter)="onDeleteEventList($event,engagementsControl)"></siga-card>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div fxLayout="row" class="textRecap noneContour" fxLayoutAlign="space-between stretch" fxFlex="50">
+        <mat-form-field class="temp-fix-error-display recapp" fxFlex="90">
+          <div fxLayout="row">
+            <textarea placeholder="Texte Disposition(s) technique(s) particulière(s)" formControlName="text" matInput
+              matTextareaAutosize matAutosizeMaxRows="6" matAutosizeMinRows="5" tabindex="10010"></textarea>
+          </div>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Modalités de versement des aides -->
+    <div fxLayout="row" fxLayoutAlign="space-between stretch">
+      <div class="mva_rb" fxFlex="50">
+        <div fxLayout="column" fxLayoutAlign=" stretch" tabindex="1001" class="siga-choix-themes-component noneContour"
+          [ngClass]="{ 'toggle-refus':viewRight, 'toggle':!viewRight}">
+          <mat-radio-group fxFlex formControlName="modaliteVersement" (change)="onModaliteVersementSelectOption($event)">
+            <span class="typologie-label">
+              Modalités de versement des aides :
+            </span>
+            <mat-radio-button class="mat-radio-button" *ngFor="let modaliteVersement of modalitesVersement; trackBy: trackById"
+              [value]="modaliteVersement">{{modaliteVersement.libelle}}</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+
+      <div fxLayout="row" class="textRecapModVersement" fxLayoutAlign="space-between stretch" fxFlex="50">
+        <mat-form-field class="temp-fix-error-display" fxFlex="90">
+          <div fxLayout="row">
+            <textarea #modVersementTextArea (click)="addLineVersement($event,modVersementTextArea)" (keydown.enter)="addLineVersement($event,modVersementTextArea)"
+              placeholder="Texte Modalité(s) de versement des aides" formControlName="textModaliteVersement" matInput
+              rows="5" tabindex="10010"></textarea>
+          </div>
+          <mat-error *ngIf="textModaliteVersementControl.hasError('required')">
+            <strong>
+              {{'messages.recap.erreurtextModaliteVersement' | translate}}
+            </strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Multiple choice of Modalites de reduction des aides -->
+    <div fxLayout="row" fxLayoutAlign="space-between stretch">
+      <div class="modReduction" fxFlex="50">
+        <div fxLayout="column" fxLayoutAlign=" stretch" tabindex="1001" class="siga-choix-themes-component noneContour">
+          <mat-select id="modalitesRductionAides" [disabled]="viewRight" placeholder="Modalité(s) de réduction des aides"
+            formControlName="modalitesReduction" [compareWith]="compareListElement" class="siga-theme-dropdown"
+            multiple>
+            <mat-select-trigger class="siga-themes-input-text">
+              {{modalitesReductionControl.value != null && modalitesReductionControl.value.length > 1 ?
+              formDescription.get('modalitesReduction').value.length
+              + ' modalités sélectionnées' : ''}} {{modalitesReductionControl.value != null &&
+              modalitesReductionControl.value.length
+              == 1 ? ' 1 modalité sélectionnée' : ''}}
+            </mat-select-trigger>
+            <mat-option *ngFor="let modaliteReduction of modalitesReduction; trackBy: trackById" [value]="modaliteReduction">
+              <span>{{ modaliteReduction.code }}</span>
+              <span> - </span>
+              <span>{{ modaliteReduction.libelle }}</span>
+            </mat-option>
+          </mat-select>
+          <div *ngIf="modalitesReductionControl.value != null && modalitesReductionControl.value.length > 0">
+            <div *ngFor="let modaliteReduction of modalitesReductionControl.value; trackBy: trackById" class="siga-theme-card-container">
+              <siga-card [listValeur]="modaliteReduction" [typeCard]="'libelleCard2'" [viewRight]="viewRight"
+                (deleteEventEmitter)="onDeleteEventList($event,modalitesReductionControl)"></siga-card>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div fxLayout="row" class="textRecapModReduction" fxLayoutAlign="space-between stretch" fxFlex="50">
+        <mat-form-field class="temp-fix-error-display" fxFlex="90">
+          <div fxLayout="row">
+            <textarea placeholder="Texte Modalité(s) de réduction des aides" formControlName="textModalitesReduction"
+              matInput matTextareaAutosize matAutosizeMaxRows="6" matAutosizeMinRows="5" tabindex="10010"></textarea>
+          </div>
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between stretch">
+      <!-- delai validité -->
+      <mat-form-field fxFlexOffset="2" class="siga-libelle-delai" fxFlex="25">
+        <input name="delaiValidite" matInput placeholder="Délai de validité de l'aide (mois)" formControlName="delaiValidite"
+          maxlength="5" tabindex="2002" [ngModel]="delaiValidite" (ngModelChange)="delaiValidite = $event" (input)="onlyDecimalDelai(delaiValiditeControl,delaiValidite)">
+        <mat-error *ngIf="delaiValiditeControl.hasError('margeValidite')">
+          {{'messages.discriptionGenerale.erreurDelaiValidite' | translate}}
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Type documents attributifs-->
+    <div class="cnv-infos" *ngIf="dossierService.dossier?.statutPhase  === 'A' && dossierService.dossier.phase !== 'A00' && dossierService.dossier.phase !== 'A01' && dossierService.dossier.phase !== 'A02' && dossierService.dossier.phase !== 'T40'">
+      <span fxLayout="row">
+        Document attributif
+      </span>
+      <div class="typ-doc-attr-contents">
+        <br>
+        <mat-radio-group fxLayout="row" formControlName="formDocAttrib" fxLayoutAlign="left center" (change)="onformDocAttrib($event)">
+          <mat-radio-button class="mat-radio-button" *ngFor="let formDocAttrib of formDocAttribs; trackBy: trackById"
+            [value]="formDocAttrib">{{formDocAttrib.libelle}}</mat-radio-button>
+        </mat-radio-group>
+        <br>
+        <mat-radio-group fxLayout="row" formControlName="typDocAttrib" fxLayoutAlign="left center" (change)="ontypDocAttrib($event)">
+          <mat-radio-button class="mat-radio-button" *ngFor="let typDocAttrib of typDocAttribs; trackBy: trackById"
+            [value]="typDocAttrib">{{typDocAttrib.libelle}}</mat-radio-button>
+        </mat-radio-group>
+        <br>
+        <div fxLayout="row" [ngClass]="{ 'toggle-travauxSurOuvrage':viewRight || viewAdministratif}">
+          <mat-slide-toggle id="travauxSurOuvrage" labelPosition="before" class="label-travOuvrage" (change)="onChangeTravSurOuvrage($event)"
+            [checked]="dossier.dossierAdmin.travauxOuvrage">
+            Travaux sur Ouvrage
+          </mat-slide-toggle>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

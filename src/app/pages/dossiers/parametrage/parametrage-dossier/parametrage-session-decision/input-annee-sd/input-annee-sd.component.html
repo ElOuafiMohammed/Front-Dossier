@@ -1,0 +1,16 @@
+<div *ngIf="rowData?.disable" class="disabled-col">
+  <span>{{value}}</span>
+</div>
+
+<div fxLayout="row" fxLayoutAlign="start center" *ngIf="!rowData?.disable">
+  <form novalidate [formGroup]="formSessionDecision" (keydown.enter)="$event.preventDefault()">
+    <mat-form-field tabindex="{{index_tab_annee}}">
+      <input matInput maxlength="4" formControlName="annee" (keyup)="onBlur()">
+      <mat-error *ngIf="anneeControl.hasError('pattern')" class="siga-error">
+        <strong>
+          {{'messages.erreurFormatNumeroDP' | translate}}
+        </strong>
+      </mat-error>
+    </mat-form-field>
+  </form>
+</div>

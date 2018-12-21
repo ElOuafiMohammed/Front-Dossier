@@ -1,0 +1,103 @@
+{
+  "Dossiers": [
+    {
+      "numDossier": "AGRO-31-3677",
+      "codeBeneficiaire": "47722667J - BOUCHON",
+      "intitule": "Pétition d'aide rivière"
+    },
+    {
+      "numDossier": "AGRO-31-3789",
+      "codeBeneficiaire": "66786778A - BOUCHON",
+      "intitule": "Amélioration canalisation"
+    },
+    {
+      "numDossier": "AGRO-31-3755",
+      "codeBeneficiaire": "87632144Z - BOUCHON",
+      "intitule": "Gestion aquatique Montauban"
+    },
+    {
+      "numDossier": "AGRO-31-3782",
+      "codeBeneficiaire": "31004222T - BOUCHON",
+      "intitule": "Canal du midi a Tarbes"
+    },
+    {
+      "numDossier": "AGRO-32-1425",
+      "codeBeneficiaire": "37643877B - BOUCHON",
+      "intitule": "Amélioration canal"
+    },
+    {
+      "numDossier": "AGRO-32-3764",
+      "codeBeneficiaire": "43516767A - BOUCHON",
+      "intitule": "Canalisation Saint Gaudens"
+    },
+    {
+      "numDossier": "AGRO-32-5789",
+      "codeBeneficiaire": "78567942D - BOUCHON",
+      "intitule": "Assainissement Visker"
+    },
+    {
+      "numDossier": "GIV-31-3677",
+      "codeBeneficiaire": "16082234B - BOUCHON",
+      "intitule": "Collectif de Bordeaux"
+    },
+    {
+      "numDossier": "GIV-32-4351",
+      "codeBeneficiaire": "8974321Y - BOUCHON",
+      "intitule": "Validation canal"
+    },
+    {
+      "numDossier": "GIV-32-7856",
+      "codeBeneficiaire": "25143232Z - BOUCHON",
+      "intitule": "Opérations canal"
+    },
+    {
+      "numDossier": "GIV-32-7870",
+      "codeBeneficiaire": "96968247T - BOUCHON",
+      "intitule": "Amélioration canal"
+    },
+    {
+      "numDossier": "GIV-32-7987",
+      "codeBeneficiaire": "74798296Z - BOUCHON",
+      "intitule": "Gestion aquatique"
+    },
+    {
+      "numDossier": "GIV-32-8911",
+      "codeBeneficiaire": "11192332A - BOUCHON",
+      "intitule": "Canalisation Tarbes"
+    },
+    {
+      "numDossier": "PAPE-31-1057",
+      "codeBeneficiaire": "65826742C - BOUCHON",
+      "intitule": "Pétition mairie Montrejeau"
+    },
+    {
+      "numDossier": "PAPE-31-1608",
+      "codeBeneficiaire": "82439568D - BOUCHON",
+      "intitule": "Assainissement canal Adour"
+    },
+    {
+      "numDossier": "PAPE-31-1806",
+      "codeBeneficiaire": "30307833A - BOUCHON",
+      "intitule": "Concession hydroélectrique"
+    },
+    {
+      "numDossier": "PAPE-32-1425",
+      "codeBeneficiaire": "72775433Z - BOUCHON",
+      "intitule": "Amélioration canal à Vigaurd"
+    },
+    {
+      "numDossier": "PAPE-32-1524",
+      "codeBeneficiaire": "42248497G - BOUCHON",
+      "intitule": "Pétition mairie hagarde"
+    }
+  ],
+  "nombreTotalElements": 42,
+  "nombreTotalPages": 3,
+  "numeroPageCourante": 1,
+  "nombreElementsPageCourante": 15,
+  "nombreElementsParPage": 15,
+  "hasNext": true,
+  "hasPrevious": false,
+  "isPremierePage": true,
+  "isDernierePage": false
+}

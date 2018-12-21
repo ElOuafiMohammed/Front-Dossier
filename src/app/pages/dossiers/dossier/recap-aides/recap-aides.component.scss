@@ -1,0 +1,107 @@
+@import 'src/app/pages/dossiers/dossier/dossier.component.scss';
+@import 'src/app/theme/sass/conf/_variables.scss';
+@import 'src/app/theme/components/siga-utils-style.scss';
+.siga-choix-themes-component {
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-bottom: 10px
+}
+  
+
+.siga-choix-encd-component {
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-bottom: 10px
+}
+.siga-theme-dropdown {
+  border-bottom: 1px solid #949494;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  width: 80%;
+}
+
+.siga-encadrement{
+  border-bottom: 1px solid #949494;
+  margin-bottom: 5px;
+  min-width: 366px;
+  max-width: 366px;
+}
+  
+.siga-themes-input-text {
+  color: $siga-grey-saisi;
+}
+.siga-theme-card-container {
+  display: inline-block;
+}
+
+// TODO : Fix - causes side effects
+/deep/ .test{
+background-color: $siga-red-error;
+}
+.recapAides {
+  display: block !important;
+}
+
+.space-around{
+  margin-bottom : 30px;
+  margin-left: 10px;
+
+}
+.textRecap{
+  margin-top: 20px
+}
+  .textRecapModReduction{
+  margin-top: 10px
+}
+.textRecapModVersement{
+  margin-top: 17px
+}
+.encadrement{
+  margin-left: 20px;
+}
+
+.dispfinan {
+  margin-bottom: 0px !important;
+  outline: none !important;
+}
+.dispTech {
+  margin-top: 10px !important;
+  outline: none !important;
+}
+.modVersement {
+  margin-top: 4px !important;
+}
+.modReduction {
+  margin-top: -20px !important;
+}
+.noneContour {
+  outline: none !important;
+}
+/deep/ .justifOptionsClass {
+  min-width: 700px !important;
+  // transform: translateX(-5%);
+}
+.content{
+overflow-y: hidden !important;
+}
+
+.justifEcdr {
+  margin-top: 10px
+}
+
+.toggle{
+  margin-bottom: 10px;
+  // margin-top: 14px
+   margin-top: 0px
+}
+.mat-radio-button {
+  padding-right: 0px !important;
+}
+.mva_rb {
+  margin-top: 10px !important;
+}
+
+/deep/  .mat-tab-body-content {
+  overflow: hidden !important;
+}
+

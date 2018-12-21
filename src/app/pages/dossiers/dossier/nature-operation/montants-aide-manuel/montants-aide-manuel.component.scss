@@ -1,0 +1,73 @@
+@import 'src/app/theme/sass/conf/_variables.scss';
+@import 'src/app/theme/components/siga-utils-style.scss';
+.siga-close-button {
+  font-size: 14px;
+}
+
+.siga-close-button, .mat-icon, .mat-icon-button {
+  line-height: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.box{
+  align-items: center;
+  color: $siga-grey-saisi;
+}
+
+.text {
+  color: rgba($color: $siga-grey-saisi, $alpha: .54);
+  margin-left: 1.7em !important;
+}
+
+.libelle{
+  color: $siga-grey-saisi;
+  margin-left: 0.8em;
+}
+
+.icon-info {
+  color: $siga-grey-saisi;
+  margin-left: 20px;
+
+}
+
+/*
+ * Temporary
+ */
+ .temp {
+  &-margin {
+    margin-top: 20px;
+  }
+
+  &-fix-error-display {
+    /deep/ .mat-form-field-subscript-wrapper {
+      min-width: 300px;
+    }
+  }  
+}
+
+input, span, mat-icon {
+  text-align:right;
+  color : $siga-grey-saisi;
+  }
+
+
+  mat-form-field  {
+    text-align: right;
+  }
+  
+  .content {
+    padding: 20px;
+    padding-top: 0px;
+    color: $siga-grey-saisi;
+  
+    .session-type {
+     padding-left: 10px;
+      padding-bottom: 5px;
+      padding-top: 1px;
+    }
+  }
+
+  mat-error {
+    text-align: left;
+  }

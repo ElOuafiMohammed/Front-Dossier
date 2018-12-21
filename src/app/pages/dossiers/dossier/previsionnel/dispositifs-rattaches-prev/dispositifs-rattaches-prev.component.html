@@ -1,0 +1,112 @@
+<div class="content" fxLayout="column">
+  <div fxFlex="90">
+    <br>
+
+    <span class="text titleDpPrev">
+      {{'dossier.update.previsionnel.dispositifs_rattaches' | translate}}
+    </span>
+
+  </div>
+
+  <div fxFlex="column">
+    <!--  Table Dispositif rattaché mat-table-->
+    <div class="float-right">
+      <button id="rattacherDP" [ngClass]="(canAdd && !viewRight)?'ion-ios-plus-outline siga-form-confirm':'ion-ios-plus-outline siga-form-invalid'"
+        class="siga-button siga-form-confirm siga-taille-image-plus siga-form-addLine btn btn-default" type="button"
+        (click)="onAddDispositif()" [disabled]="!canAdd || viewRight || viewAdministratif">
+        <em class="espacement siga-form-confirm siga-taille-image-plus"></em>
+        <span>{{'dossier.update.previsionnel.rattacher_DP' | translate}}</span>
+      </button>
+    </div>
+  </div>
+
+  <form novalidate [formGroup]="formDP">
+    <div class="alignTableLeft">
+      <mat-table #table [dataSource]="dataSource">
+
+        <!-- bouton visualiser le dispositif -->
+        <ng-container matColumnDef="urlFrontDispositifPartenariat">
+          <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass'">
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'">
+            <div *ngIf="element.complementIntitule" [ngClass]="{ disableButton : viewRight || viewAdministratif }"
+              class="element-row trashColor alignIconeCenter" (click)="goOtherWindow(element)">
+              <em fxFlex="10" class="ion-ios-eye siga-tooltip siga-icon">
+                <span class='siga-tooltiptext'>{{'dossier.update.previsionnel.visionner' | translate}}</span>
+              </em>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Column Type dispositif-->
+        <ng-container matColumnDef="type">
+          <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthType'">{{'dossier.update.previsionnel.type_DP' |
+            translate}} </mat-header-cell>
+          <mat-cell *matCellDef="let element" [ngClass]="'customWidthType'">
+            <div *ngIf="element.disable" class="disabledIntituleTypeDispositif siga-pointer" (click)="goOtherWindow(element)">{{element.typeDispositif.code}}</div>
+            <div *ngIf="!element.disable">
+              <mat-select formControlName="typeDispositif" [disabled]="element.disable" (selectionChange)="change(element.typeDispositif, element)"
+                [(ngModel)]="element.typeDispositif" [compareWith]="compareListElement">
+                <mat-select-trigger>{{element.typeDispositif.code}}
+                </mat-select-trigger>
+                <mat-option *ngFor="let typeDispositif of typesDispositif; trackBy: trackById" [value]="typeDispositif">
+                  {{ typeDispositif.code }} - {{ typeDispositif.libelle }}
+                </mat-option>
+              </mat-select>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Column Liste de dispositifs actifs possibles de rattacher-->
+        <ng-container matColumnDef="numero">
+          <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthType'">{{'dossier.update.previsionnel.numero_DP'
+            | translate}} </mat-header-cell>
+          <mat-cell *matCellDef="let element" [ngClass]="'customWidthType'">
+            <div *ngIf="element.disable" class="disabledIntituleTypeDispositif siga-pointer" (click)="goOtherWindow(element)">{{element.numeroOrdreFormatted}}</div>
+            <div *ngIf="!element.disable">
+              <mat-select formControlName="listeNumeroDP" [disabled]="element.disable" (selectionChange)="changeNumeroDispositif(element.listeNumeroDP, element)"
+                [(ngModel)]="element.listeNumeroDP" [compareWith]="compareListElement">
+                <mat-select-trigger>{{element.listeNumeroDP?.numeroOrdre}}
+                </mat-select-trigger>
+                <mat-option *ngFor="let dispositif of dispositifsNonClos; trackBy: trackById" [value]="dispositif">
+                  {{ dispositif?.numeroOrdreFormatted }} - {{ dispositif?.complementIntitule }}
+                </mat-option>
+              </mat-select>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+
+        <!-- Column complément intitulé du dispositif sélectionné-->
+        <ng-container matColumnDef="complementIntitule">
+          <mat-header-cell *matHeaderCellDef [ngClass]="'customIntitule'">
+            {{'dossier.update.previsionnel.complement_intitule' | translate}} </mat-header-cell>
+          <mat-cell *matCellDef="let element" class="disabledComplementIntituleDispositif siga-pointer" (click)="goOtherWindow(element)">
+            {{element.complementIntitule}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="suppression">
+          <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+          <mat-cell *matCellDef="let element" class="trashColor alignIconeRight">
+            <div [ngClass]=" { disableButton : viewRight || viewAdministratif } " (click)="onDeleteDispositifEvent(element) ">
+              <em fxFlex="5 " class="siga-tooltip siga-icon ion-trash-a ">
+                <span class="siga-tooltiptext ">{{'dossier.update.previsionnel.supprimer' | translate}}</span>
+              </em>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+
+
+        <mat-header-row *matHeaderRowDef="displayedColumns " class="css-mat "></mat-header-row>
+        <!-- mat-row pour l'affichage des différentes lignes de la table -->
+        <mat-row *matRowDef="let row; columns: displayedColumns; let index=index " matRipple class="element-row css-mat "></mat-row>
+      </mat-table>
+      <!-- affichage dans le cas d'existence d'un message d'erreur -->
+      <mat-hint class="siga-error errorFormDispositif error-spec " *ngIf="enableMessageError ">
+        {{this.messageErrorDispositif}}
+      </mat-hint>
+    </div>
+  </form>
+
+</div>

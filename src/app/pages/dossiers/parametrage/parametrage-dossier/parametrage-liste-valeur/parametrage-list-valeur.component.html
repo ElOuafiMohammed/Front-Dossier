@@ -1,0 +1,128 @@
+<critere-card-list-valeur [lignes]="lignes" [thematiques]="thematiques" (searchEventEmitter)="fetchResultatRecherche($event)">
+</critere-card-list-valeur>
+
+<div *ngIf="!loading">
+  <ba-card>
+    <div class="block">
+      <button [disabled]="!canAdd" class="siga-bouton siga-form-addLine btn btn-default" type="button" (click)="addLine()">
+        <em [ngClass]="(canAdd)?'ion-ios-plus-outline siga-form-confirm':'ion-ios-plus-outline siga-form-invalid'"
+          class="espacement siga-taille-image-plus"></em>
+        <span>Ajouter une liste de valeur</span>
+      </button>
+    </div>
+    <mat-paginator [length]="nbTotalElements" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOption" [pageIndex]="indexCurrentPage"
+      (page)="getNumberPage($event)">
+    </mat-paginator>
+
+    <!--  Table-->
+    <mat-table #table [dataSource]=dataSource>
+
+      <!-- Thématique -->
+      <ng-container matColumnDef="Thematique">
+        <mat-header-cell *matHeaderCellDef class="customThemaHeader" fxFlex="10"> Thématique</mat-header-cell>
+        <mat-cell *matCellDef="let element" class=" customThemarow">
+          <span *ngIf="!isNew(element)" class="spanColor spansize">{{element?.codeThematique}}</span>
+          <mat-select tabindex="{{generateTabIndex()}}" *ngIf="isNew(element)" [value]="displayAsListThema(element?.codeThematique)"
+            class="width-input-themati" (selectionChange)="changeThematique(element, $event)">
+            <mat-select-trigger>{{element.codeThematique}}
+            </mat-select-trigger>
+            <mat-option *ngFor="let thematique of thematiques; trackBy: trackById" [value]="thematique">
+              {{ thematique.code }}
+            </mat-option>
+          </mat-select>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Paramètre -->
+      <ng-container matColumnDef="Param">
+        <mat-header-cell *matHeaderCellDef class="customParamHeader" fxFlex="13"> Paramètre </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="customParamrow">
+          <span *ngIf="!isNew(element)" class="spanColor spansize">{{element?.codeParam}}</span>
+          <mat-select tabindex="{{generateTabIndex()}}" *ngIf="isNew(element)" [value]="displayAsListParam(element?.codeParam)"
+            class="width-input-param" (selectionChange)="changeParametre(element, $event)">
+            <mat-select-trigger>{{element.codeParam}}
+            </mat-select-trigger>
+            <mat-option *ngFor="let ligne of lignes; trackBy: trackById" [value]="ligne">
+              <span> {{ligne.code}} </span>
+              <span> - </span>
+              <span> {{ligne.libelle}} </span>
+            </mat-option>
+          </mat-select>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Valeur -->
+      <ng-container matColumnDef="Valeur">
+        <mat-header-cell *matHeaderCellDef class="customValeurHeader" fxFlex="10">Valeur </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="customValeurrow">
+          <span *ngIf="!isNew(element)" class="spanColor">{{element?.code}}</span>
+          <input tabindex="{{generateTabIndex()}}" *ngIf="isNew(element)" #valeur (blur)="valeurBlur(valeur.value, element)"
+            matInput [value]="element?.code" />
+        </mat-cell>
+      </ng-container>
+
+      <!-- Libellé -->
+      <ng-container matColumnDef="Libelle">
+        <mat-header-cell *matHeaderCellDef class="customLibelleHeader" fxFlex="48">Libellé </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="customLibellerow">
+          <input #libelle tabindex="{{generateTabIndex()}}" (blur)="libelleBlur(libelle.value, element)" matInput
+            [value]="element?.libelle" />
+        </mat-cell>
+      </ng-container>
+
+      <!-- valide -->
+      <ng-container matColumnDef="Valide">
+        <mat-header-cell *matHeaderCellDef class="customValidHeader" fxFlex="10">Valide </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <mat-checkbox fxFlex="10" [tabIndex]="generateTabIndex()" [checked]="element?.valide" (change)="onCheckBoxChange($event, element)"
+            class="labelCheckbox">
+          </mat-checkbox>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Actions -->
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="classActionsrow">
+          <em (click)="deleteRow(element)" (keydown.enter)="deleteRow(element)" tabindex="{{generateTabIndex()}}" class="sam-tooltip sam-icon ion-trash-a">
+            <span class="sam-tooltiptext">Supprimer</span>
+          </em>
+        </mat-cell>
+      </ng-container>
+
+
+      <!-- extra -->
+      <ng-container matColumnDef="expandedArea">
+        <mat-header-cell *matHeaderCellDef class="customMontantHeader">Libellé </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="disabledIntitule customMontantWidth">
+          {{element?.libelle}}
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <!-- mat-row pour l'affichage des différents lignes de la table -->
+      <mat-row *matRowDef="let row; columns: displayedColumns; let index=index" matRipple class="element-row css-mat"
+        [class.expanded]="expandedElement === row"></mat-row>
+      <!-- mat-row pour afficher le motif sur l'avis -->
+      <mat-row *matRowDef="let row; columns: ['expandedArea']; when: isExpansionMotifDossier" [@detailExpand]="'collapsed'"
+        style="overflow: hidden">
+      </mat-row>
+    </mat-table>
+  </ba-card>
+
+  <!-- Quitter || Enregistrer -->
+  <div fxLayout="row" fxLayoutAlign="space-around end">
+    <div fxFlex="80">
+
+    </div>
+    <button #button mat-raised-button (click)="close()" type="button" fxFlex="12" tabindex="350000">
+      <em class="ion-close siga-form-cancel"></em> &nbsp;Quitter
+    </button>
+    <div fxFlex="12"> </div>
+    <button #button mat-raised-button [disabled]="!canAdd" tabindex="350001" type="submit" (keydown.enter)="onSubmit()"
+      (click)="onSubmit()" fxFlex="12">
+      <em [ngClass]="(canAdd)?'ion-checkmark siga-form-confirm':'ion-checkmark siga-form-invalid'"></em>
+      &nbsp;Enregistrer
+    </button>
+  </div>
+</div>

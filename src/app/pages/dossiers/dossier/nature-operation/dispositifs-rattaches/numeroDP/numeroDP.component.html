@@ -1,0 +1,11 @@
+<mat-form-field *ngIf="!rowData.dispositifPartenariat.complementIntitule" class="width-input-select-dispositif" tabindex="{{indexSelectDpPrev}}">
+  <mat-select (selectionChange)="change($event.value)" [formControl]="control">
+    <mat-select-trigger> {{dispositif?.numeroOrdre}}
+    </mat-select-trigger>
+    <mat-option *ngFor="let dispositif of listDispositifs; trackBy: trackById" [value]="dispositif">
+      {{ formattedNumeroCode(dispositif?.numeroOrdre) }} - {{ dispositif?.complementIntitule }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<div *ngIf="rowData.complementIntitule" class="nounderline" (click)="goOtherWindow($event)">{{numeroOrdreFormatted}}</div>

@@ -1,0 +1,85 @@
+@import 'src/app/theme/sass/conf/_variables.scss';
+@import 'src/app/theme/components/siga-utils-style.scss';
+
+/deep/ {
+  .table-spec th:nth-child(6) {
+    text-align: left !important;
+  }
+}
+.margin{
+  margin-top: 3%;
+}
+
+.marginLeft{
+  margin-left: 5%;  color:black;
+}
+
+.icon-infoo{
+  color: $siga-red-error;
+  font-size: 16px !important;
+  margin-left: 10px;
+  margin-top: 6px !important;
+}
+
+
+.mat-icon-button {
+  padding: 0;
+  min-width: 0;
+  width: 25px;
+  height: 25px;
+  flex-shrink: 0;
+  line-height: 40px;
+  border-radius: 50%;
+}
+/deep/ .icon-infoo {
+  color: $siga-red-error;
+  font-size: 20px !important ;
+  margin-top: 3%;
+ 
+}
+
+// Vu avec Serigne : on supprimera une fois sûr q'il n'y a pas d'effet de bord aprés cette mise en commentaire
+// /deep/ .mat-select-value {
+//   display: table-cell;
+//   max-width: 0;
+//   width: 100%;
+//   overflow: hidden;
+//   text-overflow: ellipsis;
+//   white-space: nowrap;
+//   max-width: 20px !important;
+//   width: 20px;
+// }
+
+@media screen and (min-width: 1360px) {
+  .siga-arrow-position {
+    margin-right: -13px !important;
+  }
+}
+
+@media screen and (min-width: 1362px) {
+  .siga-select-position{
+    max-width: 80px;
+    color : $siga-red-error;
+    width: 40px;
+  }
+}
+
+.siga-position-CI {
+  margin-bottom: 1px !important; margin-right: 5px !important;
+}
+
+.siga-error-session{
+  margin-left: 36px;
+}
+
+.siga-position-session {
+  width:150px;
+   max-width: 160px;
+}
+
+.siga-position-year {
+  width: 33px !important; border-bottom: solid 1px;
+}
+.siga-position-close {
+  font-size: 14px; margin-top:-13px !important; 
+}

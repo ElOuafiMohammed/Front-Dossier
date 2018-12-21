@@ -1,0 +1,18 @@
+<div [ngClass]="{ disableTable : viewRight || viewAdministratif}" fxLayout="row" fxFlex="100" fxLayoutAlign="start">
+
+  <div [ngClass]="{ disableTable : viewRight || viewAdministratif}" class="space-around" fxFlex="50" class="specifiques">
+    <div fxLayout="column" class="siga-marge-tableau margin-tableau-previsionel">
+      <ng2-smart-table class="table-spec" *ngIf="settings.columns != null" [settings]="settings" [source]="source"></ng2-smart-table>
+      <ng2-smart-table class="table-spec-total" *ngIf="settingsTotals.columns != null" [settings]="settingsTotals"
+        [source]="sourceTotals"></ng2-smart-table>
+    </div>
+  </div>
+
+  <div fxLayout="column" fxFlex="50">
+    <button [disabled]="!canAdd || viewAdministratif" class="siga-bouton siga-form-addLine btn btn-default" type="button"
+      (click)="onAddLine()">
+      <em class="espacement" [ngClass]="(canAdd)?'ion-ios-plus-outline siga-form-confirm':'ion-ios-plus-outline siga-form-invalid'"></em>
+      <span>Ajouter une ligne</span>
+    </button>
+  </div>
+</div>

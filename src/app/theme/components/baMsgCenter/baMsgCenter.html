@@ -1,0 +1,21 @@
+<ul class="al-msg-center clearfix">
+
+  <li class="dropdown">
+    <a href class="dropdown-toggle" id="msg-dd2" data-toggle="dropdown" aria-expanded="false">
+      <em class="fa fa-flag-o"></em>
+    </a>
+
+    <div class="top-dropdown-menu-language dropdown-menu" aria-labelledby="msg-dd2">
+      <em class="dropdown-arr"></em>
+
+      <div class="msg-list">
+        <a *ngFor="let language of languages; trackBy: trackById" class="clearfix" (click)="changeLanguage(language.key)">
+          <div class="language-area">
+            <img src="{{ language.image }}" alt="{{ language.image }}">
+            <span translate>{{'general.language.' + language.name }}</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </li>
+</ul>
